@@ -1,0 +1,16 @@
+{
+    "projectName": "DtTestingDsl",
+    "languages": [
+        {
+            "id": "dt-testing-dsl",
+            "grammar": "src/dt-testing-dsl.langium",
+            "fileExtensions": [
+                "mtr"
+            ],
+            "textMate": {
+                "out": "syntaxes/dt-testing-dsl.tmLanguage.json"
+            }
+        }
+    ],
+    "out": "src/generated"
+}
