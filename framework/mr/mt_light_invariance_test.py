@@ -1,46 +1,29 @@
+import pytest
 import asyncio
-from mt_framework import DigitalTwinAdapter, InvarianceRelation
-from ut_helpers import UT_TENANT
 
-async def run_light_invariance_test():
-    # Wir nutzen den Adapter mit WebSocket für Befehle und HTTP für Status
-    dt = DigitalTwinAdapter(http_url="http://127.0.0.1:8083", ws_url="ws://127.0.0.1:8082/ws/2")
+@pytest.mark.asyncio
+@pytest.mark.mr(type="invariance")
+async def test_light_sensor_invariance(dt_adapter, live_monitor, wait_dt):
+    a_id, a_feat = "light.norden_tuer", "brightness"
+    s_id, s_feat = "Illuminance.Room518a_Ceiling", "Illuminance"
     
-    print("====================================================")
-    print("Metamorphic Test: Light Invariance -> Illuminance")
-    print("====================================================\n")
+    # Evaluation 1
+    await dt_adapter.set_feature_value(a_id, a_feat, 80)
+    async with live_monitor(s_id, s_feat):
+        await wait_dt()
+    out1 = float(await dt_adapter.get_feature_value(s_id, s_feat))
     
-    inv_rel = InvarianceRelation()
+    # Interference / Reset
+    await dt_adapter.set_feature_value(a_id, a_feat, 0)
+    async with live_monitor(s_id, s_feat):
+        await wait_dt()
     
-    test_config = {
-        'actuator_id': 'light.norden_tuer',
-        'actuator_feature': 'brightness',
-        'sensor_id': 'Illuminance.Room518a_Ceiling',
-        'sensor_feature': 'Illuminance',
-        
-        'input_value': 80,         # Schalte Licht auf 80% Helligkeit
-        'reset_value': 0,          # Setze zwischendurch auf 0 zurück
-        
-        'wait_time': 30.0,         # 30 Sekunden warten auf physikalische Reaktion
-        'tolerance': 0.05          # 5% Abweichung sind erlaubt (z.B. durch Rauschen)
-    }
+    # Evaluation 2
+    await dt_adapter.set_feature_value(a_id, a_feat, 80)
+    async with live_monitor(s_id, s_feat):
+        await wait_dt()
+    out2 = float(await dt_adapter.get_feature_value(s_id, s_feat))
     
-    print(f"Test: {inv_rel.name}")
-    print(f"Description: {inv_rel.description}")
-    print(f"Actuator: {UT_TENANT}:{test_config['actuator_id']}")
-    print(f"Sensor:   {UT_TENANT}:{test_config['sensor_id']}")
-    print("-" * 50)
-
-    try:
-        passed, msg = await inv_rel.execute(dt, test_config)
-        
-        print("\n" + "=" * 20)
-        print(f"TEST RESULT: {'PASS' if passed else 'FAIL'}")
-        print(f"REASON: {msg}")
-        print("=" * 20)
-        
-    finally:
-        await dt.close() # WebSocket sauber schließen
-
-if __name__ == "__main__":
-    asyncio.run(run_light_invariance_test())
+    diff = abs(out1 - out2)
+    max_allowed = max(max(out1, out2), 1) * 0.05
+    assert diff <= max_allowed, f"Outputs differ beyond tolerance: {out1} vs {out2}"
