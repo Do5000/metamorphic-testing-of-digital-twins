@@ -4,9 +4,9 @@ import asyncio
 @pytest.mark.asyncio
 @pytest.mark.mr(type="monotonicity")
 async def test_light_sensor_monotony(dt_adapter, live_monitor, wait_dt):
-    actuator = "switch.licht_schalter"
-    sensor = "TSL2_Keyboard_spec.Room518a_WP1"
-    sensor_feature = "TSL2_Keyboard_spec"
+    actuator = "switch.vorhang"
+    sensor = "sensor.arduino_light"
+    sensor_feature = "state"
     
     # --- Source Test Case ---
     await dt_adapter.set_feature_value(actuator, "state", 0)
