@@ -4,8 +4,8 @@ import asyncio
 @pytest.mark.asyncio
 @pytest.mark.mr(type="invariance")
 async def test_light_sensor_invariance(dt_adapter, live_monitor, wait_dt):
-    a_id, a_feat = "light.norden_tuer", "brightness"
-    s_id, s_feat = "Illuminance.Room518a_Ceiling", "Illuminance"
+    a_id, a_feat = "light.schreibtisch_lampe", "brightness"
+    s_id, s_feat = "sensor.arbeitsplatz_helligkeit", "state"
     
     # Evaluation 1
     await dt_adapter.set_feature_value(a_id, a_feat, 80)

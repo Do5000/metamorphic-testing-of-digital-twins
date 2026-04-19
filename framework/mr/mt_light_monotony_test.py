@@ -4,8 +4,8 @@ import asyncio
 @pytest.mark.asyncio
 @pytest.mark.mr(type="monotonicity")
 async def test_light_sensor_monotony(dt_adapter, live_monitor, wait_dt):
-    actuator = "switch.vorhang"
-    sensor = "sensor.arduino_light"
+    actuator = "light.schreibtisch_lampe"
+    sensor = "sensor.arbeitsplatz_helligkeit"
     sensor_feature = "state"
     
     # --- Source Test Case ---

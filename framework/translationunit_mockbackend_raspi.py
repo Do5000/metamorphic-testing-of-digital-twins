@@ -40,9 +40,17 @@ class RaspiHomeAssistant(EndpointMQTTandHTTP):
     def parse_from_hono(self, vals):
         """ Konvertiert Werte aus Hono in das Home Assistant Format """
         if 'state' in vals:
-            vals['state'] = 'on' if parse(int, vals['state'], 0) == 1 else 'off'
+            val = vals['state']
+            if str(val).lower() in ['on', '1', 'true']:
+                vals['state'] = 'on'
+            else:
+                vals['state'] = 'off'
         if 'brightness' in vals:
-            vals['brightness'] = parse(float, vals['brightness'], 0) * 255
+            b_val = parse(float, vals['brightness'], 0)
+            if b_val > 1.0:
+                b_val = b_val / 100.0  # Von Prozent in 0..1 umrechnen
+            vals['brightness'] = max(0.0, min(1.0, b_val)) * 255
+
         return vals
 
     def parse_to_hono(self, vals):
