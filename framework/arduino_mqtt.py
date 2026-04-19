@@ -4,12 +4,36 @@ import json
 import time
 import threading
 
-PORT = "/dev/ttyACM0"  # Gegebenenfalls auf /dev/ttyUSB0 anpassen, falls nötig
-client = mqtt.Client("mein_arduino_client")
+import os
+
+# Versuche den passenden Port automatisch zu finden (Mac oder Linux)
+def find_arduino_port():
+    ports = ["/dev/ttyACM0", "/dev/ttyUSB0"] # Linux
+    # Suche auf Mac nach usbmodem oder usbserial
+    if os.path.exists("/dev"):
+        for p in os.listdir("/dev"):
+            if "usbmodem" in p or "usbserial" in p:
+                ports.append(os.path.join("/dev", p))
+    
+    for port in ports:
+        if os.path.exists(port):
+            return port
+    return "/dev/ttyACM0" # Fallback
+
+PORT = find_arduino_port()
+print(f"Benutze Port: {PORT}")
+
+try:
+    # Für paho-mqtt >= 2.0
+    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, "mein_arduino_client")
+except AttributeError:
+    # Für ältere paho-mqtt Versionen (< 2.0)
+    client = mqtt.Client("mein_arduino_client")
 
 # Verbinde mit dem Mosquitto Broker auf dem Raspberry Pi
-print("Verbinde mit MQTT-Broker auf 127.0.0.1...")
-client.connect("127.0.0.1", 1883)
+print("Verbinde mit MQTT-Broker auf 192.168.8.30...")
+client.connect("192.168.8.30", 1883)
+client.loop_start()  # WICHTIG: Startet den Netzwerk-Loop im Hintergrund
 
 # 1. Konfiguration & Auto-Discovery an Home Assistant für alle 3 Sensoren + IR Fernbedienung
 print("Sende Auto-Discovery Konfigurationen an Home Assistant...")
