@@ -14,7 +14,7 @@ def find_arduino_port():
         for p in os.listdir("/dev"):
             if "usbmodem" in p or "usbserial" in p:
                 ports.append(os.path.join("/dev", p))
-    
+
     for port in ports:
         if os.path.exists(port):
             return port
@@ -88,52 +88,45 @@ print("Starte Sensor-Überwachung...")
 
 while True:
     try:
-        # Versuche die USB-Verbindung aufzubauen. Schlägt sofort fehl, wenn das Kabel nicht steckt.
-        with serial.Serial(PORT, 9600) as ser:
-            print(f"✅ Arduino auf {PORT} verbunden! Lese Daten...")
-            client.publish("homeassistant/sensor/arbeitsplatz_fernbedienung/state", "idle") # Initialisierung
-            
-            last_press_time = 0
-            
-            while True:
-                # Warten, bis Daten im seriellen Puffer sind
-                if ser.in_waiting > 0:
-                    line = ser.readline().decode('utf-8', errors='ignore').strip()
-                    
-                    # Prüfen ob es sauberes JSON vom Arduino ist
-                    if line.startswith("{") and line.endswith("}"):
-                        try:
-                            data = json.loads(line)
-                            
-                            # Fall 1: Eine Infrarot-Taste wurde gedrückt!
-                            if "ir_btn" in data:
-                                current_time = time.time()
-                                
-                                # Wenn der Klick weniger als 0.8 Sekunden her ist -> ignorieren (Anti-Wackel / Daumen-Schutz)
-                                if current_time - last_press_time > 0.8:
-                                    last_press_time = current_time
-                                    
-                                    hex_val = data["ir_btn"].lower()
-                                    btn_name = ELEGOO_MAP.get(hex_val, f"UNKNOWN_{hex_val}")
-                                    print(f"🔘 Taste gedrückt: {btn_name} (Code: {hex_val})")
-                                    
-                                    client.publish("homeassistant/sensor/arbeitsplatz_fernbedienung/state", btn_name)
-                                    # Starte Thread, der den Zustand nach 0.5 Sekunden in HA zurücksetzt
-                                    threading.Timer(0.5, reset_ir_sensor).start()
-                                else:
-                                    pass # Daumen drückt immer noch auf die gleiche Taste, wir reagieren nicht!
+        # timeout=1 ist wichtig: readline() wartet bis zu 1 Sekunde auf Daten.
+        # Das verhindert die 99% CPU Last (Busy Waiting).
+        with serial.Serial(PORT, 9600, timeout=1) as ser:
+            print(f"✅ Arduino auf {PORT} verbunden!")
+            client.publish("homeassistant/sensor/arbeitsplatz_fernbedienung/state", "idle")
 
-                            # Fall 2: Sensordaten (Helligkeit/Temp/Humidity)
-                            elif "light" in data:
-                                print(f"Update -> Licht: {data['light']} lx | Temp: {data['temp']} °C | Feuchte: {data['hum']} %")
-                                client.publish("homeassistant/sensor/arbeitsplatz_helligkeit/state", data["light"])
-                                client.publish("homeassistant/sensor/arbeitsplatz_temperatur/state", data["temp"])
-                                client.publish("homeassistant/sensor/arbeitsplatz_luftfeuchtigkeit/state", data["hum"])
-                                
-                        except Exception as e:
-                            print(f"Warnung: Konnte Zeile nicht json-parsen: {line}. Fehler: {e}")
-                            
+            while True:
+                # Hier "schläft" das Skript nun effizient, bis der Arduino eine Zeile sendet
+                line = ser.readline().decode('utf-8', errors='ignore').strip()
+
+                if not line:
+                    continue  # Timeout erreicht, keine Daten da -> weitermachen
+
+                if line.startswith("{") and line.endswith("}"):
+                    try:
+                        data = json.loads(line)
+
+                        # Fall 1: Infrarot
+                        if "ir_btn" in data:
+                            current_time = time.time()
+                            if current_time - last_press_time > 0.8:
+                                last_press_time = current_time
+                                hex_val = data["ir_btn"].lower()
+                                btn_name = ELEGOO_MAP.get(hex_val, f"UNKNOWN_{hex_val}")
+
+                                print(f"🔘 Taste: {btn_name}")
+                                client.publish("homeassistant/sensor/arbeitsplatz_fernbedienung/state", btn_name)
+                                threading.Timer(0.5, reset_ir_sensor).start()
+
+                        # Fall 2: Sensoren
+                        elif "light" in data:
+                            print(f"Update -> L: {data['light']} | T: {data['temp']} | H: {data['hum']}")
+                            client.publish("homeassistant/sensor/arbeitsplatz_helligkeit/state", data["light"])
+                            client.publish("homeassistant/sensor/arbeitsplatz_temperatur/state", data["temp"])
+                            client.publish("homeassistant/sensor/arbeitsplatz_luftfeuchtigkeit/state", data["hum"])
+
+                    except json.JSONDecodeError:
+                        pass  # Kaputtes JSON ignorieren
+
     except Exception as e:
-        # Wird ausgelöst, wenn das USB-Kabel gezogen wird oder der Port blockiert ist
-        print(f"❌ Keine Verbindung zum Arduino. Warte 5 Sekunden... (Fehler: {e})")
+        print(f"❌ Verbindung verloren oder Fehler: {e}. Neustart in 5s...")
         time.sleep(5)
