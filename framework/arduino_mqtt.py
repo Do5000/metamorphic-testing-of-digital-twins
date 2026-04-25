@@ -32,6 +32,7 @@ except AttributeError:
 
 # Verbinde mit dem Mosquitto Broker auf dem Raspberry Pi
 print("Verbinde mit MQTT-Broker auf 192.168.8.30...")
+client.username_pw_set("mqtt_user", "mqtt_password")
 client.connect("192.168.8.30", 1883)
 client.loop_start()  # WICHTIG: Startet den Netzwerk-Loop im Hintergrund
 

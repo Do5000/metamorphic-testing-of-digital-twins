@@ -13,9 +13,9 @@ from ut_mqtt_endpoints import EndpointMQTTandHTTP, parse
 RASPI_IP = "192.168.8.30"         # <- HIER DEINE RASBERRY PI IP EINTRAGEN
 RASPI_MQTT_PORT = 1883             # <- Standard MQTT Port auf dem Raspi
 RASPI_HTTP_PORT = 8123             # <- Standard HomeAssistant Port
-RASPI_MQTT_USER = None
-RASPI_MQTT_PW = None
-RASPI_HA_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiODE3YmNmODAzOTA0NmJlODk3Y2E3ZjZlYzliZTdiYyIsImlhdCI6MTc3NjUwNTI5OCwiZXhwIjoyMDkxODY1Mjk4fQ.3-cMkSJwvPKFtOIl2hz423qcLbO2L3bOq0esSmB-Owk"   # <- HIER DEINEN LONG-LIVED ACCESS TOKEN EINTRAGEN
+RASPI_MQTT_USER = "mqtt_user"
+RASPI_MQTT_PW = "mqtt_password"
+RASPI_HA_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI2NzA4YmQ4MjViMzg0YWM1ODQ1NWExNWMyYWM1MmE3OSIsImlhdCI6MTc3NzE0MTI3NSwiZXhwIjoyMDkyNTAxMjc1fQ.lHLlrdOIT1CGg-1pv8c-I6Z88Xdv9_jwHEwjKdsPLdI"
 # ============================================================================== #
 
 class RaspiHomeAssistant(EndpointMQTTandHTTP):
@@ -90,7 +90,9 @@ class RaspiHomeAssistant(EndpointMQTTandHTTP):
         if domain == "light" and service == "turn_on" and "brightness" in param_values:
             payload["brightness"] = int(param_values["brightness"])
             
-        requests.post(
+        print(f"[*] Sende an HA: {domain}/{service} für {device}...")
+        
+        response = requests.post(
             f'http://{RASPI_IP}:{RASPI_HTTP_PORT}/api/services/{domain}/{service}',
             headers={
                 'Authorization': RASPI_HA_TOKEN,
@@ -98,6 +100,11 @@ class RaspiHomeAssistant(EndpointMQTTandHTTP):
             },
             json=payload
         )
+        
+        if response.status_code == 200:
+            print(f"[+] Erfolgreich geschaltet: {device} | Antwort: {response.text}")
+        else:
+            print(f"[!] FEHLER beim Schalten: {response.status_code} - {response.text}")
 
 
 # ============================================================================== #
@@ -128,7 +135,8 @@ def raspi_ha_on_device_param_updated(device, param, value):
         print("Info:", param_val)
 
 def run_ditto_mock_http_endpoint(app):
-    app.run(host="0.0.0.0", port=8083, debug=False)
+    # Enable threaded mode to prevent HTTP polls from blocking other logic
+    app.run(host="0.0.0.0", port=8083, debug=False, threaded=True)
 
 def main():
     ditto_mock.on_command = ditto_mock_on_message
