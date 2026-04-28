@@ -3,11 +3,14 @@ import time
 import csv
 import os
 import sys
+from pathlib import Path
+path_root = Path(__file__).parents[1]
+sys.path.append(str(path_root))
 
 # Add framework to path if necessary
 sys.path.append(os.path.join(os.getcwd(), 'framework'))
 
-from mt_framework import DigitalTwinAdapter
+from pytest_dt_mt.core import DigitalTwinAdapter
 from ut_helpers import UT_TENANT
 
 # Configuration
