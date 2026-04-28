@@ -56,3 +56,11 @@
 - **Example in the Living Lab:**  
   This property only partially applies physically for light (due to light superposition), but it can apply to energy consumption.  
   The measured power consumption when lamp A and lamp B are on at the same time should equal the sum of the consumption measured when each lamp is operated individually.
+
+## 9. Inklusions- und Teilmengen-Relationen (Datenbank-Logik)
+
+Diese sind besonders für die IoT-Datenverarbeitung im DT relevant.
+
+Abfrage-Inklusion: Wenn du die Durchschnittstemperatur für das ganze Gebäude abfragst, muss der Datensatz alle Werte enthalten, die auch in einer Abfrage für nur einzelne Stockwerke erscheinen.
+
+Sensor-Redundanz: Wenn ein DT Daten von 10 Temperatursensoren in einer Halle mittelt, darf das Entfernen eines einzelnen Sensors den Mittelwert nur innerhalb eines statistisch erwartbaren Rahmens verändern; die Richtung der Änderung muss plausibel zur Messung des entfernten Sensors sein.

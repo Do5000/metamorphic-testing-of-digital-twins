@@ -1,5 +1,6 @@
 import pytest
 import pytest_asyncio
+import inspect
 from .core import DigitalTwinAdapter, LiveValueMonitor
 
 @pytest_asyncio.fixture(scope="function")
@@ -36,3 +37,52 @@ async def wait_dt(wait_time):
     async def _wait():
         await asyncio.sleep(wait_time)
     return _wait
+
+async def _call_lifecycle_hook(func, adapter, wait_dt):
+    sig = inspect.signature(func)
+    kwargs = {}
+    if "dt_adapter" in sig.parameters: kwargs["dt_adapter"] = adapter
+    if "wait_dt" in sig.parameters: kwargs["wait_dt"] = wait_dt
+    
+    if inspect.iscoroutinefunction(func):
+        await func(**kwargs)
+    else:
+        func(**kwargs)
+
+@pytest_asyncio.fixture(scope="module", autouse=True)
+async def dt_module_hooks(request):
+    """Handles beforeAll and afterAll once per test file."""
+    # Setup dependencies for module-scope
+    adapter = DigitalTwinAdapter()
+    wait_time = request.config.getoption("--wait-time")
+    async def _wait():
+        await asyncio.sleep(wait_time)
+
+    # Execute beforeAll
+    if hasattr(request.module, "beforeAll"):
+        await _call_lifecycle_hook(request.module.beforeAll, adapter, _wait)
+        await _wait() # Automatically wait after beforeAll
+
+    yield # Let all tests in the module run
+
+    # Execute afterAll
+    if hasattr(request.module, "afterAll"):
+        await _call_lifecycle_hook(request.module.afterAll, adapter, _wait)
+        await _wait()
+        
+    await adapter.close()
+
+@pytest_asyncio.fixture(scope="function", autouse=True)
+async def dt_function_hooks(request, dt_adapter, wait_dt):
+    """Handles beforeEach and afterEach around every test."""
+    
+    # Execute beforeEach
+    if hasattr(request.module, "beforeEach"):
+        await _call_lifecycle_hook(request.module.beforeEach, dt_adapter, wait_dt)
+        await wait_dt() # Automatically wait after beforeEach
+    yield # Let the individual test run
+
+    # Execute afterEach
+    if hasattr(request.module, "afterEach"):
+        await _call_lifecycle_hook(request.module.afterEach, dt_adapter, wait_dt)
+        await wait_dt()
