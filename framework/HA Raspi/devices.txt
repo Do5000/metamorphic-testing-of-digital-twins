@@ -1,8 +1,8 @@
-switch.steckdose_ecke_fernseher
+switch.fernseher_ecke_steckdose
 light.vintage_lampe
 light.schreibtisch_lampe
 
-switch.steckdose_bad_oben
+switch.bad_oben_steckdose
 switch.steckdose_dorian
 light.amelie_lampe
 

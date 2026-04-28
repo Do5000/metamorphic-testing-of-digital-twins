@@ -97,19 +97,24 @@ class DigitalTwinAdapter:
             }
         return data
         
-    async def get_feature_value(self, device_id, feature_name):
+    async def get_feature_value(self, device_id, feature_name, silent=False):
         """Return the value from cache if available, otherwise fetch from HTTP."""
+        val = None
         if device_id in self._cache and feature_name in self._cache[device_id]:
-            return self._cache[device_id][feature_name]
+            val = self._cache[device_id][feature_name]
+        else:
+            # Fallback to HTTP and populate cache
+            device = await self.get_state(device_id)
+            if 'features' in device and feature_name in device['features']:
+                val = device['features'][feature_name]['properties']['value']
         
-        # Fallback to HTTP and populate cache
-        device = await self.get_state(device_id)
-        if 'features' in device and feature_name in device['features']:
-            return device['features'][feature_name]['properties']['value']
-        return None
+        if not silent:
+            print(f"      [ACTION] Query {device_id} -> {feature_name}: {val}")
+        return val
 
     async def set_feature_value(self, device_id, feature_name, value):
         """Sends a command via WebSocket."""
+        print(f"      [ACTION] {device_id} -> set {feature_name} = {value}")
         ws = await self._get_ws()
         msg = {
             "topic": f"{UT_TENANT}/{device_id}/things/live/messages/{feature_name}",
@@ -128,11 +133,12 @@ class LiveValueMonitor:
     Background worker that polls a sensor value and logs it during the test.
     Helps identify timing issues or signal noise.
     """
-    def __init__(self, adapter, device_id, feature_name, interval=1.0):
+    def __init__(self, adapter, device_id, feature_name, interval=1.0, verbose=False):
         self.adapter = adapter
         self.device_id = device_id
         self.feature_name = feature_name
         self.interval = interval
+        self.verbose = verbose
         self.history = []
         self._stop_event = asyncio.Event()
         self._task = None
@@ -140,11 +146,12 @@ class LiveValueMonitor:
     async def _run(self):
         start_time = asyncio.get_event_loop().time()
         while not self._stop_event.is_set():
-            val = await self.adapter.get_feature_value(self.device_id, self.feature_name)
+            val = await self.adapter.get_feature_value(self.device_id, self.feature_name, silent=True)
             elapsed = asyncio.get_event_loop().time() - start_time
             self.history.append((elapsed, val))
             # Optional: Live printing of progression
-            print(f"      [LIVE MONITOR] {self.device_id} @ {elapsed:4.1f}s: {val}")
+            if self.verbose:
+                print(f"      [LIVE MONITOR] {self.device_id} @ {elapsed:4.1f}s: {val}")
             try:
                 await asyncio.wait_for(self._stop_event.wait(), timeout=self.interval)
             except asyncio.TimeoutError:

@@ -16,10 +16,13 @@ async def beforeEach(dt_adapter):
 @pytest.mark.asyncio
 @pytest.mark.mr(type="monotonicity")
 async def test_light_sensor_monotony(dt_adapter, live_monitor, wait_dt):
-    actuator = "light.vintage_lampe"
+    # Arrange
+    actuator = "light.schreibtisch_lampe"
     sensor = "sensor.arbeitsplatz_helligkeit"
     sensor_feature = "state"
-    
+
+
+    # Act
     # --- Source Test Case ---
     await dt_adapter.set_feature_value(actuator, "state", "off")
     async with live_monitor(sensor, sensor_feature):
@@ -31,8 +34,9 @@ async def test_light_sensor_monotony(dt_adapter, live_monitor, wait_dt):
     async with live_monitor(sensor, sensor_feature):
         await wait_dt()
     followup_val = float(await dt_adapter.get_feature_value(sensor, sensor_feature))
-    
-    assert followup_val >= source_val, f"Monotony broken: {followup_val} < {source_val}"
+
+    # Assert
+    return source_val, followup_val
 
 
 async def afterAll(dt_adapter):

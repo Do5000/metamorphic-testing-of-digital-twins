@@ -14,15 +14,16 @@ async def dt_adapter():
     await adapter.close()
 
 @pytest.fixture(scope="function")
-def live_monitor(dt_adapter):
+def live_monitor(request, dt_adapter):
     """
     Provides a factory to create LiveValueMonitor instances.
     Usage:
         async with live_monitor(device_id, feature_name):
             await asyncio.sleep(10)
     """
+    verbose = request.config.getoption("--monitor")
     def _create_monitor(device_id, feature_name, interval=1.0):
-        return LiveValueMonitor(dt_adapter, device_id, feature_name, interval=interval)
+        return LiveValueMonitor(dt_adapter, device_id, feature_name, interval=interval, verbose=verbose)
     return _create_monitor
 
 import asyncio

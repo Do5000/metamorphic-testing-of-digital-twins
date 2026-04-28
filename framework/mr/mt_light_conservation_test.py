@@ -11,26 +11,17 @@ async def beforeAll(dt_adapter):
     await dt_adapter.set_feature_value("light.vintage_lampe", "state", "off")
     
 
-async def beforeEach(dt_adapter):
-    print("\n[HOOK] beforeEach: Ensuring baseline state before test")
-    
-    
-
-async def afterEach(dt_adapter):
-    print("\n[HOOK] afterEach: Cleaning up after test")
-
 async def afterAll(dt_adapter):
     print("\n[HOOK] afterAll: Tearing down digital twin environment")
     await dt_adapter.set_feature_value("automation.wohnzimmer_ein ", "state", "on")
     await dt_adapter.set_feature_value("automation.wohnzimmer_aus ", "state", "on")
 
 @pytest.mark.asyncio
-@pytest.mark.mr(type="conservation")
+@pytest.mark.mr(type="conservation", tolerance=0.05)
 async def test_light_sensor_conservation(dt_adapter, live_monitor, wait_dt):
-    a1_id, a2_id = "light.vintage_lampe", "switch.fernseher_ecke_steckdose "
+    a1_id, a2_id = "light.schreibtisch_lampe", "light.vintage_lampe "
     feat1, feat2 = "state", "state"
     s_id, s_feat = "sensor.arbeitsplatz_helligkeit", "state"
-    delta = 100
     
 
     # Source
@@ -47,6 +38,4 @@ async def test_light_sensor_conservation(dt_adapter, live_monitor, wait_dt):
         await wait_dt()
     followup_out = float(await dt_adapter.get_feature_value(s_id, s_feat))
     
-    diff = abs(source_out - followup_out)
-    max_allowed = max(max(source_out, followup_out), 1) * 0.15 #TODO: make this relative to the input values
-    assert diff <= max_allowed, f"Conservation broken: {source_out} vs {followup_out}"
+    return source_out, followup_out
