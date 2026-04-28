@@ -106,6 +106,47 @@ class RaspiHomeAssistant(EndpointMQTTandHTTP):
         else:
             print(f"[!] FEHLER beim Schalten: {response.status_code} - {response.text}")
 
+    def sync_from_ha(self, ditto_mock):
+        """ Holt alle aktuellen Zustände von HA und registriert sie im Ditto-Mock """
+        print(f"[*] Synchronisiere alle Entitäten von Home Assistant ({RASPI_IP})...")
+        try:
+            response = requests.get(
+                f'http://{RASPI_IP}:{RASPI_HTTP_PORT}/api/states',
+                headers={
+                    'Authorization': RASPI_HA_TOKEN,
+                    'Content-Type': 'application/json'
+                },
+                timeout=10
+            )
+            if response.status_code == 200:
+                entities = response.json()
+                for e in entities:
+                    e_id = e['entity_id']
+                    # Wir überspringen interne HA-Entitäten, die meist nicht relevant sind
+                    if e_id.startswith(('sun.', 'person.', 'zone.', 'automation.', 'scene.')):
+                        continue
+                        
+                    state = e['state']
+                    # Konvertiere HA-Zustand (on/off) in Hono-Format (1/0)
+                    vals = self.parse_to_hono({'state': state})
+                    
+                    # Zusatz-Attribute (Brightness, Position etc.)
+                    attrs = e.get('attributes', {})
+                    if 'brightness' in attrs:
+                        vals.update(self.parse_to_hono({'brightness': attrs['brightness']}))
+                    if 'current_position' in attrs:
+                        vals['position'] = attrs['current_position']
+                    
+                    # Im Mock registrieren
+                    for param, val in vals.items():
+                        ditto_mock.set_feature(e_id, param, val)
+                
+                print(f"[+] {len(entities)} Entitäten im Digitalen Zwilling initialisiert.")
+            else:
+                print(f"[!] Fehler beim Sync: Status {response.status_code}")
+        except Exception as e:
+            print(f"[!] Sync-Fehler: {e}")
+
 
 # ============================================================================== #
 #            FRAMEWORK BINDING (Exakt wie translationunit_mockbackend)           #
@@ -144,6 +185,9 @@ def main():
     
     app = ditto_mock.create_flask_app()
     Thread(target=run_ditto_mock_http_endpoint, args=(app,), daemon=True).start()
+    
+    # Synchronisiere alle Entitäten von HA VOR dem Start der Listener
+    raspi_ha.sync_from_ha(ditto_mock)
     
     print(f"[*] Verbinde mit Raspberry Pi MQTT Broker unter {RASPI_IP}:{RASPI_MQTT_PORT}...")
     raspi_ha.connect_mqtt()

@@ -64,3 +64,7 @@ Diese sind besonders für die IoT-Datenverarbeitung im DT relevant.
 Abfrage-Inklusion: Wenn du die Durchschnittstemperatur für das ganze Gebäude abfragst, muss der Datensatz alle Werte enthalten, die auch in einer Abfrage für nur einzelne Stockwerke erscheinen.
 
 Sensor-Redundanz: Wenn ein DT Daten von 10 Temperatursensoren in einer Halle mittelt, darf das Entfernen eines einzelnen Sensors den Mittelwert nur innerhalb eines statistisch erwartbaren Rahmens verändern; die Richtung der Änderung muss plausibel zur Messung des entfernten Sensors sein.
+
+## 10. Statistische Metamorphe Relationen (Noise Robustness)
+Problem: Sensoren rauschen. Ein absolut exakter Vergleich (==) schlägt oft fehl.
+Feature: Unterstützung für Relationen wie approximately_equal oder mean_invariant. Man prüft nicht einen Einzelwert, sondern ob der Mittelwert über 10 Sekunden stabil bleibt. Das macht MT im IoT-Bereich erst praxistauglich.

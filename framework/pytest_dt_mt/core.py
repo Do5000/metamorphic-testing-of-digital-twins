@@ -23,6 +23,24 @@ class DigitalTwinAdapter:
         self._cache = {} # {device_id: {feature_name: value}}
         self._listen_task = None
         self._stop_listen = asyncio.Event()
+        
+        # Load device catalog for validation
+        self.catalog = {}
+        if os.path.exists("device_catalog.json"):
+            with open("device_catalog.json", "r") as f:
+                self.catalog = json.load(f)
+
+    def validate_device(self, device_id):
+        """Strict validation: Fail the test if device_id is unknown."""
+        if not self.catalog:
+            # If no catalog exists, we just print a warning once but don't fail yet 
+            # (to allow first run or if user doesn't want catalog)
+            return
+        
+        if device_id not in self.catalog:
+            error_msg = f"\n[ERROR] Device '{device_id}' NOT FOUND in catalog!\n"
+            error_msg += f"Available devices: {', '.join(list(self.catalog.keys())[:10])}..."
+            raise AssertionError(error_msg)
 
     async def _get_ws(self):
         from websockets.protocol import State
@@ -99,6 +117,7 @@ class DigitalTwinAdapter:
         
     async def get_feature_value(self, device_id, feature_name, silent=False):
         """Return the value from cache if available, otherwise fetch from HTTP."""
+        self.validate_device(device_id)
         val = None
         if device_id in self._cache and feature_name in self._cache[device_id]:
             val = self._cache[device_id][feature_name]
@@ -114,6 +133,7 @@ class DigitalTwinAdapter:
 
     async def set_feature_value(self, device_id, feature_name, value):
         """Sends a command via WebSocket."""
+        self.validate_device(device_id)
         print(f"      [ACTION] {device_id} -> set {feature_name} = {value}")
         ws = await self._get_ws()
         msg = {

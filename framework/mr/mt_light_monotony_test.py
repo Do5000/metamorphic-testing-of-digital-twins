@@ -3,14 +3,14 @@ import asyncio
 
 async def beforeAll(dt_adapter):
     print("\n[HOOK] beforeAll: Setting up digital twin environment for the module")
-    await dt_adapter.set_feature_value("automation.wohnzimmer_ein ", "state", "off")
-    await dt_adapter.set_feature_value("automation.wohnzimmer_aus ", "state", "off")
+    # await dt_adapter.set_feature_value("automation.wohnzimmer_ein ", "state", "off")
+    # await dt_adapter.set_feature_value("automation.wohnzimmer_aus ", "state", "off")
 
 
 async def beforeEach(dt_adapter):
     print("\n[HOOK] beforeEach: Ensuring baseline state before test")
     await dt_adapter.set_feature_value("light.schreibtisch_lampe", "state", "off")
-    await dt_adapter.set_feature_value("switch.fernseher_ecke_steckdose ", "state", "off")
+    await dt_adapter.set_feature_value("switch.fernseher_ecke_steckdose", "state", "off")
     await dt_adapter.set_feature_value("light.vintage_lampe", "state", "off")
 
 @pytest.mark.asyncio
@@ -42,5 +42,5 @@ async def test_light_sensor_monotony(dt_adapter, live_monitor, wait_dt):
 async def afterAll(dt_adapter):
     print("\n[HOOK] afterAll: Ensuring baseline state before test")
     await dt_adapter.set_feature_value("light.schreibtisch_lampe", "state", "off")
-    await dt_adapter.set_feature_value("switch.steckdose_ecke_fernseher", "state", "off")
+    await dt_adapter.set_feature_value("switch.fernseher_ecke_steckdose", "state", "off")
     await dt_adapter.set_feature_value("light.vintage_lampe", "state", "off")
