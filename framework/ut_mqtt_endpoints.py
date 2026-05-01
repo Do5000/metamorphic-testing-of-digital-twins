@@ -142,6 +142,10 @@ class Homeassistant(EndpointMQTTandHTTP):
             vals['state'] = 'on' if parse(int, vals['state'], 0) == 1 else 'off'
         if 'brightness' in vals:
             vals['brightness'] = parse(float, vals['brightness'], 0) * 255
+        if 'current_position' in vals:
+            vals['current_position'] = int(parse(float, vals['current_position'], 0) * 100)
+        if 'current_tilt_position' in vals:
+            vals['current_tilt_position'] = int(parse(float, vals['current_tilt_position'], 0) * 100)
         return vals
 
     def parse_to_hono(self, vals):
@@ -149,6 +153,10 @@ class Homeassistant(EndpointMQTTandHTTP):
             vals['state'] = 1 if vals['state'] == 'on' else 0
         if 'brightness' in vals:
             vals['brightness'] = parse(float, vals['brightness'], 0) / 255.0
+        if 'current_position' in vals:
+            vals['current_position'] = parse(float, vals['current_position'], 0) / 100.0
+        if 'current_tilt_position' in vals:
+            vals['current_tilt_position'] = parse(float, vals['current_tilt_position'], 0) / 100.0
         return vals
 
     def send_value(self, device, param_values):
@@ -178,6 +186,10 @@ class Middleware(EndpointMQTTandHTTP):
             vals['state'] = 'on' if parse(int, vals['state'], 0) == 1 else 'off'
         if 'brightness' in vals:
             vals['brightness'] = parse(float, vals['brightness'], 0) * 255
+        if 'current_position' in vals:
+            vals['current_position'] = int(parse(float, vals['current_position'], 0) * 100)
+        if 'current_tilt_position' in vals:
+            vals['current_tilt_position'] = int(parse(float, vals['current_tilt_position'], 0) * 100)
         return vals
 
     def parse_to_hono(self, vals):
@@ -185,6 +197,10 @@ class Middleware(EndpointMQTTandHTTP):
             vals['state'] = 1 if vals['state'] == 'on' else 0
         if 'brightness' in vals:
             vals['brightness'] = parse(float, vals['brightness'], 0) / 255.0
+        if 'current_position' in vals:
+            vals['current_position'] = parse(float, vals['current_position'], 0) / 100.0
+        if 'current_tilt_position' in vals:
+            vals['current_tilt_position'] = parse(float, vals['current_tilt_position'], 0) / 100.0
 
         return vals
 
