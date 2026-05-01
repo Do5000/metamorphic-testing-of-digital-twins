@@ -8,7 +8,7 @@ import re
 
 # Append parent dir so ut_helpers can be imported easily
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from ut_helpers import UT_TENANT, DITTO_USER, DITTO_PW
+from ut_params import UT_TENANT, DITTO_USER, DITTO_PW
 
 class DigitalTwinAdapter:
     """
