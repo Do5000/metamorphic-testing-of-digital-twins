@@ -25,24 +25,26 @@ def pytest_collection_modifyitems(items):
     for item in items:
         marker = item.get_closest_marker("mr")
         if marker:
-            original_obj = item.obj
-            mr_type = marker.kwargs.get("type")
-            tolerance = marker.kwargs.get("tolerance", 0.0)
+            item.obj = wrap_mr_test(item.obj, marker)
 
-            if inspect.iscoroutinefunction(original_obj):
-                @functools.wraps(original_obj)
-                async def wrapped_test(*args, **kwargs):
-                    result = await original_obj(*args, **kwargs)
-                    validate_mr_result(result, mr_type, tolerance)
-                    return result
-                item.obj = wrapped_test
-            else:
-                @functools.wraps(original_obj)
-                def wrapped_test(*args, **kwargs):
-                    result = original_obj(*args, **kwargs)
-                    validate_mr_result(result, mr_type, tolerance)
-                    return result
-                item.obj = wrapped_test
+def wrap_mr_test(original_obj, marker):
+    mr_type = marker.kwargs.get("type")
+    tolerance = marker.kwargs.get("tolerance", 0.0)
+
+    if inspect.iscoroutinefunction(original_obj):
+        @functools.wraps(original_obj)
+        async def wrapped_test(*args, **kwargs):
+            result = await original_obj(*args, **kwargs)
+            validate_mr_result(result, mr_type, tolerance)
+            return result
+        return wrapped_test
+    else:
+        @functools.wraps(original_obj)
+        def wrapped_test(*args, **kwargs):
+            result = original_obj(*args, **kwargs)
+            validate_mr_result(result, mr_type, tolerance)
+            return result
+        return wrapped_test
 
 def validate_mr_result(result, mr_type, tolerance):
     if result is None or not isinstance(result, (tuple, list)) or len(result) < 2:

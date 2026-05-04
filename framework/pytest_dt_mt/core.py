@@ -32,9 +32,8 @@ class DigitalTwinAdapter:
 
     def validate_device(self, device_id):
         """Strict validation: Fail the test if device_id is unknown."""
+        device_id = device_id.strip()
         if not self.catalog:
-            # If no catalog exists, we just print a warning once but don't fail yet 
-            # (to allow first run or if user doesn't want catalog)
             return
         
         if device_id not in self.catalog:
@@ -117,6 +116,7 @@ class DigitalTwinAdapter:
         
     async def get_feature_value(self, device_id, feature_name, silent=False):
         """Return the value from cache if available, otherwise fetch from HTTP."""
+        device_id = device_id.strip()
         self.validate_device(device_id)
         val = None
         if device_id in self._cache and feature_name in self._cache[device_id]:
@@ -133,6 +133,7 @@ class DigitalTwinAdapter:
 
     async def set_feature_value(self, device_id, feature_name, value):
         """Sends a command via WebSocket."""
+        device_id = device_id.strip()
         self.validate_device(device_id)
         print(f"      [ACTION] {device_id} -> set {feature_name} = {value}")
         ws = await self._get_ws()

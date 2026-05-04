@@ -59,31 +59,42 @@ async def dt_module_hooks(request):
     async def _wait():
         await asyncio.sleep(wait_time)
 
-    # Execute beforeAll
-    if hasattr(request.module, "beforeAll"):
-        await _call_lifecycle_hook(request.module.beforeAll, adapter, _wait)
-        await _wait() # Automatically wait after beforeAll
+    try:
+        # Execute beforeAll
+        if hasattr(request.module, "beforeAll"):
+            await _call_lifecycle_hook(request.module.beforeAll, adapter, _wait)
+            await _wait() # Automatically wait after beforeAll
 
-    yield # Let all tests in the module run
+        yield # Let all tests in the module run
 
-    # Execute afterAll
-    if hasattr(request.module, "afterAll"):
-        await _call_lifecycle_hook(request.module.afterAll, adapter, _wait)
-        await _wait()
-        
-    await adapter.close()
+    finally:
+        # Execute afterAll
+        if hasattr(request.module, "afterAll"):
+            try:
+                await _call_lifecycle_hook(request.module.afterAll, adapter, _wait)
+                await _wait()
+            except Exception as e:
+                print(f"\n[ERROR] Error in afterAll hook: {e}")
+            
+        await adapter.close()
 
 @pytest_asyncio.fixture(scope="function", autouse=True)
 async def dt_function_hooks(request, dt_adapter, wait_dt):
     """Handles beforeEach and afterEach around every test."""
     
-    # Execute beforeEach
-    if hasattr(request.module, "beforeEach"):
-        await _call_lifecycle_hook(request.module.beforeEach, dt_adapter, wait_dt)
-        await wait_dt() # Automatically wait after beforeEach
-    yield # Let the individual test run
+    try:
+        # Execute beforeEach
+        if hasattr(request.module, "beforeEach"):
+            await _call_lifecycle_hook(request.module.beforeEach, dt_adapter, wait_dt)
+            await wait_dt() # Automatically wait after beforeEach
+        
+        yield # Let the individual test run
 
-    # Execute afterEach
-    if hasattr(request.module, "afterEach"):
-        await _call_lifecycle_hook(request.module.afterEach, dt_adapter, wait_dt)
-        await wait_dt()
+    finally:
+        # Execute afterEach
+        if hasattr(request.module, "afterEach"):
+            try:
+                await _call_lifecycle_hook(request.module.afterEach, dt_adapter, wait_dt)
+                await wait_dt()
+            except Exception as e:
+                print(f"\n[ERROR] Error in afterEach hook: {e}")
