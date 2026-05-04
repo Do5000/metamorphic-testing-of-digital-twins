@@ -1,0 +1,45 @@
+esphome:
+  name: arbeitsplatz-sensor
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: ESP32C3
+  framework:
+    type: esp-idf
+
+# WLAN, API und OTA komplett entfernen!
+# Wir nutzen nur den Logger für die USB-Ausgabe.
+logger:
+  baud_rate: 115200
+  hardware_uart: USB_SERIAL_JTAG
+
+sensor:
+  - platform: dht
+    pin: GPIO4
+    model: DHT11
+    temperature:
+      name: "Temperatur"
+      # Dieser Teil schreibt den Wert alle 30s in den USB-Stream
+      on_value:
+        then:
+          - logger.log:
+              format: "VALUE_TEMP:%.1f"
+              args: [ 'x' ]
+    humidity:
+      name: "Luftfeuchtigkeit"
+      on_value:
+        then:
+          - logger.log:
+              format: "VALUE_HUM:%.0f"
+              args: [ 'x' ]
+
+  - platform: adc
+    pin: GPIO1
+    name: "Helligkeit"
+    update_interval: 10s
+    attenuation: 12db
+    on_value:
+      then:
+        - logger.log:
+            format: "VALUE_LUX:%.2f"
+            args: [ 'x' ]
