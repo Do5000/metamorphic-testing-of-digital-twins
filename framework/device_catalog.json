@@ -76,6 +76,34 @@
         ],
         "attributes": {}
     },
+    "automation.wohnzimmer_ein": {
+        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_ein",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.wohnzimmer_aus": {
+        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_aus",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.schlafzimmer_ein": {
+        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_ein",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.schlafzimmer_aus": {
+        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_aus",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
     "sensor.sun_next_dawn": {
         "full_id": "at.uibk.ut.tenants:sensor.sun_next_dawn",
         "features": [
@@ -455,6 +483,13 @@
     },
     "update.advanced_ssh_web_terminal_update": {
         "full_id": "at.uibk.ut.tenants:update.advanced_ssh_web_terminal_update",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "update.esphome_device_builder_update": {
+        "full_id": "at.uibk.ut.tenants:update.esphome_device_builder_update",
         "features": [
             "state"
         ],

@@ -29,6 +29,9 @@ Always: source venv/bin/activate in /framework!!!!
 
     pytest mr/ -v -s --wait-time=5.0 --monitor     (all tests)
 
+    pytest tests/test_home_lab.py -v -s --wait-time=5.0 --monitor 
+    pytest tests/test_living_lab.py -v -s --wait-time=5.0 --monitor 
+
     
 
 
