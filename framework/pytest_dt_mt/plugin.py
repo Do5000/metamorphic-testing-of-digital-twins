@@ -34,6 +34,7 @@ def wrap_mr_test(original_obj, marker):
     if inspect.iscoroutinefunction(original_obj):
         @functools.wraps(original_obj)
         async def wrapped_test(*args, **kwargs):
+            __tracebackhide__ = True
             result = await original_obj(*args, **kwargs)
             validate_mr_result(result, mr_type, tolerance)
             return result
@@ -41,12 +42,14 @@ def wrap_mr_test(original_obj, marker):
     else:
         @functools.wraps(original_obj)
         def wrapped_test(*args, **kwargs):
+            __tracebackhide__ = True
             result = original_obj(*args, **kwargs)
             validate_mr_result(result, mr_type, tolerance)
             return result
         return wrapped_test
 
 def validate_mr_result(result, mr_type, tolerance):
+    __tracebackhide__ = True
     if result is None or not isinstance(result, (tuple, list)) or len(result) < 2:
         return
 
@@ -54,7 +57,7 @@ def validate_mr_result(result, mr_type, tolerance):
 
     if mr_type == "monotonicity":
         if not (followup_val >= source_val):
-            raise AssertionError(f"Metamorphic Relation (Monotonicity) failed: {followup_val} is not >= {source_val}")
+            pytest.fail(f"Metamorphic Relation (Monotonicity) failed: {followup_val} is not >= {source_val}", pytrace=False)
         print(f"\n      [MR CHECK] Monotonicity PASSED: {followup_val} >= {source_val}")
         
     elif mr_type == "invariance":
@@ -63,7 +66,7 @@ def validate_mr_result(result, mr_type, tolerance):
         allowed = tolerance if tolerance > 1.0 else max_val * tolerance
         
         if diff > allowed:
-            raise AssertionError(f"Metamorphic Relation (Invariance) failed: {followup_val} vs {source_val} (diff {diff} > allowed {allowed})")
+            pytest.fail(f"Metamorphic Relation (Invariance) failed: {followup_val} vs {source_val} (diff {diff} > allowed {allowed})", pytrace=False)
         print(f"\n      [MR CHECK] Invariance PASSED: {followup_val} approx {source_val} (diff {diff} <= {allowed})")
 
     elif mr_type == "conservation":
@@ -72,7 +75,7 @@ def validate_mr_result(result, mr_type, tolerance):
         allowed = tolerance if tolerance > 1.0 else max_val * tolerance
         
         if diff > allowed:
-            raise AssertionError(f"Metamorphic Relation (Conservation) failed: {followup_val} vs {source_val} (diff {diff} > allowed {allowed})")
+            pytest.fail(f"Metamorphic Relation (Conservation) failed: {followup_val} vs {source_val} (diff {diff} > allowed {allowed})", pytrace=False)
         print(f"\n      [MR CHECK] Conservation PASSED: {followup_val} approx {source_val} (diff {diff} <= {allowed})")
 
 
