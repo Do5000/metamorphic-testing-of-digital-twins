@@ -2,10 +2,13 @@ import pytest
 import asyncio
 import functools
 import inspect
+import os
+import datetime
 
 def pytest_addoption(parser):
     parser.addoption("--wait-time", action="store", default=30.0, type=float, help="Global wait time in seconds for physical simulation")
     parser.addoption("--monitor", action="store_true", help="Enable live printing of sensor values during tests")
+    parser.addoption("--log", action="store_true", help="Enable detailed logging into a session-based folder")
 
 def pytest_configure(config):
     """
@@ -84,3 +87,52 @@ def pytest_runtest_makereport(item, call):
     Custom reporting hook. Can be used to inject additional MT-specific output.
     """
     pass
+
+def pytest_terminal_summary(terminalreporter, exitstatus, config):
+    """
+    Creates a single structured log file for the entire test session if --log is enabled.
+    """
+    if not config.getoption("--log"):
+        return
+
+    # Create base directory
+    log_dir = "test_reports"
+    try:
+        os.makedirs(log_dir, exist_ok=True)
+    except Exception as e:
+        print(f"\n[ERROR] Could not create log directory {log_dir}: {e}")
+        return
+
+    # Create a unique filename for the session
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    file_path = os.path.join(log_dir, f"report_{timestamp}.log")
+    
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(f"{'='*80}\n")
+        f.write(f" METAMORPHIC TESTING SESSION REPORT - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"{'='*80}\n\n")
+        
+        # Process all outcomes
+        for outcome in ["passed", "failed", "error"]:
+            reports = terminalreporter.stats.get(outcome, [])
+            for rep in reports:
+                f.write(f"[{outcome.upper()}] {rep.nodeid}\n")
+                
+                if rep.capstdout:
+                    f.write("--- Captured Output ---\n")
+                    f.write(rep.capstdout)
+                    f.write("\n")
+                
+                if outcome != "passed":
+                    f.write("--- Error Details ---\n")
+                    f.write(str(rep.longrepr))
+                    f.write("\n")
+                
+                f.write("-" * 80 + "\n")
+
+        # Session Summary
+        passed = len(terminalreporter.stats.get('passed', []))
+        failed = len(terminalreporter.stats.get('failed', []))
+        f.write(f"\nTOTAL RESULT: {passed} PASSED, {failed} FAILED\n")
+
+    print(f"\n[INFO] Session report created: {file_path}")
