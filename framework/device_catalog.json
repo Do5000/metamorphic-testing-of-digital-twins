@@ -1,4 +1,11 @@
 {
+    "conversation.home_assistant": {
+        "full_id": "at.uibk.ut.tenants:conversation.home_assistant",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
     "update.home_assistant_supervisor_update": {
         "full_id": "at.uibk.ut.tenants:update.home_assistant_supervisor_update",
         "features": [
@@ -8,6 +15,13 @@
     },
     "update.home_assistant_core_update": {
         "full_id": "at.uibk.ut.tenants:update.home_assistant_core_update",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "update.home_assistant_operating_system_update": {
+        "full_id": "at.uibk.ut.tenants:update.home_assistant_operating_system_update",
         "features": [
             "state"
         ],
@@ -27,15 +41,43 @@
         ],
         "attributes": {}
     },
-    "update.home_assistant_operating_system_update": {
-        "full_id": "at.uibk.ut.tenants:update.home_assistant_operating_system_update",
+    "update.mosquitto_broker_update": {
+        "full_id": "at.uibk.ut.tenants:update.mosquitto_broker_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
-    "conversation.home_assistant": {
-        "full_id": "at.uibk.ut.tenants:conversation.home_assistant",
+    "update.spotify_connect_update": {
+        "full_id": "at.uibk.ut.tenants:update.spotify_connect_update",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "update.grafana_update": {
+        "full_id": "at.uibk.ut.tenants:update.grafana_update",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "update.advanced_ssh_web_terminal_update": {
+        "full_id": "at.uibk.ut.tenants:update.advanced_ssh_web_terminal_update",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "update.esphome_device_builder_update": {
+        "full_id": "at.uibk.ut.tenants:update.esphome_device_builder_update",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "update.file_editor_update": {
+        "full_id": "at.uibk.ut.tenants:update.file_editor_update",
         "features": [
             "state"
         ],
@@ -71,34 +113,6 @@
     },
     "sensor.backup_last_attempted_automatic_backup": {
         "full_id": "at.uibk.ut.tenants:sensor.backup_last_attempted_automatic_backup",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.wohnzimmer_ein": {
-        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_ein",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.wohnzimmer_aus": {
-        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_aus",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.schlafzimmer_ein": {
-        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_ein",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.schlafzimmer_aus": {
-        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_aus",
         "features": [
             "state"
         ],
@@ -146,15 +160,64 @@
         ],
         "attributes": {}
     },
-    "tts.google_ubersetzer_en_com_google_translate_en_com": {
-        "full_id": "at.uibk.ut.tenants:tts.google_ubersetzer_en_com_google_translate_en_com",
+    "automation.wohnzimmer_ein": {
+        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_ein",
         "features": [
             "state"
         ],
         "attributes": {}
     },
-    "binary_sensor.rpi_power_status": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.rpi_power_status",
+    "automation.wohnzimmer_aus": {
+        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_aus",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.schlafzimmer_ein": {
+        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_ein",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.schlafzimmer_aus": {
+        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_aus",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.wohnzimmer_ein_2": {
+        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_ein_2",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.wohnzimmer_ein_3": {
+        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_ein_3",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.wohnzimmer_ein_4": {
+        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_ein_4",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.wohnzimmer_on": {
+        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_on",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "weather.forecast_home": {
+        "full_id": "at.uibk.ut.tenants:weather.forecast_home",
         "features": [
             "state"
         ],
@@ -162,6 +225,13 @@
     },
     "device_tracker.iphone_von_dorian": {
         "full_id": "at.uibk.ut.tenants:device_tracker.iphone_von_dorian",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "notify.iphone_von_dorian": {
+        "full_id": "at.uibk.ut.tenants:notify.iphone_von_dorian",
         "features": [
             "state"
         ],
@@ -265,6 +335,20 @@
         ],
         "attributes": {}
     },
+    "binary_sensor.rpi_power_status": {
+        "full_id": "at.uibk.ut.tenants:binary_sensor.rpi_power_status",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "tts.google_ubersetzer_en_com_google_translate_en_com": {
+        "full_id": "at.uibk.ut.tenants:tts.google_ubersetzer_en_com_google_translate_en_com",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
     "sensor.bett_batterie": {
         "full_id": "at.uibk.ut.tenants:sensor.bett_batterie",
         "features": [
@@ -286,15 +370,15 @@
         ],
         "attributes": {}
     },
-    "switch.vintage_steckdose": {
-        "full_id": "at.uibk.ut.tenants:switch.vintage_steckdose",
+    "switch.schreibtisch_steckdose": {
+        "full_id": "at.uibk.ut.tenants:switch.schreibtisch_steckdose",
         "features": [
             "state"
         ],
         "attributes": {}
     },
-    "switch.schreibtisch_steckdose": {
-        "full_id": "at.uibk.ut.tenants:switch.schreibtisch_steckdose",
+    "switch.bad_oben_steckdose": {
+        "full_id": "at.uibk.ut.tenants:switch.bad_oben_steckdose",
         "features": [
             "state"
         ],
@@ -314,8 +398,8 @@
         ],
         "attributes": {}
     },
-    "switch.bad_oben_steckdose": {
-        "full_id": "at.uibk.ut.tenants:switch.bad_oben_steckdose",
+    "switch.vintage_steckdose": {
+        "full_id": "at.uibk.ut.tenants:switch.vintage_steckdose",
         "features": [
             "state"
         ],
@@ -323,48 +407,6 @@
     },
     "switch.tretakt": {
         "full_id": "at.uibk.ut.tenants:switch.tretakt",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "button.amelie_lampe_identify": {
-        "full_id": "at.uibk.ut.tenants:button.amelie_lampe_identify",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "light.amelie_lampe": {
-        "full_id": "at.uibk.ut.tenants:light.amelie_lampe",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.amelie_lampe_thread_status": {
-        "full_id": "at.uibk.ut.tenants:sensor.amelie_lampe_thread_status",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.amelie_lampe_thread_capabilities": {
-        "full_id": "at.uibk.ut.tenants:sensor.amelie_lampe_thread_capabilities",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "weather.forecast_home": {
-        "full_id": "at.uibk.ut.tenants:weather.forecast_home",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.mosquitto_broker_update": {
-        "full_id": "at.uibk.ut.tenants:update.mosquitto_broker_update",
         "features": [
             "state"
         ],
@@ -402,8 +444,37 @@
         ],
         "attributes": {}
     },
-    "button.vintage_lampe_identify": {
-        "full_id": "at.uibk.ut.tenants:button.vintage_lampe_identify",
+    "media_player.bose_amelie": {
+        "full_id": "at.uibk.ut.tenants:media_player.bose_amelie",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "light.schreibtisch_lampe": {
+        "full_id": "at.uibk.ut.tenants:light.schreibtisch_lampe",
+        "features": [
+            "brightness",
+            "state"
+        ],
+        "attributes": {}
+    },
+    "button.schreibtisch_lampe_identify": {
+        "full_id": "at.uibk.ut.tenants:button.schreibtisch_lampe_identify",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "sensor.schreibtisch_lampe_thread_capabilities": {
+        "full_id": "at.uibk.ut.tenants:sensor.schreibtisch_lampe_thread_capabilities",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "sensor.schreibtisch_lampe_thread_status": {
+        "full_id": "at.uibk.ut.tenants:sensor.schreibtisch_lampe_thread_status",
         "features": [
             "state"
         ],
@@ -413,6 +484,13 @@
         "full_id": "at.uibk.ut.tenants:light.vintage_lampe",
         "features": [
             "brightness",
+            "state"
+        ],
+        "attributes": {}
+    },
+    "button.vintage_lampe_identify": {
+        "full_id": "at.uibk.ut.tenants:button.vintage_lampe_identify",
+        "features": [
             "state"
         ],
         "attributes": {}
@@ -431,65 +509,52 @@
         ],
         "attributes": {}
     },
-    "button.schreibtisch_lampe_identify": {
-        "full_id": "at.uibk.ut.tenants:button.schreibtisch_lampe_identify",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "light.schreibtisch_lampe": {
-        "full_id": "at.uibk.ut.tenants:light.schreibtisch_lampe",
+    "light.amelie_lampe": {
+        "full_id": "at.uibk.ut.tenants:light.amelie_lampe",
         "features": [
             "brightness",
             "state"
         ],
         "attributes": {}
     },
-    "sensor.schreibtisch_lampe_thread_status": {
-        "full_id": "at.uibk.ut.tenants:sensor.schreibtisch_lampe_thread_status",
+    "button.amelie_lampe_identify": {
+        "full_id": "at.uibk.ut.tenants:button.amelie_lampe_identify",
         "features": [
             "state"
         ],
         "attributes": {}
     },
-    "sensor.schreibtisch_lampe_thread_capabilities": {
-        "full_id": "at.uibk.ut.tenants:sensor.schreibtisch_lampe_thread_capabilities",
+    "sensor.amelie_lampe_thread_capabilities": {
+        "full_id": "at.uibk.ut.tenants:sensor.amelie_lampe_thread_capabilities",
         "features": [
             "state"
         ],
         "attributes": {}
     },
-    "media_player.bose_amelie": {
-        "full_id": "at.uibk.ut.tenants:media_player.bose_amelie",
+    "sensor.amelie_lampe_thread_status": {
+        "full_id": "at.uibk.ut.tenants:sensor.amelie_lampe_thread_status",
         "features": [
             "state"
         ],
         "attributes": {}
     },
-    "update.spotify_connect_update": {
-        "full_id": "at.uibk.ut.tenants:update.spotify_connect_update",
+    "sensor.arbeitsplatz_helligkeit_2": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_helligkeit_2",
+        "features": [
+            "config",
+            "state"
+        ],
+        "attributes": {}
+    },
+    "sensor.arbeitsplatz_temperatur_2": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_temperatur_2",
         "features": [
             "state"
         ],
         "attributes": {}
     },
-    "update.grafana_update": {
-        "full_id": "at.uibk.ut.tenants:update.grafana_update",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.advanced_ssh_web_terminal_update": {
-        "full_id": "at.uibk.ut.tenants:update.advanced_ssh_web_terminal_update",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.esphome_device_builder_update": {
-        "full_id": "at.uibk.ut.tenants:update.esphome_device_builder_update",
+    "sensor.arbeitsplatz_luftfeuchtigkeit_2": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_luftfeuchtigkeit_2",
         "features": [
             "state"
         ],

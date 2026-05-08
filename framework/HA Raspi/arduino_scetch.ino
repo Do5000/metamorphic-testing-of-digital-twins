@@ -32,11 +32,13 @@ void loop() {
     lastDHTReadTime = currentMillis;
     
     int brightness = analogRead(A0);
+    int brightness2 = analogRead(A1);
     float humidity = dht.readHumidity();
     float temperature = dht.readTemperature();
     
     if (!isnan(humidity) && !isnan(temperature)) {
       Serial.print("{\"light\":"); Serial.print(brightness);
+      Serial.print(",\"light2\":"); Serial.print(brightness2);
       Serial.print(",\"temp\":"); Serial.print(temperature);
       Serial.print(",\"hum\":"); Serial.print(humidity);
       Serial.println("}");

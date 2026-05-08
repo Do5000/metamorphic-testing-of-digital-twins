@@ -30,6 +30,7 @@
 
 
 ## 5. Inclusion (Inclusive Relation)
+- S5: Integration eines neuen Sensors (wenn die helligkeit im Raum steigt (gemessen durch vorhandene Sensoren, muss der der neue Sensor aehnliche Werte messen))
 - **The concept:** The result of a computation on a subset must be consistent with the result on the complete set (e.g., the complete set must contain the results of the subset or be greater than or equal in value).
 - **Example in the Living Lab:**  
   You query the energy consumption.  
@@ -57,14 +58,6 @@
   This property only partially applies physically for light (due to light superposition), but it can apply to energy consumption.  
   The measured power consumption when lamp A and lamp B are on at the same time should equal the sum of the consumption measured when each lamp is operated individually.
 
-## 9. Inklusions- und Teilmengen-Relationen (Datenbank-Logik)
-
-Diese sind besonders für die IoT-Datenverarbeitung im DT relevant.
-
-Abfrage-Inklusion: Wenn du die Durchschnittstemperatur für das ganze Gebäude abfragst, muss der Datensatz alle Werte enthalten, die auch in einer Abfrage für nur einzelne Stockwerke erscheinen.
-
-Sensor-Redundanz: Wenn ein DT Daten von 10 Temperatursensoren in einer Halle mittelt, darf das Entfernen eines einzelnen Sensors den Mittelwert nur innerhalb eines statistisch erwartbaren Rahmens verändern; die Richtung der Änderung muss plausibel zur Messung des entfernten Sensors sein.
-
-## 10. Statistische Metamorphe Relationen (Noise Robustness)
+## 9. Consistency (Noise Robustness)
 Problem: Sensoren rauschen. Ein absolut exakter Vergleich (==) schlägt oft fehl.
 Feature: Unterstützung für Relationen wie approximately_equal oder mean_invariant. Man prüft nicht einen Einzelwert, sondern ob der Mittelwert über 10 Sekunden stabil bleibt. Das macht MT im IoT-Bereich erst praxistauglich.

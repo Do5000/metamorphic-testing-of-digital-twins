@@ -46,6 +46,14 @@ client.publish("homeassistant/sensor/arbeitsplatz_helligkeit/config", json.dumps
     "unique_id": "arduino_ldr_01"
 }), retain=True)
 
+client.publish("homeassistant/sensor/arbeitsplatz_helligkeit_2/config", json.dumps({
+    "name": "Arbeitsplatz Helligkeit 2",
+    "state_topic": "homeassistant/sensor/arbeitsplatz_helligkeit_2/state",
+    "unit_of_measurement": "lx",
+    "device_class": "illuminance",
+    "unique_id": "arduino_ldr_02"
+}), retain=True)
+
 client.publish("homeassistant/sensor/arbeitsplatz_temperatur/config", json.dumps({
     "name": "Arbeitsplatz Temperatur",
     "state_topic": "homeassistant/sensor/arbeitsplatz_temperatur/state",
@@ -87,6 +95,8 @@ def reset_ir_sensor():
 # 2. Endlos-Schleife: USB Auslesen und an MQTT weitergeben
 print("Starte Sensor-Überwachung...")
 
+last_press_time = 0
+
 while True:
     try:
         # timeout=1 ist wichtig: readline() wartet bis zu 1 Sekunde auf Daten.
@@ -120,8 +130,10 @@ while True:
 
                         # Fall 2: Sensoren
                         elif "light" in data:
-                            print(f"Update -> L: {data['light']} | T: {data['temp']} | H: {data['hum']}")
+                            print(f"Update -> L1: {data['light']} | L2: {data.get('light2', 'N/A')} | T: {data['temp']} | H: {data['hum']}")
                             client.publish("homeassistant/sensor/arbeitsplatz_helligkeit/state", data["light"])
+                            if "light2" in data:
+                                client.publish("homeassistant/sensor/arbeitsplatz_helligkeit_2/state", data["light2"])
                             client.publish("homeassistant/sensor/arbeitsplatz_temperatur/state", data["temp"])
                             client.publish("homeassistant/sensor/arbeitsplatz_luftfeuchtigkeit/state", data["hum"])
 
