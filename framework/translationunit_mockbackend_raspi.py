@@ -153,7 +153,7 @@ class RaspiHomeAssistant(EndpointMQTTandHTTP):
 # ============================================================================== #
 logging.getLogger("werkzeug").setLevel(logging.ERROR)
 
-executor = ThreadPoolExecutor(max_workers=10)
+executor = ThreadPoolExecutor(max_workers=1)
 raspi_ha = RaspiHomeAssistant()
 ditto_mock = DittoWebSocket("0.0.0.0", 8082)
 

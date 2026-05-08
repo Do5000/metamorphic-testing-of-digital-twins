@@ -97,10 +97,10 @@ async def test_home_conservation(dt_adapter, live_monitor, wait_dt):
 
 
 async def afterAll(dt_adapter):
-    print("\n[HOOK] afterAll: Ensuring baseline state before test")
-    await dt_adapter.set_feature_value("light.vintage_lampe", "state", "off")
+    print("\n[HOOK] afterAll: Ensuring baseline state after test")
     await dt_adapter.set_feature_value("light.schreibtisch_lampe", "state", "off")
     await dt_adapter.set_feature_value("switch.fernseher_ecke_steckdose", "state", "off")
+    await dt_adapter.set_feature_value("light.vintage_lampe", "state", "off")
 
 
     await dt_adapter.set_feature_value("automation.wohnzimmer_ein", "state", "on")

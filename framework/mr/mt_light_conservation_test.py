@@ -39,7 +39,7 @@ async def test_conservation(dt_adapter, live_monitor, wait_dt):
     return source_out, followup_out
 
 async def afterAll(dt_adapter):
-    print("\n[HOOK] afterAll: Ensuring baseline state before test")
+    print("\n[HOOK] afterAll: Ensuring baseline state after test")
     await dt_adapter.set_feature_value("light.schreibtisch_lampe", "state", "off")
     await dt_adapter.set_feature_value("switch.fernseher_ecke_steckdose", "state", "off")
     await dt_adapter.set_feature_value("light.vintage_lampe", "state", "off")
