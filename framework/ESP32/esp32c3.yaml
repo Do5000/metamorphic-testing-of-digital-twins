@@ -1,0 +1,59 @@
+esphome:
+  name: esp-c3
+  friendly_name: esp-c3
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  hardware_uart: USB_SERIAL_JTAG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "cq37xKSBdiCuZBHRjgFCkxzsz/ZfbOlwaqjKds4Woz8="
+
+ota:
+  - platform: esphome
+    password: "26fccb5f376dc6a469dd7f30c083e4d8"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  power_save_mode: NONE
+  fast_connect: true
+
+  output_power: 8.5dB
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp-C3 Fallback Hotspot"
+    password: "nMuQWaMm1WVE"
+
+captive_portal:
+
+sensor:
+  # DHT11 an GPIO4 (nicht 1!)
+  - platform: dht
+    pin: GPIO4
+    model: DHT11
+    temperature:
+      name: "Temperatur"
+    humidity:
+      name: "Luftfeuchtigkeit"
+    update_interval: 60s
+
+  # LDR an GPIO3
+  - platform: adc
+    pin: GPIO3
+    name: "Helligkeit"
+    update_interval: 1s
+    attenuation: 11db
+    unit_of_measurement: "V"
+
+
+
