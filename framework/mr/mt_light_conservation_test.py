@@ -18,7 +18,7 @@ async def test_conservation(dt_adapter, live_monitor, wait_dt):
     # Arrange
     a1_id, a2_id = "light.schreibtisch_lampe", "light.vintage_lampe"
     feat1, feat2 = "state", "state"
-    s_id, s_feat = "sensor.arbeitsplatz_helligkeit", "state"
+    s_id, s_feat = "sensor.esp_c3_helligkeit", "state"
 
     # Act
     # --- Source Test Case ---

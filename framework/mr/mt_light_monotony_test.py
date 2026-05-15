@@ -19,7 +19,7 @@ async def test_monotony(dt_adapter, live_monitor, wait_dt):
     actuator = "light.schreibtisch_lampe"
     actuator_feature = "state"
 
-    sensor = "sensor.arbeitsplatz_helligkeit"
+    sensor = "sensor.esp_c3_helligkeit"
     sensor_feature = "state"
 
     # Act

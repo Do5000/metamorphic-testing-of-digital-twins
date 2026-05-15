@@ -6,6 +6,8 @@ import logging
 
 from ut_ditto_mock import DittoWebSocket
 from ut_mqtt_endpoints import EndpointMQTTandHTTP, parse
+import websockets
+import asyncio
 
 # ============================================================================== #
 #                       EIGENE KONFIGURATION (RASPBERRY PI)                      #
@@ -147,6 +149,73 @@ class RaspiHomeAssistant(EndpointMQTTandHTTP):
         except Exception as e:
             print(f"[!] Sync-Fehler: {e}")
 
+class HAWebSocketListener:
+    """
+    Hört direkt auf den Home Assistant Websocket, um Echtzeit-Updates zu erhalten.
+    Dies ist robuster als MQTT Statestream, da es keine extra Konfiguration in HA benötigt.
+    """
+    def __init__(self, ip, token, ditto_mock, raspi_ha):
+        self.ip = ip
+        # HA erwartet im Websocket nur den Token-String ohne "Bearer "
+        self.token = token.replace("Bearer ", "").strip()
+        self.ditto_mock = ditto_mock
+        self.raspi_ha = raspi_ha
+        self.loop = asyncio.new_event_loop()
+        self.thread = Thread(target=self._run_loop, daemon=True)
+
+    def _run_loop(self):
+        asyncio.set_event_loop(self.loop)
+        self.loop.run_until_complete(self._listen())
+
+    async def _listen(self):
+        url = f"ws://{self.ip}:8123/api/websocket"
+        while True:
+            try:
+                async with websockets.connect(url) as ws:
+                    # 1. Authentifizierung
+                    await ws.send(json.dumps({"type": "auth", "access_token": self.token}))
+                    
+                    # 2. Subscription auf alle Zustandsänderungen
+                    await ws.send(json.dumps({
+                        "id": 1,
+                        "type": "subscribe_events",
+                        "event_type": "state_changed"
+                    }))
+                    
+                    print(f"[*] HA Websocket: Verbunden und abonniert ({self.ip})")
+                    
+                    async for msg in ws:
+                        data = json.loads(msg)
+                        if data.get("type") == "event":
+                            event_data = data.get("event", {}).get("data", {})
+                            entity_id = event_data.get("entity_id")
+                            new_state = event_data.get("new_state")
+                            
+                            if entity_id and new_state:
+                                # Wir ignorieren wieder interne HA-Entitäten
+                                if entity_id.startswith(('sun.', 'person.', 'zone.', 'scene.')):
+                                    continue
+                                    
+                                state = new_state.get("state")
+                                attrs = new_state.get("attributes", {})
+                                
+                                # In das Hono/Ditto Format konvertieren
+                                vals = self.raspi_ha.parse_to_hono({"state": state})
+                                if "brightness" in attrs:
+                                    vals.update(self.raspi_ha.parse_to_hono({"brightness": attrs["brightness"]}))
+                                if "current_position" in attrs:
+                                    vals["position"] = attrs["current_position"]
+                                
+                                # Im Mock aktualisieren
+                                for param, val in vals.items():
+                                    self.ditto_mock.set_feature(entity_id, param, val)
+            except Exception as e:
+                print(f"[!] HA Websocket Fehler: {e}. Reconnect in 5s...")
+                await asyncio.sleep(5)
+
+    def start(self):
+        self.thread.start()
+
 
 # ============================================================================== #
 #            FRAMEWORK BINDING (Exakt wie translationunit_mockbackend)           #
@@ -188,6 +257,10 @@ def main():
     
     # Synchronisiere alle Entitäten von HA VOR dem Start der Listener
     raspi_ha.sync_from_ha(ditto_mock)
+    
+    # Starte den Websocket Listener für Echtzeit-Updates von HA
+    ha_ws = HAWebSocketListener(RASPI_IP, RASPI_HA_TOKEN, ditto_mock, raspi_ha)
+    ha_ws.start()
     
     print(f"[*] Verbinde mit Raspberry Pi MQTT Broker unter {RASPI_IP}:{RASPI_MQTT_PORT}...")
     raspi_ha.connect_mqtt()

@@ -20,7 +20,7 @@ async def test_home_monotony(dt_adapter, live_monitor, wait_dt):
     actuator = "light.schreibtisch_lampe"
     actuator_feature = "state"
 
-    sensor = "sensor.arbeitsplatz_helligkeit"
+    sensor = "sensor.esp_c3_helligkeit"
     sensor_feature = "state"
 
     # Act
@@ -45,7 +45,7 @@ async def test_home_monotony(dt_adapter, live_monitor, wait_dt):
 async def test_home_invariance(dt_adapter, live_monitor, wait_dt):
     # Arrange
     a_id, a_feat = "light.schreibtisch_lampe", "state"
-    s_id, s_feat = "sensor.arbeitsplatz_helligkeit", "state"
+    s_id, s_feat = "sensor.esp_c3_helligkeit", "state"
 
     # Act
     # --- Source Test Case ---
@@ -75,7 +75,7 @@ async def test_home_conservation(dt_adapter, live_monitor, wait_dt):
     # Arrange
     a1_id, a2_id = "light.schreibtisch_lampe", "light.vintage_lampe"
     feat1, feat2 = "state", "state"
-    s_id, s_feat = "sensor.arbeitsplatz_helligkeit", "state"
+    s_id, s_feat = "sensor.esp_c3_helligkeit", "state"
 
     # Act
     # --- Source Test Case ---

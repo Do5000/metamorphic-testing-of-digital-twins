@@ -18,7 +18,7 @@ async def beforeEach(dt_adapter):
 async def test_invariance(dt_adapter, live_monitor, wait_dt):
     # Arrange
     a_id, a_feat = "light.schreibtisch_lampe", "state"
-    s_id, s_feat = "sensor.arbeitsplatz_helligkeit", "state"
+    s_id, s_feat = "sensor.esp_c3_helligkeit", "state"
 
     # Act
     # --- Source Test Case ---

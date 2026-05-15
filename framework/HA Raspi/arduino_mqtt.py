@@ -125,17 +125,17 @@ while True:
                                 btn_name = ELEGOO_MAP.get(hex_val, f"UNKNOWN_{hex_val}")
 
                                 print(f"🔘 Taste: {btn_name}")
-                                client.publish("homeassistant/sensor/arbeitsplatz_fernbedienung/state", btn_name)
+                                client.publish("homeassistant/sensor/arbeitsplatz_fernbedienung/state", btn_name, retain=True)
                                 threading.Timer(0.5, reset_ir_sensor).start()
 
                         # Fall 2: Sensoren
                         elif "light" in data:
                             print(f"Update -> L1: {data['light']} | L2: {data.get('light2', 'N/A')} | T: {data['temp']} | H: {data['hum']}")
-                            client.publish("homeassistant/sensor/arbeitsplatz_helligkeit/state", data["light"])
+                            client.publish("homeassistant/sensor/arbeitsplatz_helligkeit/state", data["light"], retain=True)
                             if "light2" in data:
-                                client.publish("homeassistant/sensor/arbeitsplatz_helligkeit_2/state", data["light2"])
-                            client.publish("homeassistant/sensor/arbeitsplatz_temperatur/state", data["temp"])
-                            client.publish("homeassistant/sensor/arbeitsplatz_luftfeuchtigkeit/state", data["hum"])
+                                client.publish("homeassistant/sensor/arbeitsplatz_helligkeit_2/state", data["light2"], retain=True)
+                            client.publish("homeassistant/sensor/arbeitsplatz_temperatur/state", data["temp"], retain=True)
+                            client.publish("homeassistant/sensor/arbeitsplatz_luftfeuchtigkeit/state", data["hum"], retain=True)
 
                     except json.JSONDecodeError:
                         pass  # Kaputtes JSON ignorieren
