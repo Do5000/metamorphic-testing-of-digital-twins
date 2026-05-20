@@ -6,6 +6,12 @@ import os
 import datetime
 import json
 
+from pytest_dt_mt.relations import monotonicity
+from pytest_dt_mt.relations import invariance
+from pytest_dt_mt.relations import conservation
+from pytest_dt_mt.relations import proportionality
+from pytest_dt_mt.relations import substitution
+
 def pytest_addoption(parser):
     parser.addoption("--wait-time", action="store", default=30.0, type=float, help="Global wait time in seconds for physical simulation")
     parser.addoption("--monitor", action="store_true", help="Enable live printing of sensor values during tests")
@@ -18,8 +24,6 @@ def pytest_configure(config):
     config.addinivalue_line(
         "markers", "mr(type, tolerance): mark test as a Metamorphic Relation test"
     )
-
-
 
 def pytest_collection_modifyitems(items):
     """
@@ -49,99 +53,23 @@ def wrap_mr_test(original_obj, marker):
             return result
         return wrapped_test
 
-def _load_json_profile(file_path):
-    """Internal helper to load reference tables with robust path resolution."""
-    if os.path.exists(file_path):
-        full_path = file_path
-    else:
-        plugin_dir = os.path.dirname(os.path.abspath(__file__))
-        framework_dir = os.path.dirname(plugin_dir)
-        full_path = os.path.join(framework_dir, file_path)
-
-    if not os.path.exists(full_path):
-        return None
-    try:
-        with open(full_path, "r") as f:
-            return json.load(f)
-    except Exception:
-        return None
-
 def validate_mr_result(result, **kwargs):
     __tracebackhide__ = True
     if result is None or not isinstance(result, (tuple, list)) or len(result) < 2:
         return
 
     mr_type = kwargs.get("type")
-    tolerance = kwargs.get("tolerance", 0.0)
-    source_val, followup_val = result[0], result[1]
-
+    
     if mr_type == "monotonicity":
-        if not (followup_val >= source_val):
-            pytest.fail(f"Metamorphic Relation (Monotonicity) failed: {followup_val} is not >= {source_val}", pytrace=False)
-        print(f"\n      [MR CHECK] Monotonicity PASSED: {followup_val} >= {source_val}")
-        
+        monotonicity.validate(result, **kwargs)
     elif mr_type == "invariance":
-        diff = abs(followup_val - source_val)
-        max_val = max(abs(source_val), abs(followup_val), 1.0)
-        allowed = tolerance if tolerance > 1.0 else max_val * tolerance
-        
-        if diff > allowed:
-            pytest.fail(f"Metamorphic Relation (Invariance) failed: {followup_val} vs {source_val} (diff {diff} > allowed {allowed})", pytrace=False)
-        print(f"\n      [MR CHECK] Invariance PASSED: {followup_val} approx {source_val} (diff {diff} <= {allowed})")
-
+        invariance.validate(result, **kwargs)
     elif mr_type == "conservation":
-        diff = abs(followup_val - source_val)
-        max_val = max(abs(source_val), abs(followup_val), 1.0)
-        allowed = tolerance if tolerance > 1.0 else max_val * tolerance
-        
-        if diff > allowed:
-            pytest.fail(f"Metamorphic Relation (Conservation) failed: {followup_val} vs {source_val} (diff {diff} > allowed {allowed})", pytrace=False)
-        print(f"\n      [MR CHECK] Conservation PASSED: {followup_val} approx {source_val} (diff {diff} <= {allowed})")
-
+        conservation.validate(result, **kwargs)
     elif mr_type == "proportionality":
-        if len(result) < 4:
-            return # Requires 4 values: (source_main, followup_main, source_ref, followup_ref)
-            
-        s1, f1 = float(result[0]), float(result[1])
-        s2, f2 = float(result[2]), float(result[3])
-        
-        # Proportionality check: f1/s1 approx f2/s2
-        # Cross-multiply to avoid division by zero: f1 * s2 approx f2 * s1
-        diff = abs(f1 * s2 - f2 * s1)
-        norm = max(abs(s1 * s2), 1.0)
-        rel_diff = diff / norm
-        
-        if rel_diff > tolerance:
-            pytest.fail(f"Metamorphic Relation (Proportionality) failed: Sensor A ({s1}->{f1}) and Sensor B ({s2}->{f2}) inconsistent (rel_diff {rel_diff:.3f} > allowed {tolerance})", pytrace=False)
-        print(f"\n      [MR CHECK] Proportionality PASSED: Sensors A and B show consistent relative change (rel_diff {rel_diff:.3f} <= {tolerance})")
-
+        proportionality.validate(result, **kwargs)
     elif mr_type == "substitution":
-        # Expects result = (current_new_val, current_neighbor_val)
-        new_val, neighbor_val = float(result[0]), float(result[1])
-        
-        profile_path = kwargs.get("profile", "sensor_profile.json")
-        profile = _load_json_profile(profile_path)
-        
-        if profile is None:
-            pytest.fail(f"Metamorphic Relation (Substitution) failed: Reference profile '{profile_path}' not found or invalid.", pytrace=False)
-            
-        # Find best match in table based on neighbor sensor
-        try:
-            best_match = min(profile, key=lambda x: abs(x["neighbor_sensor"] - neighbor_val))
-            historic_old_val = best_match["old_sensor"]
-            match_ref_val = best_match["neighbor_sensor"]
-        except (KeyError, TypeError):
-            pytest.fail(f"Metamorphic Relation (Substitution) failed: Profile format invalid (missing 'neighbor_sensor' or 'old_sensor').", pytrace=False)
-
-        diff = abs(new_val - historic_old_val)
-        max_val = max(abs(historic_old_val), abs(new_val), 1.0)
-        allowed = tolerance if tolerance > 1.0 else max_val * tolerance
-        
-        if diff > allowed:
-            pytest.fail(f"Metamorphic Relation (Substitution) failed: New sensor {new_val} vs Historical old sensor {historic_old_val} (Matched by neighbor {neighbor_val} approx {match_ref_val} | diff {diff} > allowed {allowed})", pytrace=False)
-        
-        print(f"\n      [MR CHECK] Substitution PASSED: New sensor {new_val} matches Historical entry {historic_old_val} (Neighbor match: {neighbor_val} approx {match_ref_val})")
-
+        substitution.validate(result, **kwargs)
 
 def pytest_runtest_makereport(item, call):
     """
