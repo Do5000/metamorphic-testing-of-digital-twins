@@ -4,6 +4,36 @@ async def beforeAll(dt_adapter):
     print("\n[HOOK] beforeAll: Setting up digital twin environment for the module")
     await dt_adapter.set_feature_value("automation.wohnzimmer_ein", "state", "off")
     await dt_adapter.set_feature_value("automation.wohnzimmer_aus", "state", "off")
+    
+    await dt_adapter.measure_latency(
+        actuator="light.schreibtisch_lampe",
+        actuator_feature="state",
+        val_off="off",
+        val_on="on",
+        sensor="sensor.esp_c3_helligkeit",
+        sensor_feature="state",
+        min_change_percent=0.10,
+        tolerance_factor = 1.1,
+        add_seconds = 0,
+        timeout = 3.0,
+        runs = 5
+    )
+
+    await dt_adapter.set_feature_value("light.schreibtisch_lampe", "state", "off")
+
+    await dt_adapter.measure_latency(
+        actuator="light.vintage_lampe",
+        actuator_feature="state",
+        val_off="off",
+        val_on="on",
+        sensor="sensor.esp_c3_helligkeit",
+        sensor_feature="state",
+        min_change_percent=0.10,
+        tolerance_factor = 1.1,
+        add_seconds = 0,
+        timeout = 3.0,
+        runs = 5
+    )
 
 
 async def beforeEach(dt_adapter):
