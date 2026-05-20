@@ -11,6 +11,7 @@ from pytest_dt_mt.relations import invariance
 from pytest_dt_mt.relations import conservation
 from pytest_dt_mt.relations import proportionality
 from pytest_dt_mt.relations import substitution
+from pytest_dt_mt.relations import stability
 
 def pytest_addoption(parser):
     parser.addoption("--wait-time", action="store", default=30.0, type=float, help="Global wait time in seconds for physical simulation")
@@ -41,7 +42,20 @@ def wrap_mr_test(original_obj, marker):
         async def wrapped_test(*args, **kwargs):
             __tracebackhide__ = True
             result = await original_obj(*args, **kwargs)
-            validate_mr_result(result, **marker.kwargs)
+            
+            # Find dt_adapter
+            dt_adapter = None
+            for arg in args:
+                if hasattr(arg, "get_feature_value"):
+                    dt_adapter = arg
+                    break
+            if not dt_adapter:
+                for k, v in kwargs.items():
+                    if hasattr(v, "get_feature_value"):
+                        dt_adapter = v
+                        break
+                        
+            await validate_mr_result(result, dt_adapter=dt_adapter, **marker.kwargs)
             return result
         return wrapped_test
     else:
@@ -49,17 +63,37 @@ def wrap_mr_test(original_obj, marker):
         def wrapped_test(*args, **kwargs):
             __tracebackhide__ = True
             result = original_obj(*args, **kwargs)
-            validate_mr_result(result, **marker.kwargs)
+            
+            # Find dt_adapter
+            dt_adapter = None
+            for arg in args:
+                if hasattr(arg, "get_feature_value"):
+                    dt_adapter = arg
+                    break
+            if not dt_adapter:
+                for k, v in kwargs.items():
+                    if hasattr(v, "get_feature_value"):
+                        dt_adapter = v
+                        break
+                        
+            # Run the async validator synchronously in fallback
+            loop = asyncio.get_event_loop()
+            loop.run_until_complete(validate_mr_result(result, dt_adapter=dt_adapter, **marker.kwargs))
             return result
         return wrapped_test
 
-def validate_mr_result(result, **kwargs):
+async def validate_mr_result(result, dt_adapter=None, **kwargs):
     __tracebackhide__ = True
-    if result is None or not isinstance(result, (tuple, list)) or len(result) < 2:
-        return
-
     mr_type = kwargs.get("type")
     
+    if mr_type == "stability":
+        await stability.validate(result, dt_adapter=dt_adapter, **kwargs)
+        return
+
+    # Non-stability relations require a tuple/list of at least 2 elements:
+    if result is None or not isinstance(result, (tuple, list)) or len(result) < 2:
+        return
+        
     if mr_type == "monotonicity":
         monotonicity.validate(result, **kwargs)
     elif mr_type == "invariance":

@@ -203,3 +203,58 @@ async def test_wait_dt_fixture_integration():
     # Assert it waited roughly 0.05 seconds
     assert 0.04 <= elapsed <= 0.15
     print(f"\n[TEST SUCCESS] wait_dt successfully waited {elapsed:.3f}s based on the module-specific latency of 0.05s")
+
+@pytest.mark.asyncio
+async def test_stability_relation_validation():
+    from pytest_dt_mt.relations import stability
+    
+    # 1. Test Success Case: fluctuation stays within tolerance
+    adapter = DigitalTwinAdapter()
+    
+    # Mock get_feature_value to return slightly fluctuating values
+    vals = [10.0, 10.5, 9.8, 10.2, 10.0]
+    idx = 0
+    async def mock_get_val(device_id, feature_name, silent=True):
+        nonlocal idx
+        val = vals[idx % len(vals)]
+        idx += 1
+        return val
+        
+    adapter.get_feature_value = mock_get_val
+    
+    # This should pass (max 10.5 - min 9.8 = 0.7 <= tolerance 10% of ~10 = 1.0)
+    await stability.validate(
+        result=None,
+        dt_adapter=adapter,
+        sensor="sensor.test",
+        sensor_feature="state",
+        tolerance=0.10,
+        duration=0.5
+    )
+    print("\n[TEST SUCCESS] Stability passed within tolerance.")
+    
+    # 2. Test Failure Case: fluctuation exceeds tolerance
+    adapter_unstable = DigitalTwinAdapter()
+    
+    unstable_vals = [10.0, 12.5, 9.0, 10.2, 10.0]
+    idx_unstable = 0
+    async def mock_get_unstable_val(device_id, feature_name, silent=True):
+        nonlocal idx_unstable
+        val = unstable_vals[idx_unstable % len(unstable_vals)]
+        idx_unstable += 1
+        return val
+        
+    adapter_unstable.get_feature_value = mock_get_unstable_val
+    
+    # This should fail (max 12.5 - min 9.0 = 3.5 > tolerance 10% of ~10 = 1.0)
+    with pytest.raises(pytest.fail.Exception) as exc_info:
+        await stability.validate(
+            result=None,
+            dt_adapter=adapter_unstable,
+            sensor="sensor.test",
+            sensor_feature="state",
+            tolerance=0.10,
+            duration=0.5
+        )
+    assert "fluctuated too much" in str(exc_info.value)
+    print("[TEST SUCCESS] Stability failed correctly when exceeding tolerance.")
