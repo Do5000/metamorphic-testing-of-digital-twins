@@ -568,5 +568,47 @@
             "config"
         ],
         "attributes": {}
+    },
+    "automation.sonnenuntergang": {
+        "full_id": "at.uibk.ut.tenants:automation.sonnenuntergang",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.sonnenaufgang_aktivieren": {
+        "full_id": "at.uibk.ut.tenants:automation.sonnenaufgang_aktivieren",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.nach_sonnenuntergang": {
+        "full_id": "at.uibk.ut.tenants:automation.nach_sonnenuntergang",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.nach_sonnenaufgang": {
+        "full_id": "at.uibk.ut.tenants:automation.nach_sonnenaufgang",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "script.sonnenaufgang": {
+        "full_id": "at.uibk.ut.tenants:script.sonnenaufgang",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "script.sonnenuntergang": {
+        "full_id": "at.uibk.ut.tenants:script.sonnenuntergang",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
     }
 }

@@ -125,7 +125,7 @@ class RaspiHomeAssistant(EndpointMQTTandHTTP):
                 for e in entities:
                     e_id = e['entity_id']
                     # Wir überspringen interne HA-Entitäten, die meist nicht relevant sind
-                    if e_id.startswith(('sun.', 'person.', 'zone.', 'scene.')):
+                    if e_id.startswith(('person.', 'zone.')):
                         continue
                         
                     state = e['state']
@@ -193,7 +193,7 @@ class HAWebSocketListener:
                             
                             if entity_id and new_state:
                                 # Wir ignorieren wieder interne HA-Entitäten
-                                if entity_id.startswith(('sun.', 'person.', 'zone.', 'scene.')):
+                                if entity_id.startswith(('person.', 'zone.')):
                                     continue
                                     
                                 state = new_state.get("state")
