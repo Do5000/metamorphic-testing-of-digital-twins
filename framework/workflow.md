@@ -38,8 +38,11 @@ Always: source venv/bin/activate in /framework!!!!
 ## Workflow Raspi Lab
 
     1) python3 ./translationunit_mockbackend_raspi.py
-    2) python3 ./HA\ Raspi/arduino_mqtt.py  
-    3) python3 ./discover_catalog.py
-    4) see all connected devices in device_catalog.json or http://localhost:8083/api/2/search/things
+    2) python3 ./discover_catalog.py
+    3) see all connected devices in device_catalog.json or http://localhost:8083/api/2/search/things
+
+## Workflow Substitution Relation
+
+    1) 
 
     

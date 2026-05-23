@@ -6,8 +6,16 @@ async def validate(result, dt_adapter=None, **kwargs):
     if dt_adapter is None:
         pytest.fail("Metamorphic Relation (Stability) failed: dt_adapter is not available to measure sensor.", pytrace=False)
 
-    sensor = kwargs.get("sensor")
-    sensor_feature = kwargs.get("sensor_feature", "state")
+    if isinstance(result, tuple) and len(result) >= 1:
+        sensor = result[0]
+        sensor_feature = result[1] if len(result) >= 2 else kwargs.get("sensor_feature", "state")
+    elif isinstance(result, str):
+        sensor = result
+        sensor_feature = kwargs.get("sensor_feature", "state")
+    else:
+        sensor = kwargs.get("sensor")
+        sensor_feature = kwargs.get("sensor_feature", "state")
+
     tolerance = kwargs.get("tolerance")
     duration = kwargs.get("duration", 5.0)
     

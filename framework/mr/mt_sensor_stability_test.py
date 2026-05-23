@@ -14,9 +14,7 @@ async def beforeEach(dt_adapter):
 @pytest.mark.mr(
     type="stability",
     tolerance=0.05,              # allowed fluctuation range (5% of average value)
-    duration=15.0,               # measurement duration in seconds
-    sensor="sensor.esp_c3_helligkeit",
-    sensor_feature="state"
+    duration=15.0                # measurement duration in seconds
 )
 async def test_sensor_stability(dt_adapter, live_monitor, wait_dt):
     # Act: Ensure light is OFF (so light sensor should be stable in dark room)
@@ -25,8 +23,8 @@ async def test_sensor_stability(dt_adapter, live_monitor, wait_dt):
     # Wait for the system to settle before stability check begins
     await wait_dt()
     
-    # Return dummy value (or current value) since MR type="stability" handles measurement automatically
-    return None
+    # Return the sensor and feature to be measured by the stability relation
+    return "sensor.esp_c3_helligkeit", "state"
 
 async def afterAll(dt_adapter, wait_dt):
     print("\n[HOOK] afterAll: Restoring state")

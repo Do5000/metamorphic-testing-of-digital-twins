@@ -114,7 +114,19 @@ def pytest_runtest_makereport(item, call):
 def pytest_terminal_summary(terminalreporter, exitstatus, config):
     """
     Creates a single structured log file for the entire test session if --log is enabled.
+    Also prints the measured latencies for each module clearly to the console.
     """
+    from pytest_dt_mt.fixtures import _MODULE_WAIT_DT
+    
+    if _MODULE_WAIT_DT:
+        terminalreporter.write_sep("=", "LATENCY CALIBRATION SUMMARY", bold=True, yellow=True)
+        for module_name, latency in _MODULE_WAIT_DT.items():
+            if latency is not None:
+                terminalreporter.write_line(f"  - Module '{module_name}': {latency:.3f}s")
+            else:
+                terminalreporter.write_line(f"  - Module '{module_name}': Default wait time")
+        terminalreporter.write_line("")
+
     if not config.getoption("--log"):
         return
 
@@ -157,5 +169,16 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
         passed = len(terminalreporter.stats.get('passed', []))
         failed = len(terminalreporter.stats.get('failed', []))
         f.write(f"\nTOTAL RESULT: {passed} PASSED, {failed} FAILED\n")
+        
+        if _MODULE_WAIT_DT:
+            f.write(f"\n{'='*80}\n")
+            f.write(f" LATENCY CALIBRATION SUMMARY\n")
+            f.write(f"{'='*80}\n")
+            for module_name, latency in _MODULE_WAIT_DT.items():
+                if latency is not None:
+                    f.write(f"  - Module '{module_name}': {latency:.3f}s\n")
+                else:
+                    f.write(f"  - Module '{module_name}': Default wait time\n")
+            f.write("\n")
 
     print(f"\n[INFO] Session report created: {file_path}")

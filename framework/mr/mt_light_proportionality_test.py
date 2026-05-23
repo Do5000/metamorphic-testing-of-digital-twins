@@ -16,8 +16,8 @@ async def test_light_proportionality(dt_adapter, wait_dt):
     Checks if both illuminance sensors react proportionally when the desk lamp is turned on.
     Expects 4 return values: (S1, F1, S2, F2)
     """
-    sensor1_id = "sensor.arbeitsplatz_helligkeit"
-    sensor2_id = "sensor.arbeitsplatz_helligkeit_2"
+    sensor1_id = "sensor.esp_c3_helligkeit"
+    sensor2_id = "sensor.esp_c6_helligkeit"
     
     # 1. Source State: Baseline readings
     s1 = await dt_adapter.get_feature_value(sensor1_id, "state")

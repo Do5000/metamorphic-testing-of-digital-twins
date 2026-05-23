@@ -29,7 +29,7 @@
   Whether you turn on lamp A first and then lamp B, or lamp B first and then lamp A, the final result (the measured total brightness in the room) must be identical.
 
 
-## 5. Inclusion (Inclusive Relation)
+## 5. Proportional
 - S5: Integration eines neuen Sensors (wenn die helligkeit im Raum steigt (gemessen durch vorhandene Sensoren, muss der der neue Sensor aehnliche Werte messen))
 - **The concept:** The result of a computation on a subset must be consistent with the result on the complete set (e.g., the complete set must contain the results of the subset or be greater than or equal in value).
 - **Example in the Living Lab:**  
@@ -61,3 +61,7 @@
 ## 9. Consistency (Noise Robustness)
 Problem: Sensoren rauschen. Ein absolut exakter Vergleich (==) schlägt oft fehl.
 Feature: Unterstützung für Relationen wie approximately_equal oder mean_invariant. Man prüft nicht einen Einzelwert, sondern ob der Mittelwert über 10 Sekunden stabil bleibt. Das macht MT im IoT-Bereich erst praxistauglich.
+
+## 10. Substitution (Metamorphe Relation???)
+Problem: Wenn ein Sensor ausgetauscht wird. Moechte man ein Sensor einbauen, der auch in absoluten Werten ähnliche Werte liefert.
+Feature: Input: neuer Senor und Nachbarsensor Livedaten; historische daten mit verhaeltnis von alten sensor und nachbarsensor
