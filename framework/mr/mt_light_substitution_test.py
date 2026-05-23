@@ -11,8 +11,8 @@ async def test_sensor_substitution(dt_adapter, wait_dt):
     
     # ARRANGE      
     light_id = "light.schreibtisch_lampe"
-    new_sensor_id = "sensor.arbeitsplatz_helligkeit" 
-    neighbor_sensor_id = "sensor.arbeitsplatz_helligkeit_2"
+    new_sensor_id = "sensor.esp_c3_helligkeit"
+    neighbor_sensor_id = "sensor.esp_c6_helligkeit"
     
     # 1. ACT
     target_brightness = 50

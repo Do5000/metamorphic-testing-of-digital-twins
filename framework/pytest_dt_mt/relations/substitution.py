@@ -27,13 +27,18 @@ def _load_json_profile(file_path):
 def validate(result, **kwargs):
     __tracebackhide__ = True
     new_val, neighbor_val = float(result[0]), float(result[1])
-    
     tolerance = kwargs.get("tolerance", 0.0)
     profile_path = kwargs.get("profile", "sensor_profile.json")
-    profile = _load_json_profile(profile_path)
+    profile_data = _load_json_profile(profile_path)
     
-    if profile is None:
+    if profile_data is None:
         pytest.fail(f"Metamorphic Relation (Substitution) failed: Reference profile '{profile_path}' not found or invalid.", pytrace=False)
+        
+    # Handle dictionary structure vs old flat list structure
+    if isinstance(profile_data, dict):
+        profile = profile_data.get("profile", [])
+    else:
+        profile = profile_data
         
     # Find best match in table based on neighbor sensor
     try:

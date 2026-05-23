@@ -18,8 +18,8 @@ async def test_generate_sensor_profile(dt_adapter, wait_dt):
     """
     profile = []
     light_id = "light.schreibtisch_lampe"
-    sensor_old_id = "sensor.arbeitsplatz_helligkeit"
-    sensor_neighbor_id = "sensor.arbeitsplatz_helligkeit_2"
+    sensor_old_id = "sensor.esp_c3_helligkeit"
+    sensor_neighbor_id = "sensor.esp_c6_helligkeit"
     
     # Step through brightness levels (0 to 255)
     # We use smaller steps for a "lückenlose" table as requested
@@ -47,11 +47,18 @@ async def test_generate_sensor_profile(dt_adapter, wait_dt):
         })
         print(f"       Recorded -> Old: {val_old}, Neighbor: {val_neighbor}")
 
-    # Save the profile to a JSON file
+    # Save the profile to a JSON file with metadata
+    profile_data = {
+        "light_id": light_id,
+        "sensor_old_id": sensor_old_id,
+        "sensor_neighbor_id": sensor_neighbor_id,
+        "profile": profile
+    }
+
     output_file = "sensor_profile.json"
     with open(output_file, "w") as f:
-        json.dump(profile, f, indent=4)
-    
+        json.dump(profile_data, f, indent=4)
+
     print(f"\n[SUCCESS] Profile saved to {output_file}")
 
 async def afterAll(dt_adapter):

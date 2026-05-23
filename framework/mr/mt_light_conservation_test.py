@@ -9,6 +9,7 @@ async def beforeAll(dt_adapter):
 async def beforeEach(dt_adapter):
     print("\n[HOOK] beforeEach: Ensuring baseline state before test")
     await dt_adapter.set_feature_value("switch.fernseher_ecke_steckdose", "state", "off")
+    await dt_adapter.set_feature_value("light.amelie_lampe", "state", "off")
     await dt_adapter.set_feature_value("light.vintage_lampe", "state", "off")
     await dt_adapter.set_feature_value("light.schreibtisch_lampe", "state", "off")
 
@@ -16,7 +17,7 @@ async def beforeEach(dt_adapter):
 @pytest.mark.mr(type="conservation", tolerance=0.05)
 async def test_conservation(dt_adapter, live_monitor, wait_dt):
     # Arrange
-    a1_id, a2_id = "light.schreibtisch_lampe", "light.vintage_lampe"
+    a1_id, a2_id = "light.schreibtisch_lampe", "light.amelie_lampe"
     feat1, feat2 = "state", "state"
     s_id, s_feat = "sensor.esp_c3_helligkeit", "state"
 
@@ -42,6 +43,7 @@ async def afterAll(dt_adapter):
     print("\n[HOOK] afterAll: Ensuring baseline state after test")
     await dt_adapter.set_feature_value("light.schreibtisch_lampe", "state", "off")
     await dt_adapter.set_feature_value("switch.fernseher_ecke_steckdose", "state", "off")
+    await dt_adapter.set_feature_value("light.amelie_lampe", "state", "off")
     await dt_adapter.set_feature_value("light.vintage_lampe", "state", "off")
 
     await dt_adapter.set_feature_value("automation.wohnzimmer_ein ", "state", "on")

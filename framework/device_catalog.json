@@ -1,11 +1,4 @@
 {
-    "conversation.home_assistant": {
-        "full_id": "at.uibk.ut.tenants:conversation.home_assistant",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
     "update.home_assistant_supervisor_update": {
         "full_id": "at.uibk.ut.tenants:update.home_assistant_supervisor_update",
         "features": [
@@ -78,6 +71,13 @@
     },
     "update.file_editor_update": {
         "full_id": "at.uibk.ut.tenants:update.file_editor_update",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "conversation.home_assistant": {
+        "full_id": "at.uibk.ut.tenants:conversation.home_assistant",
         "features": [
             "state"
         ],
@@ -265,6 +265,13 @@
         ],
         "attributes": {}
     },
+    "media_player.bose_amelie_2": {
+        "full_id": "at.uibk.ut.tenants:media_player.bose_amelie_2",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
     "automation.wohnzimmer_ein": {
         "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_ein",
         "features": [
@@ -300,8 +307,22 @@
         ],
         "attributes": {}
     },
-    "media_player.bose_amelie_2": {
-        "full_id": "at.uibk.ut.tenants:media_player.bose_amelie_2",
+    "media_player.bose_amelie": {
+        "full_id": "at.uibk.ut.tenants:media_player.bose_amelie",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "binary_sensor.rpi_power_status": {
+        "full_id": "at.uibk.ut.tenants:binary_sensor.rpi_power_status",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "tts.google_ubersetzer_en_com_google_translate_en_com": {
+        "full_id": "at.uibk.ut.tenants:tts.google_ubersetzer_en_com_google_translate_en_com",
         "features": [
             "state"
         ],
@@ -309,13 +330,6 @@
     },
     "todo.einkaufsliste": {
         "full_id": "at.uibk.ut.tenants:todo.einkaufsliste",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "weather.forecast_home": {
-        "full_id": "at.uibk.ut.tenants:weather.forecast_home",
         "features": [
             "state"
         ],
@@ -384,27 +398,6 @@
         ],
         "attributes": {}
     },
-    "tts.google_ubersetzer_en_com_google_translate_en_com": {
-        "full_id": "at.uibk.ut.tenants:tts.google_ubersetzer_en_com_google_translate_en_com",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "binary_sensor.rpi_power_status": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.rpi_power_status",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "media_player.bose_amelie": {
-        "full_id": "at.uibk.ut.tenants:media_player.bose_amelie",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
     "sensor.esp_c3_temperatur": {
         "full_id": "at.uibk.ut.tenants:sensor.esp_c3_temperatur",
         "features": [
@@ -421,6 +414,20 @@
     },
     "sensor.esp_c3_helligkeit": {
         "full_id": "at.uibk.ut.tenants:sensor.esp_c3_helligkeit",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "weather.forecast_home": {
+        "full_id": "at.uibk.ut.tenants:weather.forecast_home",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "button.schreibtisch_lampe_identify": {
+        "full_id": "at.uibk.ut.tenants:button.schreibtisch_lampe_identify",
         "features": [
             "state"
         ],
@@ -448,8 +455,8 @@
         ],
         "attributes": {}
     },
-    "button.schreibtisch_lampe_identify": {
-        "full_id": "at.uibk.ut.tenants:button.schreibtisch_lampe_identify",
+    "button.vintage_lampe_identify": {
+        "full_id": "at.uibk.ut.tenants:button.vintage_lampe_identify",
         "features": [
             "state"
         ],
@@ -477,8 +484,8 @@
         ],
         "attributes": {}
     },
-    "button.vintage_lampe_identify": {
-        "full_id": "at.uibk.ut.tenants:button.vintage_lampe_identify",
+    "button.amelie_lampe_identify": {
+        "full_id": "at.uibk.ut.tenants:button.amelie_lampe_identify",
         "features": [
             "state"
         ],
@@ -506,10 +513,59 @@
         ],
         "attributes": {}
     },
-    "button.amelie_lampe_identify": {
-        "full_id": "at.uibk.ut.tenants:button.amelie_lampe_identify",
+    "sensor.esp_c6_temperatur": {
+        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_temperatur",
         "features": [
             "state"
+        ],
+        "attributes": {}
+    },
+    "sensor.esp_c6_luftfeuchtigkeit": {
+        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_luftfeuchtigkeit",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "sensor.esp_c6_helligkeit": {
+        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_helligkeit",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "sensor.arbeitsplatz_helligkeit": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_helligkeit",
+        "features": [
+            "config"
+        ],
+        "attributes": {}
+    },
+    "sensor.arbeitsplatz_temperatur": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_temperatur",
+        "features": [
+            "config"
+        ],
+        "attributes": {}
+    },
+    "sensor.arbeitsplatz_luftfeuchtigkeit": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_luftfeuchtigkeit",
+        "features": [
+            "config"
+        ],
+        "attributes": {}
+    },
+    "sensor.arbeitsplatz_fernbedienung": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_fernbedienung",
+        "features": [
+            "config"
+        ],
+        "attributes": {}
+    },
+    "sensor.arbeitsplatz_helligkeit_2": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_helligkeit_2",
+        "features": [
+            "config"
         ],
         "attributes": {}
     }
