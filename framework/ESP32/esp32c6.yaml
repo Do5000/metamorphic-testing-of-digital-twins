@@ -1,0 +1,47 @@
+esphome:
+  name: esp-c6
+  friendly_name: esp-c6
+
+esp32:
+  board: esp32-c6-devkitc-1
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+  hardware_uart: USB_SERIAL_JTAG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "5bg5bb7YnqYIrVR+gRi22pFohMJPTB3+v12N54G2iO4="
+
+ota:
+  - platform: esphome
+    password: "c797eb0d171dd236a435f42d77f153d0"
+
+network:
+  enable_ipv6: true
+
+openthread:
+  device_type: FTD
+  tlv: 4a0300000b0e08000068eabf2b0000000300001935060004001fffc002085ec40dbcfcef454e0708fdc03878a70c000005101abc618e74702146dbc7e808e46ef5b1030f4d79486f6d6536373531313137363401021b600410aae4c27f7a93fca61209aeefdb6e24d70c0402a0f7f8
+
+sensor:
+  # DHT22 an GPIO20
+  - platform: dht
+    pin: GPIO20
+    model: DHT22
+    temperature:
+      name: "Temperatur"
+    humidity:
+      name: "Luftfeuchtigkeit"
+    update_interval: 60s
+
+  # LDR (Lichtsensor) an GPIO19
+  - platform: adc
+    pin: GPIO3
+    name: "Helligkeit"
+    update_interval: 1s
+    attenuation: 11db
+    unit_of_measurement: "V"
