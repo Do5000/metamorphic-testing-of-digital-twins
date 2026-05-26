@@ -1,15 +1,16 @@
-import pytest
+from .base import MetamorphicRelation, MetamorphicRelationError
 
-def validate(result, **kwargs):
-    __tracebackhide__ = True
-    tolerance = kwargs.get("tolerance", 0.0)
-    source_val, followup_val = result[0], result[1]
-    
-    diff = abs(followup_val - source_val)
-    max_val = max(abs(source_val), abs(followup_val), 1.0)
-    allowed = tolerance if tolerance > 1.0 else max_val * tolerance
-    
-    if diff > allowed:
-        pytest.fail(f"Metamorphic Relation (Invariance) failed: {followup_val} vs {source_val} (diff {diff} > allowed {allowed})", pytrace=False)
+class InvarianceRelation(MetamorphicRelation):
+    def evaluate(self, result, dt_adapter=None):
+        __tracebackhide__ = True
+        tolerance = self.kwargs.get("tolerance", 0.0)
+        source_val, followup_val = result[0], result[1]
         
-    print(f"\n      [MR CHECK] Invariance PASSED: {followup_val} approx {source_val} (diff {diff} <= {allowed})")
+        diff = abs(followup_val - source_val)
+        max_val = max(abs(source_val), abs(followup_val), 1.0)
+        allowed = tolerance if tolerance > 1.0 else max_val * tolerance
+        
+        if diff > allowed:
+            raise MetamorphicRelationError(f"Metamorphic Relation (Invariance) failed: {followup_val} vs {source_val} (diff {diff} > allowed {allowed})")
+            
+        print(f"\n      [MR CHECK] Invariance PASSED: {followup_val} approx {source_val} (diff {diff} <= {allowed})")

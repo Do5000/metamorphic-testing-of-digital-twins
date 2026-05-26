@@ -69,12 +69,16 @@ async def dt_module_hooks(request):
     async def _wait():
         await asyncio.sleep(get_current_wait())
 
+    from .core import PreconditionFailedError
+
     try:
         # Execute beforeAll
         err = None
         if hasattr(request.module, "beforeAll"):
             try:
                 await _call_lifecycle_hook(request.module.beforeAll, adapter, _wait)
+            except PreconditionFailedError as pe:
+                pytest.skip(str(pe))
             except AssertionError as ae:
                 err = str(ae)
             except Exception as e:
@@ -105,12 +109,16 @@ async def dt_module_hooks(request):
 async def dt_function_hooks(request, dt_adapter, wait_dt):
     """Handles beforeEach and afterEach around every test."""
     
+    from .core import PreconditionFailedError
+
     try:
         # Execute beforeEach
         err = None
         if hasattr(request.module, "beforeEach"):
             try:
                 await _call_lifecycle_hook(request.module.beforeEach, dt_adapter, wait_dt)
+            except PreconditionFailedError as pe:
+                pytest.skip(str(pe))
             except AssertionError as ae:
                 err = str(ae)
             except Exception as e:

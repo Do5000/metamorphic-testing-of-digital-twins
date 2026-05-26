@@ -6,12 +6,13 @@ import os
 import datetime
 import json
 
-from pytest_dt_mt.relations import monotonicity
-from pytest_dt_mt.relations import invariance
-from pytest_dt_mt.relations import conservation
-from pytest_dt_mt.relations import proportionality
-from pytest_dt_mt.relations import substitution
-from pytest_dt_mt.relations import stability
+from pytest_dt_mt.relations.monotonicity import MonotonicityRelation
+from pytest_dt_mt.relations.invariance import InvarianceRelation
+from pytest_dt_mt.relations.conservation import ConservationRelation
+from pytest_dt_mt.relations.proportionality import ProportionalityRelation
+from pytest_dt_mt.relations.substitution import SubstitutionRelation
+from pytest_dt_mt.relations.stability import StabilityRelation
+from pytest_dt_mt.relations.base import MetamorphicRelationError
 
 def pytest_addoption(parser):
     parser.addoption("--wait-time", action="store", default=30.0, type=float, help="Global wait time in seconds for physical simulation")
@@ -86,24 +87,29 @@ async def validate_mr_result(result, dt_adapter=None, **kwargs):
     __tracebackhide__ = True
     mr_type = kwargs.get("type")
     
+    relation = None
+    
     if mr_type == "stability":
-        await stability.validate(result, dt_adapter=dt_adapter, **kwargs)
-        return
-
-    # Non-stability relations require a tuple/list of at least 2 elements:
-    if result is None or not isinstance(result, (tuple, list)) or len(result) < 2:
-        return
-        
-    if mr_type == "monotonicity":
-        monotonicity.validate(result, **kwargs)
+        relation = StabilityRelation(**kwargs)
+    elif mr_type == "monotonicity":
+        relation = MonotonicityRelation(**kwargs)
     elif mr_type == "invariance":
-        invariance.validate(result, **kwargs)
+        relation = InvarianceRelation(**kwargs)
     elif mr_type == "conservation":
-        conservation.validate(result, **kwargs)
+        relation = ConservationRelation(**kwargs)
     elif mr_type == "proportionality":
-        proportionality.validate(result, **kwargs)
+        relation = ProportionalityRelation(**kwargs)
     elif mr_type == "substitution":
-        substitution.validate(result, **kwargs)
+        relation = SubstitutionRelation(**kwargs)
+
+    if relation:
+        try:
+            if inspect.iscoroutinefunction(relation.evaluate):
+                await relation.evaluate(result, dt_adapter=dt_adapter)
+            else:
+                relation.evaluate(result, dt_adapter=dt_adapter)
+        except MetamorphicRelationError as e:
+            pytest.fail(str(e), pytrace=False)
 
 def pytest_runtest_makereport(item, call):
     """

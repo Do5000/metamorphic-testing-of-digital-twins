@@ -5,7 +5,8 @@ import json
 import os
 import sys
 import re
-import pytest
+class PreconditionFailedError(Exception):
+    pass
 
 from pytest_dt_mt.calibration import measure_latency
 
@@ -173,7 +174,7 @@ class DigitalTwinAdapter:
             if skip_message is None:
                 skip_message = f"Precondition failed: '{device_id}' ({feature_name}) is '{val}', expected '{expected_value}'"
             print(f"      [PRECONDITION FAILED] {skip_message}")
-            pytest.skip(skip_message)
+            raise PreconditionFailedError(skip_message)
         else:
             print(f"      [PRECONDITION MET] '{device_id}' ({feature_name}) is '{val}' (matches expected '{expected_value}')")
 

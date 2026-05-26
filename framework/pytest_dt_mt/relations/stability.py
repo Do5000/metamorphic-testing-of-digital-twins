@@ -1,60 +1,48 @@
 import asyncio
-import pytest
+from .base import MetamorphicRelation, MetamorphicRelationError
+from pytest_dt_mt.core import LiveValueMonitor
 
-async def validate(result, dt_adapter=None, **kwargs):
-    __tracebackhide__ = True
-    if dt_adapter is None:
-        pytest.fail("Metamorphic Relation (Stability) failed: dt_adapter is not available to measure sensor.", pytrace=False)
-
-    if isinstance(result, tuple) and len(result) >= 1:
-        sensor = result[0]
-        sensor_feature = result[1] if len(result) >= 2 else kwargs.get("sensor_feature", "state")
-    elif isinstance(result, str):
-        sensor = result
-        sensor_feature = kwargs.get("sensor_feature", "state")
-    else:
-        sensor = kwargs.get("sensor")
-        sensor_feature = kwargs.get("sensor_feature", "state")
-
-    tolerance = kwargs.get("tolerance")
-    duration = kwargs.get("duration", 5.0)
-    
-    if not sensor:
-        pytest.fail("Metamorphic Relation (Stability) failed: 'sensor' argument is required.", pytrace=False)
-    if tolerance is None:
-        pytest.fail("Metamorphic Relation (Stability) failed: 'tolerance' argument is required.", pytrace=False)
+class StabilityRelation(MetamorphicRelation):
+    async def evaluate(self, result, dt_adapter=None):
+        __tracebackhide__ = True
         
-    print(f"\n      [MR CHECK] Stability: Monitoring '{sensor}' ({sensor_feature}) for {duration}s (allowed fluctuation tolerance: {tolerance})...")
-    
-    values = []
-    start_time = asyncio.get_event_loop().time()
-    
-    # Poll the sensor for the specified duration
-    while asyncio.get_event_loop().time() - start_time < duration:
-        val = await dt_adapter.get_feature_value(sensor, sensor_feature, silent=True)
-        if val is not None:
-            try:
-                values.append(float(val))
-            except (ValueError, TypeError):
-                pass
-        await asyncio.sleep(0.2)
+        if dt_adapter is None:
+            raise MetamorphicRelationError("dt_adapter is required for Stability relation")
+        if not result or len(result) < 1:
+            raise MetamorphicRelationError("Stability relation requires the test to return at least a 'sensor_id'")
+            
+        sensor_id = result[0]
+        feature_name = result[1] if len(result) > 1 else self.kwargs.get("feature", "state")
         
-    if not values:
-        pytest.fail(f"Metamorphic Relation (Stability) failed: No numeric values could be read from sensor '{sensor}' during {duration}s.", pytrace=False)
+        duration = self.kwargs.get("duration", 10.0)
+        tolerance = self.kwargs.get("tolerance", 0.0)
+            
+        print(f"\n      [MR CHECK] Stability: Monitoring '{sensor_id}' ({feature_name}) for {duration}s (allowed fluctuation tolerance: {tolerance})...")
         
-    avg_val = sum(values) / len(values)
-    ref_val = max(abs(avg_val), 1.0)
-    
-    # If tolerance is <= 1.0, treat it as a percentage/fraction of the reference value
-    is_percent = tolerance <= 1.0
-    allowed = tolerance if not is_percent else ref_val * tolerance
-    tolerance_str = f"{tolerance * 100:.1f}%" if is_percent else f"{tolerance}"
-    
-    min_val = min(values)
-    max_val = max(values)
-    diff = max_val - min_val
-    
-    if diff > allowed:
-        pytest.fail(f"Metamorphic Relation (Stability) failed: Sensor '{sensor}' fluctuated too much! Max value: {max_val}, Min value: {min_val} (diff {diff:.3f} > allowed tolerance {tolerance_str} [= {allowed:.3f}])", pytrace=False)
+        monitor = LiveValueMonitor(dt_adapter, sensor_id, feature_name, interval=0.5, verbose=False)
+        async with monitor:
+            await asyncio.sleep(duration)
+            
+        vals = [v for (_, v) in monitor.history if v is not None]
+        if not vals:
+            raise MetamorphicRelationError(f"Stability check failed: No valid data points received from '{sensor_id}' in {duration}s")
+            
+        # Optional: verify if all values are numeric. If not, just check exact equality
+        all_numeric = all(isinstance(v, (int, float)) for v in vals)
         
-    print(f"      [MR CHECK] Stability PASSED: Fluctuation diff {diff:.3f} <= allowed tolerance {tolerance_str} [= {allowed:.3f}] (Max: {max_val}, Min: {min_val}) over {duration}s")
+        if all_numeric:
+            max_v = max(vals)
+            min_v = min(vals)
+            diff = abs(max_v - min_v)
+            
+            allowed = tolerance if tolerance > 1.0 else max(abs(max_v), abs(min_v), 1.0) * tolerance
+            
+            if diff > allowed:
+                raise MetamorphicRelationError(f"Metamorphic Relation (Stability) failed: Fluctuation {diff:.3f} > allowed {allowed:.3f} (Max: {max_v}, Min: {min_v}) over {duration}s")
+                
+            print(f"      [MR CHECK] Stability PASSED: Fluctuation diff {diff:.3f} <= allowed tolerance {tolerance*100}% [= {allowed:.3f}] (Max: {max_v}, Min: {min_v}) over {duration}s")
+        else:
+            first_v = vals[0]
+            if any(v != first_v for v in vals):
+                raise MetamorphicRelationError(f"Metamorphic Relation (Stability) failed: Value changed during monitoring period")
+            print(f"      [MR CHECK] Stability PASSED: Value remained '{first_v}' for {duration}s")
