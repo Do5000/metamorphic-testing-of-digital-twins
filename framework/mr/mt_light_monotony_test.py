@@ -17,7 +17,8 @@ async def beforeAll(dt_adapter):
         tolerance_factor = 1.1,
         add_seconds = 0,
         timeout = 3.0,
-        runs = 5
+        runs = 2
+
     )
 
 

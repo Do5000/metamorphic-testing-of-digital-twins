@@ -1,0 +1,11 @@
+node_modules/
+out/
+src/language/generated/
+syntaxes/
+
+# Ignore compiled JSON files from .mt models
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!langium-config.json

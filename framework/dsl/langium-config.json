@@ -1,0 +1,12 @@
+{
+    "projectName": "MtDsl",
+    "languages": [{
+        "id": "mt-dsl",
+        "fileExtensions": [".mt"],
+        "grammar": "src/language/mt-dsl.langium",
+        "textMate": {
+            "out": "syntaxes/mt-dsl.tmLanguage.json"
+        }
+    }],
+    "out": "src/language/generated"
+}

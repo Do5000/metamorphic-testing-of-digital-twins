@@ -3,6 +3,7 @@ import asyncio
 import functools
 import inspect
 import os
+import sys
 import datetime
 import json
 
@@ -26,6 +27,44 @@ def pytest_configure(config):
     config.addinivalue_line(
         "markers", "mr(type, tolerance): mark test as a Metamorphic Relation test"
     )
+
+import io
+
+class ManualTee:
+    """Writes to original stdout and captures the text internally."""
+    def __init__(self, original_stdout):
+        self._original = original_stdout
+        self._buffer = io.StringIO()
+
+    def write(self, data):
+        self._original.write(data)
+        self._buffer.write(data)
+
+    def flush(self):
+        self._original.flush()
+        
+    def getvalue(self):
+        return self._buffer.getvalue()
+
+    def __getattr__(self, name):
+        return getattr(self._original, name)
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_call(item):
+    """
+    If --monitor is active, capture is disabled (-s). We manually wrap sys.stdout 
+    to both print to the live terminal AND save the text for the log file.
+    """
+    if item.config.getoption("--monitor"):
+        tee = ManualTee(sys.stdout)
+        sys.stdout = tee
+        try:
+            yield
+        finally:
+            sys.stdout = tee._original
+            item._manual_capstdout = tee.getvalue()
+    else:
+        yield
 
 def pytest_collection_modifyitems(items):
     """
@@ -111,11 +150,17 @@ async def validate_mr_result(result, dt_adapter=None, **kwargs):
         except MetamorphicRelationError as e:
             pytest.fail(str(e), pytrace=False)
 
+@pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     """
-    Custom reporting hook. Can be used to inject additional MT-specific output.
+    Because --monitor disables pytest's capture (-s) to allow natural live printing,
+    we inject our manually captured stdout into the report so the --log file
+    still gets the output. (We use a custom attribute since capstdout is read-only).
     """
-    pass
+    outcome = yield
+    rep = outcome.get_result()
+    if call.when == "call" and hasattr(item, "_manual_capstdout"):
+        rep._manual_capstdout = item._manual_capstdout
 
 def pytest_terminal_summary(terminalreporter, exitstatus, config):
     """
@@ -159,9 +204,11 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
             for rep in reports:
                 f.write(f"[{outcome.upper()}] {rep.nodeid}\n")
                 
-                if rep.capstdout:
+                # Check normal capstdout OR our custom manual tee output
+                output = rep.capstdout or getattr(rep, "_manual_capstdout", "")
+                if output:
                     f.write("--- Captured Output ---\n")
-                    f.write(rep.capstdout)
+                    f.write(output)
                     f.write("\n")
                 
                 if outcome != "passed":
@@ -170,6 +217,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
                     f.write("\n")
                 
                 f.write("-" * 80 + "\n")
+
 
         # Session Summary
         passed = len(terminalreporter.stats.get('passed', []))

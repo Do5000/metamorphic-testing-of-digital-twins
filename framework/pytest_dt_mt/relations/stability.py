@@ -16,10 +16,11 @@ class StabilityRelation(MetamorphicRelation):
         
         duration = self.kwargs.get("duration", 10.0)
         tolerance = self.kwargs.get("tolerance", 0.0)
+        verbose = self.kwargs.get("verbose", False)
             
         print(f"\n      [MR CHECK] Stability: Monitoring '{sensor_id}' ({feature_name}) for {duration}s (allowed fluctuation tolerance: {tolerance})...")
         
-        monitor = LiveValueMonitor(dt_adapter, sensor_id, feature_name, interval=0.5, verbose=False)
+        monitor = LiveValueMonitor(dt_adapter, sensor_id, feature_name, interval=0.5, verbose=verbose)
         async with monitor:
             await asyncio.sleep(duration)
             

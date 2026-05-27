@@ -222,7 +222,7 @@ class LiveValueMonitor:
             self.history.append((elapsed, val))
             # Optional: Live printing of progression
             if self.verbose:
-                print(f"      [LIVE MONITOR] {self.device_id} @ {elapsed:4.1f}s: {val}")
+                print(f"      [LIVE MONITOR] {self.device_id} @ {elapsed:4.1f}s: {val}", flush=True)
             try:
                 await asyncio.wait_for(self._stop_event.wait(), timeout=self.interval)
             except asyncio.TimeoutError:
