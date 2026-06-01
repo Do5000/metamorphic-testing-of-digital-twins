@@ -184,4 +184,12 @@ pytest tests/test_dsl_runner.py -v --wait-time=5.0 --monitor --log
 pytest tests/test_dsl_runner.py -k "substitution" -v --wait-time=5.0 --monitor --log
 ```
 
+## DSL Plugin starten
+
+```
+npm install
+```
+
+Taste F5
+
 
