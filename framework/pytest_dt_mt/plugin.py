@@ -141,6 +141,7 @@ async def validate_mr_result(result, dt_adapter=None, **kwargs):
     elif mr_type == "substitution":
         relation = SubstitutionRelation(**kwargs)
 
+    err_msg = None
     if relation:
         try:
             if inspect.iscoroutinefunction(relation.evaluate):
@@ -148,7 +149,10 @@ async def validate_mr_result(result, dt_adapter=None, **kwargs):
             else:
                 relation.evaluate(result, dt_adapter=dt_adapter)
         except MetamorphicRelationError as e:
-            pytest.fail(str(e), pytrace=False)
+            err_msg = str(e)
+            
+    if err_msg:
+        pytest.fail(err_msg, pytrace=False)
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
@@ -213,7 +217,12 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
                 
                 if outcome != "passed":
                     f.write("--- Error Details ---\n")
-                    f.write(str(rep.longrepr))
+                    # Clean way to get the error message without Pytest's traceback boilerplate
+                    if hasattr(rep.longrepr, "reprcrash") and rep.longrepr.reprcrash:
+                        error_text = rep.longrepr.reprcrash.message
+                    else:
+                        error_text = str(rep.longrepr)
+                    f.write(error_text)
                     f.write("\n")
                 
                 f.write("-" * 80 + "\n")

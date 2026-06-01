@@ -15,7 +15,7 @@ JSON_FILES = glob.glob(os.path.join(DSL_OUT_DIR, "**", "*.json"), recursive=True
 def is_test_json(filepath):
     if not os.path.exists(filepath):
         return False
-    if "langium-config.json" in filepath or "tsconfig.json" in filepath or "package.json" in filepath or "package-lock.json" in filepath or ".tmLanguage.json" in filepath:
+    if "langium-config.json" in filepath or "tsconfig.json" in filepath or "package.json" in filepath or "package-lock.json" in filepath or ".tmLanguage.json" in filepath or "langium-configuration.json" in filepath:
         return False
     try:
         with open(filepath, "r") as f:
@@ -74,10 +74,14 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
             
     # Run the test definition
     verbose = pytestconfig.getoption("--monitor")
+    err_msg = None
     try:
         await runner.execute_test(test_data, wait_dt, verbose=verbose)
     except MetamorphicRelationError as e:
-        pytest.fail(str(e), pytrace=False)
+        err_msg = str(e)
+        
+    if err_msg:
+        pytest.fail(err_msg, pytrace=False)
     
     # Run afterEach hooks from the same file
     for el in full_data.get("elements", []):
