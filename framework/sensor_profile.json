@@ -3,423 +3,423 @@
     "profile": [
         {
             "brightness_cmd": 0,
-            "old_sensor": 1.93599998950958,
-            "neighbor_sensor": 2.19000005722046
+            "old_sensor": 1.42299997806549,
+            "neighbor_sensor": 2.09100008010864
         },
         {
             "brightness_cmd": 2,
-            "old_sensor": 2.04699993133545,
-            "neighbor_sensor": 2.34400010108948
+            "old_sensor": 1.44500005245209,
+            "neighbor_sensor": 2.26600003242493
         },
         {
             "brightness_cmd": 3,
-            "old_sensor": 2.07299995422363,
-            "neighbor_sensor": 2.38899993896484
+            "old_sensor": 1.44900000095367,
+            "neighbor_sensor": 2.32599997520447
         },
         {
             "brightness_cmd": 4,
-            "old_sensor": 2.11299991607666,
-            "neighbor_sensor": 2.44099998474121
+            "old_sensor": 1.45700001716614,
+            "neighbor_sensor": 2.37100005149841
         },
         {
             "brightness_cmd": 5,
-            "old_sensor": 2.16199994087219,
-            "neighbor_sensor": 2.4909999370575
+            "old_sensor": 1.46800005435944,
+            "neighbor_sensor": 2.41300010681152
         },
         {
             "brightness_cmd": 6,
-            "old_sensor": 2.1949999332428,
-            "neighbor_sensor": 2.52999997138977
+            "old_sensor": 1.48099994659424,
+            "neighbor_sensor": 2.46600008010864
         },
         {
             "brightness_cmd": 7,
-            "old_sensor": 2.24900007247925,
-            "neighbor_sensor": 2.57200002670288
+            "old_sensor": 1.49399995803833,
+            "neighbor_sensor": 2.52999997138977
         },
         {
             "brightness_cmd": 8,
-            "old_sensor": 2.29500007629395,
-            "neighbor_sensor": 2.63000011444092
+            "old_sensor": 1.50699996948242,
+            "neighbor_sensor": 2.57699990272522
         },
         {
             "brightness_cmd": 9,
-            "old_sensor": 2.30699992179871,
-            "neighbor_sensor": 2.65100002288818
+            "old_sensor": 1.51900005340576,
+            "neighbor_sensor": 2.59699988365173
         },
         {
             "brightness_cmd": 10,
-            "old_sensor": 2.34999990463257,
-            "neighbor_sensor": 2.66899991035461
+            "old_sensor": 1.52999997138977,
+            "neighbor_sensor": 2.61800003051758
         },
         {
             "brightness_cmd": 11,
-            "old_sensor": 2.34200000762939,
-            "neighbor_sensor": 2.66300010681152
+            "old_sensor": 1.52699995040894,
+            "neighbor_sensor": 2.625
         },
         {
             "brightness_cmd": 12,
-            "old_sensor": 2.33800005912781,
-            "neighbor_sensor": 2.6800000667572
+            "old_sensor": 1.52999997138977,
+            "neighbor_sensor": 2.63299989700317
         },
         {
             "brightness_cmd": 13,
-            "old_sensor": 2.36199998855591,
-            "neighbor_sensor": 2.68899989128113
+            "old_sensor": 1.53799998760223,
+            "neighbor_sensor": 2.63599991798401
         },
         {
             "brightness_cmd": 14,
-            "old_sensor": 2.37400007247925,
-            "neighbor_sensor": 2.68499994277954
+            "old_sensor": 1.52999997138977,
+            "neighbor_sensor": 2.63800001144409
         },
         {
             "brightness_cmd": 15,
-            "old_sensor": 2.37400007247925,
-            "neighbor_sensor": 2.7039999961853
+            "old_sensor": 1.53900003433228,
+            "neighbor_sensor": 2.65799999237061
         },
         {
             "brightness_cmd": 16,
-            "old_sensor": 2.37599992752075,
-            "neighbor_sensor": 2.71099996566772
+            "old_sensor": 1.53999996185303,
+            "neighbor_sensor": 2.66400003433228
         },
         {
             "brightness_cmd": 17,
-            "old_sensor": 2.40499997138977,
-            "neighbor_sensor": 2.71499991416931
+            "old_sensor": 1.54799997806549,
+            "neighbor_sensor": 2.66499996185303
         },
         {
             "brightness_cmd": 18,
-            "old_sensor": 2.40899991989136,
-            "neighbor_sensor": 2.71600008010864
+            "old_sensor": 1.54900002479553,
+            "neighbor_sensor": 2.67799997329712
         },
         {
             "brightness_cmd": 19,
-            "old_sensor": 2.3970000743866,
-            "neighbor_sensor": 2.73099994659424
+            "old_sensor": 1.55200004577637,
+            "neighbor_sensor": 2.68600010871887
         },
         {
             "brightness_cmd": 20,
-            "old_sensor": 2.4300000667572,
-            "neighbor_sensor": 2.74499988555908
+            "old_sensor": 1.56099998950958,
+            "neighbor_sensor": 2.70099997520447
         },
         {
             "brightness_cmd": 21,
-            "old_sensor": 2.43199992179871,
-            "neighbor_sensor": 2.73600006103516
+            "old_sensor": 1.56400001049042,
+            "neighbor_sensor": 2.69300007820129
         },
         {
             "brightness_cmd": 22,
-            "old_sensor": 2.4210000038147,
-            "neighbor_sensor": 2.75
+            "old_sensor": 1.56400001049042,
+            "neighbor_sensor": 2.70700001716614
         },
         {
             "brightness_cmd": 23,
-            "old_sensor": 2.43899989128113,
-            "neighbor_sensor": 2.75500011444092
+            "old_sensor": 1.56400001049042,
+            "neighbor_sensor": 2.71499991416931
         },
         {
             "brightness_cmd": 24,
-            "old_sensor": 2.45199990272522,
-            "neighbor_sensor": 2.75600004196167
+            "old_sensor": 1.57200002670288,
+            "neighbor_sensor": 2.71499991416931
         },
         {
             "brightness_cmd": 25,
-            "old_sensor": 2.45499992370605,
-            "neighbor_sensor": 2.75600004196167
+            "old_sensor": 1.57700002193451,
+            "neighbor_sensor": 2.71799993515015
         },
         {
             "brightness_cmd": 30,
-            "old_sensor": 2.48499989509583,
-            "neighbor_sensor": 2.79200005531311
+            "old_sensor": 1.59899997711182,
+            "neighbor_sensor": 2.7590000629425
         },
         {
             "brightness_cmd": 31,
-            "old_sensor": 2.49900007247925,
-            "neighbor_sensor": 2.79699993133545
+            "old_sensor": 1.59899997711182,
+            "neighbor_sensor": 2.76300001144409
         },
         {
             "brightness_cmd": 32,
-            "old_sensor": 2.50500011444092,
-            "neighbor_sensor": 2.79200005531311
+            "old_sensor": 1.60699999332428,
+            "neighbor_sensor": 2.76099991798401
         },
         {
             "brightness_cmd": 33,
-            "old_sensor": 2.50500011444092,
-            "neighbor_sensor": 2.80299997329712
+            "old_sensor": 1.61300003528595,
+            "neighbor_sensor": 2.76600003242493
         },
         {
             "brightness_cmd": 34,
-            "old_sensor": 2.51600003242493,
-            "neighbor_sensor": 2.80900001525879
+            "old_sensor": 1.61199998855591,
+            "neighbor_sensor": 2.77699995040894
         },
         {
             "brightness_cmd": 35,
-            "old_sensor": 2.52500009536743,
-            "neighbor_sensor": 2.80900001525879
+            "old_sensor": 1.62000000476837,
+            "neighbor_sensor": 2.77999997138977
         },
         {
             "brightness_cmd": 40,
-            "old_sensor": 2.54900002479553,
-            "neighbor_sensor": 2.8289999961853
+            "old_sensor": 1.63999998569489,
+            "neighbor_sensor": 2.80100011825562
         },
         {
             "brightness_cmd": 41,
-            "old_sensor": 2.55800008773804,
-            "neighbor_sensor": 2.83899998664856
+            "old_sensor": 1.64100003242493,
+            "neighbor_sensor": 2.8050000667572
         },
         {
             "brightness_cmd": 42,
-            "old_sensor": 2.56100010871887,
-            "neighbor_sensor": 2.84100008010864
+            "old_sensor": 1.64400005340576,
+            "neighbor_sensor": 2.80900001525879
         },
         {
             "brightness_cmd": 43,
-            "old_sensor": 2.55900001525879,
-            "neighbor_sensor": 2.83800005912781
+            "old_sensor": 1.64600002765656,
+            "neighbor_sensor": 2.80999994277954
         },
         {
             "brightness_cmd": 44,
-            "old_sensor": 2.56800007820129,
-            "neighbor_sensor": 2.83599996566772
+            "old_sensor": 1.65199995040894,
+            "neighbor_sensor": 2.81100010871887
         },
         {
             "brightness_cmd": 45,
-            "old_sensor": 2.58200001716614,
-            "neighbor_sensor": 2.8510000705719
+            "old_sensor": 1.65799999237061,
+            "neighbor_sensor": 2.82399988174438
         },
         {
             "brightness_cmd": 50,
-            "old_sensor": 2.59999990463257,
-            "neighbor_sensor": 2.86800003051758
+            "old_sensor": 1.67599999904633,
+            "neighbor_sensor": 2.83999991416931
         },
         {
             "brightness_cmd": 51,
-            "old_sensor": 2.60199999809265,
-            "neighbor_sensor": 2.86400008201599
+            "old_sensor": 1.67700004577637,
+            "neighbor_sensor": 2.83899998664856
         },
         {
             "brightness_cmd": 52,
-            "old_sensor": 2.61100006103516,
-            "neighbor_sensor": 2.86999988555908
+            "old_sensor": 1.67900002002716,
+            "neighbor_sensor": 2.83500003814697
         },
         {
             "brightness_cmd": 53,
-            "old_sensor": 2.6159999370575,
-            "neighbor_sensor": 2.87599992752075
+            "old_sensor": 1.68700003623962,
+            "neighbor_sensor": 2.84899997711182
         },
         {
             "brightness_cmd": 54,
-            "old_sensor": 2.6159999370575,
-            "neighbor_sensor": 2.875
+            "old_sensor": 1.68900001049042,
+            "neighbor_sensor": 2.8529999256134
         },
         {
             "brightness_cmd": 55,
-            "old_sensor": 2.62299990653992,
-            "neighbor_sensor": 2.87299990653992
+            "old_sensor": 1.69099998474121,
+            "neighbor_sensor": 2.8510000705719
         },
         {
             "brightness_cmd": 56,
-            "old_sensor": 2.63199996948242,
-            "neighbor_sensor": 2.88199996948242
+            "old_sensor": 1.69900000095367,
+            "neighbor_sensor": 2.84999990463257
         },
         {
             "brightness_cmd": 57,
-            "old_sensor": 2.625,
-            "neighbor_sensor": 2.88700008392334
+            "old_sensor": 1.70099997520447,
+            "neighbor_sensor": 2.86199998855591
         },
         {
             "brightness_cmd": 58,
-            "old_sensor": 2.63700008392334,
-            "neighbor_sensor": 2.8840000629425
+            "old_sensor": 1.7039999961853,
+            "neighbor_sensor": 2.86400008201599
         },
         {
             "brightness_cmd": 59,
-            "old_sensor": 2.63700008392334,
-            "neighbor_sensor": 2.88599991798401
+            "old_sensor": 1.71099996566772,
+            "neighbor_sensor": 2.86199998855591
         },
         {
             "brightness_cmd": 60,
-            "old_sensor": 2.6489999294281,
-            "neighbor_sensor": 2.89800000190735
+            "old_sensor": 1.7150000333786,
+            "neighbor_sensor": 2.86999988555908
         },
         {
             "brightness_cmd": 61,
-            "old_sensor": 2.64800000190735,
-            "neighbor_sensor": 2.8970000743866
+            "old_sensor": 1.7150000333786,
+            "neighbor_sensor": 2.87299990653992
         },
         {
             "brightness_cmd": 62,
-            "old_sensor": 2.65700006484985,
-            "neighbor_sensor": 2.89400005340576
+            "old_sensor": 1.72200000286102,
+            "neighbor_sensor": 2.87400007247925
         },
         {
             "brightness_cmd": 63,
-            "old_sensor": 2.65400004386902,
-            "neighbor_sensor": 2.8970000743866
+            "old_sensor": 1.72300004959106,
+            "neighbor_sensor": 2.87199997901917
         },
         {
             "brightness_cmd": 64,
-            "old_sensor": 2.65700006484985,
-            "neighbor_sensor": 2.90300011634827
+            "old_sensor": 1.72200000286102,
+            "neighbor_sensor": 2.87800002098083
         },
         {
             "brightness_cmd": 65,
-            "old_sensor": 2.66700005531311,
-            "neighbor_sensor": 2.90499997138977
+            "old_sensor": 1.73399996757507,
+            "neighbor_sensor": 2.88299989700317
         },
         {
             "brightness_cmd": 66,
-            "old_sensor": 2.66700005531311,
-            "neighbor_sensor": 2.90100002288818
+            "old_sensor": 1.73399996757507,
+            "neighbor_sensor": 2.8840000629425
         },
         {
             "brightness_cmd": 67,
-            "old_sensor": 2.66700005531311,
-            "neighbor_sensor": 2.90700006484985
+            "old_sensor": 1.73399996757507,
+            "neighbor_sensor": 2.88100004196167
         },
         {
             "brightness_cmd": 68,
-            "old_sensor": 2.67600011825562,
-            "neighbor_sensor": 2.91000008583069
+            "old_sensor": 1.73699998855591,
+            "neighbor_sensor": 2.88800001144409
         },
         {
             "brightness_cmd": 69,
-            "old_sensor": 2.67899990081787,
-            "neighbor_sensor": 2.91100001335144
+            "old_sensor": 1.74600005149841,
+            "neighbor_sensor": 2.89499998092651
         },
         {
             "brightness_cmd": 70,
-            "old_sensor": 2.67600011825562,
-            "neighbor_sensor": 2.90899991989136
+            "old_sensor": 1.74600005149841,
+            "neighbor_sensor": 2.89100003242493
         },
         {
             "brightness_cmd": 71,
-            "old_sensor": 2.68799996376038,
-            "neighbor_sensor": 2.91599988937378
+            "old_sensor": 1.74899995326996,
+            "neighbor_sensor": 2.89100003242493
         },
         {
             "brightness_cmd": 72,
-            "old_sensor": 2.68799996376038,
-            "neighbor_sensor": 2.91700005531311
+            "old_sensor": 1.75,
+            "neighbor_sensor": 2.89599990844727
         },
         {
             "brightness_cmd": 73,
-            "old_sensor": 2.69000005722046,
-            "neighbor_sensor": 2.91700005531311
+            "old_sensor": 1.75,
+            "neighbor_sensor": 2.90100002288818
         },
         {
             "brightness_cmd": 74,
-            "old_sensor": 2.69199991226196,
-            "neighbor_sensor": 2.92000007629395
+            "old_sensor": 1.75800001621246,
+            "neighbor_sensor": 2.90000009536743
         },
         {
             "brightness_cmd": 75,
-            "old_sensor": 2.70900011062622,
-            "neighbor_sensor": 2.92400002479553
+            "old_sensor": 1.7610000371933,
+            "neighbor_sensor": 2.8989999294281
         },
         {
             "brightness_cmd": 80,
-            "old_sensor": 2.71700000762939,
-            "neighbor_sensor": 2.93400001525879
+            "old_sensor": 1.77499997615814,
+            "neighbor_sensor": 2.91799998283386
         },
         {
             "brightness_cmd": 81,
-            "old_sensor": 2.71700000762939,
-            "neighbor_sensor": 2.93199992179871
+            "old_sensor": 1.77999997138977,
+            "neighbor_sensor": 2.91599988937378
         },
         {
             "brightness_cmd": 82,
-            "old_sensor": 2.72199988365173,
-            "neighbor_sensor": 2.93400001525879
+            "old_sensor": 1.77499997615814,
+            "neighbor_sensor": 2.91400003433228
         },
         {
             "brightness_cmd": 83,
-            "old_sensor": 2.72699999809265,
-            "neighbor_sensor": 2.93700003623962
+            "old_sensor": 1.77999997138977,
+            "neighbor_sensor": 2.91700005531311
         },
         {
             "brightness_cmd": 84,
-            "old_sensor": 2.7279999256134,
-            "neighbor_sensor": 2.93799996376038
+            "old_sensor": 1.78400003910065,
+            "neighbor_sensor": 2.92000007629395
         },
         {
             "brightness_cmd": 85,
-            "old_sensor": 2.73200011253357,
-            "neighbor_sensor": 2.93499994277954
+            "old_sensor": 1.78600001335144,
+            "neighbor_sensor": 2.92499995231628
         },
         {
             "brightness_cmd": 86,
-            "old_sensor": 2.73900008201599,
-            "neighbor_sensor": 2.94000005722046
+            "old_sensor": 1.79200005531311,
+            "neighbor_sensor": 2.92199993133545
         },
         {
             "brightness_cmd": 87,
-            "old_sensor": 2.72900009155273,
-            "neighbor_sensor": 2.93799996376038
+            "old_sensor": 1.79200005531311,
+            "neighbor_sensor": 2.92499995231628
         },
         {
             "brightness_cmd": 88,
-            "old_sensor": 2.73000001907349,
-            "neighbor_sensor": 2.93899989128113
+            "old_sensor": 1.7960000038147,
+            "neighbor_sensor": 2.92799997329712
         },
         {
             "brightness_cmd": 89,
-            "old_sensor": 2.72900009155273,
-            "neighbor_sensor": 2.94099998474121
+            "old_sensor": 1.79700005054474,
+            "neighbor_sensor": 2.9300000667572
         },
         {
             "brightness_cmd": 90,
-            "old_sensor": 2.73699998855591,
-            "neighbor_sensor": 2.94300007820129
+            "old_sensor": 1.7960000038147,
+            "neighbor_sensor": 2.92799997329712
         },
         {
             "brightness_cmd": 91,
-            "old_sensor": 2.74200010299683,
-            "neighbor_sensor": 2.94099998474121
+            "old_sensor": 1.80599999427795,
+            "neighbor_sensor": 2.93099999427795
         },
         {
             "brightness_cmd": 92,
-            "old_sensor": 2.73699998855591,
-            "neighbor_sensor": 2.94899988174438
+            "old_sensor": 1.80599999427795,
+            "neighbor_sensor": 2.93300008773804
         },
         {
             "brightness_cmd": 93,
-            "old_sensor": 2.74200010299683,
-            "neighbor_sensor": 2.95199990272522
+            "old_sensor": 1.807000041008,
+            "neighbor_sensor": 2.93600010871887
         },
         {
             "brightness_cmd": 94,
-            "old_sensor": 2.75,
-            "neighbor_sensor": 2.95099997520447
+            "old_sensor": 1.80799996852875,
+            "neighbor_sensor": 2.93300008773804
         },
         {
             "brightness_cmd": 95,
-            "old_sensor": 2.74900007247925,
-            "neighbor_sensor": 2.94700002670288
+            "old_sensor": 1.80799996852875,
+            "neighbor_sensor": 2.93799996376038
         },
         {
             "brightness_cmd": 96,
-            "old_sensor": 2.75099992752075,
-            "neighbor_sensor": 2.9539999961853
+            "old_sensor": 1.81400001049042,
+            "neighbor_sensor": 2.94099998474121
         },
         {
             "brightness_cmd": 97,
-            "old_sensor": 2.7590000629425,
-            "neighbor_sensor": 2.95700001716614
+            "old_sensor": 1.81700003147125,
+            "neighbor_sensor": 2.94099998474121
         },
         {
             "brightness_cmd": 98,
-            "old_sensor": 2.7590000629425,
-            "neighbor_sensor": 2.95499992370605
+            "old_sensor": 1.81900000572205,
+            "neighbor_sensor": 2.94000005722046
         },
         {
             "brightness_cmd": 99,
-            "old_sensor": 2.76200008392334,
-            "neighbor_sensor": 2.95499992370605
+            "old_sensor": 1.82099997997284,
+            "neighbor_sensor": 2.9449999332428
         },
         {
             "brightness_cmd": 100,
-            "old_sensor": 2.76999998092651,
-            "neighbor_sensor": 2.96099996566772
+            "old_sensor": 1.8289999961853,
+            "neighbor_sensor": 2.94899988174438
         }
     ]
 }

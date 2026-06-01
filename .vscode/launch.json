@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Extension (DSL)",
+            "type": "extensionHost",
+            "request": "launch",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}/framework/dsl"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/framework/dsl/out/**/*.cjs"
+            ],
+            "preLaunchTask": "npm: watch"
+        }
+    ]
+}

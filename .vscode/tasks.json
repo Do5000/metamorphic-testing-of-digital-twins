@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "npm: watch",
+            "type": "npm",
+            "script": "watch",
+            "options": {
+                "cwd": "${workspaceFolder}/framework/dsl"
+            },
+            "isBackground": true,
+            "problemMatcher": [
+                "$tsc-watch"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

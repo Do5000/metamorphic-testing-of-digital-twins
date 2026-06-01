@@ -4,6 +4,7 @@ import os
 import glob
 from mt_engine.runner import DslRunner
 from pytest_dt_mt.relations.base import MetamorphicRelationError
+from pytest_dt_mt.core import PreconditionFailedError
 
 # Find all generated JSON files in the framework/dsl folder or its subdirectories
 # Assuming the user compiles their .mt files into .json
@@ -24,6 +25,7 @@ def is_test_json(filepath):
         return False
 
 TEST_JSONS = [f for f in JSON_FILES if is_test_json(f)]
+SKIPPED_FILES = {}
 
 def get_test_cases():
     cases = []
@@ -35,34 +37,40 @@ def get_test_cases():
             for el in data.get("elements", []):
                 if el["type"] == "TestDefinition":
                     # Parameterize expects a tuple or list of arguments
-                    cases.append(pytest.param(filepath, data, el, id=el.get("name", "Unnamed Test")))
+                    cases.append(pytest.param(filepath, data, el, id=f"{os.path.basename(filepath)}::{el.get('name', 'Unnamed')}"))
         except Exception:
             pass
     return cases
 
-@pytest.mark.asyncio
-async def test_dsl_hooks_before_all(dt_adapter):
-    """Executes BeforeAll hooks for the loaded files before the actual tests run.
-    Currently runs all BeforeAll hooks found in the JSONs. In a real scenario, this could be scoped per file."""
-    runner = DslRunner(dt_adapter, {})
-    for filepath in TEST_JSONS:
-        if not os.path.exists(filepath): continue
-        with open(filepath, "r") as f:
-            data = json.load(f)
-        for el in data.get("elements", []):
-            if el["type"] == "LifecycleHook" and el.get("hookType") == "beforeAll":
-                await runner.execute_hook(el)
+
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("filepath, full_data, test_data", get_test_cases())
 async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath, full_data, test_data):
+    if filepath in SKIPPED_FILES:
+        pytest.skip(SKIPPED_FILES[filepath])
+        
     __tracebackhide__ = True
     runner = DslRunner(dt_adapter, full_data)
+    
+    # Run beforeAll hooks from the same file IF they haven't run yet
+    if not full_data.get("_before_all_run", False):
+        for el in full_data.get("elements", []):
+            if el["type"] == "LifecycleHook" and el.get("hookType") == "beforeAll":
+                try:
+                    await runner.execute_hook(el)
+                except PreconditionFailedError as e:
+                    SKIPPED_FILES[filepath] = f"Precondition in beforeAll failed: {e}"
+                    pytest.skip(SKIPPED_FILES[filepath])
+        full_data["_before_all_run"] = True
     
     # Run beforeEach hooks from the same file
     for el in full_data.get("elements", []):
         if el["type"] == "LifecycleHook" and el.get("hookType") == "beforeEach":
-            await runner.execute_hook(el)
+            try:
+                await runner.execute_hook(el)
+            except PreconditionFailedError as e:
+                pytest.skip(f"Precondition in beforeEach failed: {e}")
             
     # Run the test definition
     verbose = pytestconfig.getoption("--monitor")

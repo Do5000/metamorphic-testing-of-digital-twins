@@ -1,13 +1,20 @@
 import { type Module, inject } from 'langium';
 import { createDefaultModule, createDefaultSharedModule, type DefaultSharedModuleContext, type LangiumServices, type LangiumSharedServices, type PartialLangiumServices } from 'langium/lsp';
 import { MtDslGeneratedModule, MtDslGeneratedSharedModule } from './generated/module.js';
+import { MtDslValidator, registerValidationChecks } from './mt-dsl-validator.js';
 
-export type MtDslServices = LangiumServices & {
-    // add custom services here
-};
+export type MtDslAddedServices = {
+    validation: {
+        MtDslValidator: MtDslValidator
+    }
+}
 
-export const MtDslModule: Module<MtDslServices, PartialLangiumServices> = {
-    // custom services can be defined here
+export type MtDslServices = LangiumServices & MtDslAddedServices;
+
+export const MtDslModule: Module<MtDslServices, PartialLangiumServices & MtDslAddedServices> = {
+    validation: {
+        MtDslValidator: () => new MtDslValidator()
+    }
 };
 
 export function createMtDslServices(context: DefaultSharedModuleContext): {
@@ -24,5 +31,6 @@ export function createMtDslServices(context: DefaultSharedModuleContext): {
         MtDslModule
     );
     shared.ServiceRegistry.register(MtDsl);
+    registerValidationChecks(MtDsl);
     return { shared, MtDsl };
 }

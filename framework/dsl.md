@@ -11,7 +11,6 @@
 - Toleranz (nicht bei jeder Relation)
 - Duration / Messdauer in Sekunden (z.B. für `stability`)
 - Geräte-Profile / Device Profiles (z.B. JSON-Profil für `substitution`)
-- Historische Daten (nicht bei jeder Relation)
 - Historische Datenerzeugung: Abtastwerte(0,1,2,3...100), Outputfile Name: automatisch handhaben (z.B. basierend auf dem Testnamen und Zeitstempel), 
 - Wait Time (wegen Pipline Latenz)
 - Latenz Messung: min_change_percent, tolerance_factor, add_seconds, timeout, runs

@@ -2,6 +2,8 @@ import pytest
 import pytest_asyncio
 import inspect
 from .core import DigitalTwinAdapter, LiveValueMonitor
+from .core import PreconditionFailedError
+
 
 @pytest_asyncio.fixture(scope="function")
 async def dt_adapter():
@@ -69,8 +71,6 @@ async def dt_module_hooks(request):
     async def _wait():
         await asyncio.sleep(get_current_wait())
 
-    from .core import PreconditionFailedError
-
     try:
         # Execute beforeAll
         err = None
@@ -109,8 +109,6 @@ async def dt_module_hooks(request):
 async def dt_function_hooks(request, dt_adapter, wait_dt):
     """Handles beforeEach and afterEach around every test."""
     
-    from .core import PreconditionFailedError
-
     try:
         # Execute beforeEach
         err = None
