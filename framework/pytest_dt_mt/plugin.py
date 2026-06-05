@@ -171,15 +171,27 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
     Creates a single structured log file for the entire test session if --log is enabled.
     Also prints the measured latencies for each module clearly to the console.
     """
-    from pytest_dt_mt.fixtures import _MODULE_WAIT_DT
+    from pytest_dt_mt.fixtures import _MODULE_WAIT_DT, _CALIBRATION_REPORTS
     
-    if _MODULE_WAIT_DT:
+    if _MODULE_WAIT_DT or _CALIBRATION_REPORTS:
         terminalreporter.write_sep("=", "LATENCY CALIBRATION SUMMARY", bold=True, yellow=True)
-        for module_name, latency in _MODULE_WAIT_DT.items():
+        all_keys = set(_MODULE_WAIT_DT.keys()).union(_CALIBRATION_REPORTS.keys())
+        for key in sorted(all_keys):
+            latency = _MODULE_WAIT_DT.get(key)
+            reports = _CALIBRATION_REPORTS.get(key, [])
+            
             if latency is not None:
-                terminalreporter.write_line(f"  - Module '{module_name}': {latency:.3f}s")
+                terminalreporter.write_line(f"  - Target '{key}': wait_dt = {latency:.3f}s")
             else:
-                terminalreporter.write_line(f"  - Module '{module_name}': Default wait time")
+                terminalreporter.write_line(f"  - Target '{key}': Default wait time")
+                
+            for rep in reports:
+                act = rep["actuator"]
+                sens = rep["sensor"]
+                if rep["status"] == "timeout":
+                    terminalreporter.write_line(f"    * [TIMEOUT] {act} -> {sens}", red=True, bold=True)
+                else:
+                    terminalreporter.write_line(f"    * [SUCCESS] {act} -> {sens}: {rep['latency']:.3f}s")
         terminalreporter.write_line("")
 
     if not config.getoption("--log"):
@@ -233,15 +245,28 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
         failed = len(terminalreporter.stats.get('failed', []))
         f.write(f"\nTOTAL RESULT: {passed} PASSED, {failed} FAILED\n")
         
-        if _MODULE_WAIT_DT:
+        from pytest_dt_mt.fixtures import _CALIBRATION_REPORTS
+        if _MODULE_WAIT_DT or _CALIBRATION_REPORTS:
             f.write(f"\n{'='*80}\n")
             f.write(f" LATENCY CALIBRATION SUMMARY\n")
             f.write(f"{'='*80}\n")
-            for module_name, latency in _MODULE_WAIT_DT.items():
+            all_keys = set(_MODULE_WAIT_DT.keys()).union(_CALIBRATION_REPORTS.keys())
+            for key in sorted(all_keys):
+                latency = _MODULE_WAIT_DT.get(key)
+                reports = _CALIBRATION_REPORTS.get(key, [])
+                
                 if latency is not None:
-                    f.write(f"  - Module '{module_name}': {latency:.3f}s\n")
+                    f.write(f"  - Target '{key}': wait_dt = {latency:.3f}s\n")
                 else:
-                    f.write(f"  - Module '{module_name}': Default wait time\n")
+                    f.write(f"  - Target '{key}': Default wait time\n")
+                    
+                for rep in reports:
+                    act = rep["actuator"]
+                    sens = rep["sensor"]
+                    if rep["status"] == "timeout":
+                        f.write(f"    * [TIMEOUT] {act} -> {sens}\n")
+                    else:
+                        f.write(f"    * [SUCCESS] {act} -> {sens}: {rep['latency']:.3f}s\n")
             f.write("\n")
 
     print(f"\n[INFO] Session report created: {file_path}")

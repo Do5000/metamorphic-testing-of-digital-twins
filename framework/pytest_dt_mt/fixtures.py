@@ -31,6 +31,7 @@ def live_monitor(request, dt_adapter):
 import asyncio
 
 _MODULE_WAIT_DT = {}
+_CALIBRATION_REPORTS = {}
 
 @pytest_asyncio.fixture(scope="session")
 def wait_time(request):
@@ -90,6 +91,8 @@ async def dt_module_hooks(request):
             # Store the measured latency for this module after beforeAll completes!
             if hasattr(adapter, "_measured_latency") and adapter._measured_latency is not None:
                 _MODULE_WAIT_DT[request.module.__name__] = adapter._measured_latency
+            if hasattr(adapter, "_calibration_results"):
+                _CALIBRATION_REPORTS[request.module.__name__] = adapter._calibration_results
             await _wait() # Automatically wait after beforeAll
 
         yield # Let all tests in the module run

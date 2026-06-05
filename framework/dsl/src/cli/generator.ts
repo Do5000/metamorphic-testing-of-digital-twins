@@ -35,6 +35,7 @@ function extractElement(e: any): any {
             actuators: e.actuators ? e.actuators.map((a: any) => ({ deviceId: a.deviceId, feature: a.feature })) : [],
             sensors: e.sensors ? e.sensors.map((s: any) => ({ deviceId: s.deviceId, feature: s.feature })) : [],
             sourceActions: e.sourceActions ? e.sourceActions.map((v: any) => extractValue(v)) : [],
+            intermediateActions: e.intermediateActions ? e.intermediateActions.map((v: any) => extractValue(v)) : [],
             followupActions: e.followupActions ? e.followupActions.map((v: any) => extractValue(v)) : [],
             brightnessLevels: e.brightnessLevels ? e.brightnessLevels.map((v: any) => extractValue(v)) : []
         };

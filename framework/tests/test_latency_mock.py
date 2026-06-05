@@ -206,7 +206,7 @@ async def test_wait_dt_fixture_integration():
 
 @pytest.mark.asyncio
 async def test_stability_relation_validation():
-    from pytest_dt_mt.relations import stability
+    from pytest_dt_mt.relations.stability import StabilityRelation
     
     # 1. Test Success Case: fluctuation stays within tolerance
     adapter = DigitalTwinAdapter()
@@ -223,13 +223,10 @@ async def test_stability_relation_validation():
     adapter.get_feature_value = mock_get_val
     
     # This should pass (max 10.5 - min 9.8 = 0.7 <= tolerance 10% of ~10 = 1.0)
-    await stability.validate(
-        result=None,
-        dt_adapter=adapter,
-        sensor="sensor.test",
-        sensor_feature="state",
-        tolerance=0.10,
-        duration=0.5
+    relation_success = StabilityRelation(duration=1.5, tolerance=0.10, feature="state")
+    await relation_success.evaluate(
+        result=["sensor.test", "state"],
+        dt_adapter=adapter
     )
     print("\n[TEST SUCCESS] Stability passed within tolerance.")
     
@@ -247,14 +244,12 @@ async def test_stability_relation_validation():
     adapter_unstable.get_feature_value = mock_get_unstable_val
     
     # This should fail (max 12.5 - min 9.0 = 3.5 > tolerance 10% of ~10 = 1.0)
-    with pytest.raises(pytest.fail.Exception) as exc_info:
-        await stability.validate(
-            result=None,
-            dt_adapter=adapter_unstable,
-            sensor="sensor.test",
-            sensor_feature="state",
-            tolerance=0.10,
-            duration=0.5
+    from pytest_dt_mt.relations.base import MetamorphicRelationError
+    relation_fail = StabilityRelation(duration=1.5, tolerance=0.10, feature="state")
+    with pytest.raises(MetamorphicRelationError) as exc_info:
+        await relation_fail.evaluate(
+            result=["sensor.test", "state"],
+            dt_adapter=adapter_unstable
         )
-    assert "fluctuated too much" in str(exc_info.value)
+    assert "Fluctuation" in str(exc_info.value)
     print("[TEST SUCCESS] Stability failed correctly when exceeding tolerance.")

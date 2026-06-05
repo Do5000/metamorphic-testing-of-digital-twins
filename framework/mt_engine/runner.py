@@ -113,6 +113,26 @@ class DslRunner:
             
         followup_results = []
         if followup_actions:
+            relation_name = test_data.get("relation")
+            
+            # Revert to intermediate state to ensure clean physics for the followup (ONLY for invariance)
+            if relation_name == "invariance":
+                intermediate_actions = test_data.get("intermediateActions", [])
+                for idx, act in enumerate(actuators):
+                    # Use the provided intermediate value, fallback to "off" if not given
+                    if intermediate_actions:
+                        init_val = intermediate_actions[idx] if idx < len(intermediate_actions) else intermediate_actions[0]
+                    else:
+                        init_val = "off"
+                        
+                    await self.adapter.set_feature_value(act["deviceId"], act["feature"], init_val)
+                    
+                # Wait for physics to settle after reset
+                if manual_wait_time is not None:
+                    await asyncio.sleep(manual_wait_time)
+                else:
+                    await wait_dt_callable()
+            
             # Followup Test Case
             for idx, act in enumerate(actuators):
                 val = followup_actions[idx] if idx < len(followup_actions) else followup_actions[0]
@@ -171,7 +191,6 @@ class DslRunner:
     async def _execute_generation(self, test_data: Dict[str, Any], wait_dt_callable, verbose: bool):
         actuators = test_data.get("actuators", [])
         sensors = test_data.get("sensors", [])
-        samples = test_data.get("historicalSamples", 100)
         output_file = test_data.get("historicalFile", "sensor_profile.json")
         
         if not actuators or not sensors:
@@ -183,6 +202,10 @@ class DslRunner:
             steps = test_data["brightnessLevels"]
         else:
             steps = [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 30, 31, 32, 33, 34, 35, 40, 41, 42, 43, 44, 45, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+        
+        samples = test_data.get("historicalSamples")
+        if samples is None:
+            samples = len(steps)
         
         profile = []
         for step_val in steps:

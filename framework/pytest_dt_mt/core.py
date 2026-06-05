@@ -162,21 +162,15 @@ class DigitalTwinAdapter:
         val_str = str(val).lower()
         exp_str = str(expected_value).lower()
         
-        # Handle Ditto/HomeAssistant binary state mapping (1/0 == on/off)
         match = (val_str == exp_str)
-        if not match:
-            if exp_str == "on" and val_str in ["1", "1.0", "true"]: match = True
-            elif exp_str == "off" and val_str in ["0", "0.0", "false"]: match = True
-            elif val_str == "on" and exp_str in ["1", "1.0", "true"]: match = True
-            elif val_str == "off" and exp_str in ["0", "0.0", "false"]: match = True
 
         if not match:
             if skip_message is None:
-                skip_message = f"Precondition failed: '{device_id}' ({feature_name}) is '{val}', expected '{expected_value}'"
+                skip_message = f"Precondition failed: '{device_id}' ({feature_name}) is '{val}'"
             print(f"      [PRECONDITION FAILED] {skip_message}")
             raise PreconditionFailedError(skip_message)
         else:
-            print(f"      [PRECONDITION MET] '{device_id}' ({feature_name}) is '{val}' (matches expected '{expected_value}')")
+            print(f"      [PRECONDITION MET] '{device_id}' ({feature_name}) is '{val}'")
 
     async def measure_latency(self, actuator, actuator_feature, val_off, val_on, sensor, sensor_feature, tolerance_factor=1.5, add_seconds=1.0, timeout=15.0, min_change_percent=None, runs=1):
         """

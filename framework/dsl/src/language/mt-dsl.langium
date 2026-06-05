@@ -41,6 +41,7 @@ TestDefinition:
         ('sensors' '[' (sensors+=DeviceFeature (',' sensors+=DeviceFeature)*)? ']')?
         
         ('source_action' '[' (sourceActions+=Value (',' sourceActions+=Value)*)? ']')?
+        ('intermediate_action' '[' (intermediateActions+=Value (',' intermediateActions+=Value)*)? ']')?
         ('followup_action' '[' (followupActions+=Value (',' followupActions+=Value)*)? ']')?
         ('brightness_levels' ('=')? '[' (brightnessLevels+=Value (',' brightnessLevels+=Value)*)? ']')?
     '}';

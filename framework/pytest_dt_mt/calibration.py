@@ -85,8 +85,11 @@ async def measure_latency(
             print(f"      [LATENCY CALIBRATION]{run_label} SUCCESS: Measured latency = {measured_latency:.3f}s")
             latencies.append(measured_latency)
         else:
-            print(f"      [LATENCY CALIBRATION]{run_label} WARNING: Calibration timed out! No sensor change detected within {timeout}s.")
+            print(f"      [LATENCY CALIBRATION]{run_label} ERROR: Calibration timed out! No sensor change detected within {timeout}s.")
     
+    if not hasattr(adapter, "_calibration_results"):
+        adapter._calibration_results = []
+
     if latencies:
         max_measured = max(latencies)
         calculated_wait = (max_measured * tolerance_factor) + add_seconds
@@ -100,12 +103,30 @@ async def measure_latency(
             adapter._measured_latency = calculated_wait
         else:
             adapter._measured_latency = max(adapter._measured_latency, calculated_wait)
+
+        adapter._calibration_results.append({
+            "actuator": f"{actuator} ({actuator_feature})",
+            "sensor": f"{sensor} ({sensor_feature})",
+            "status": "success",
+            "latency": calculated_wait
+        })
     else:
-        print(f"      [LATENCY CALIBRATION] WARNING: All calibration runs timed out.")
+        print(f"      [LATENCY CALIBRATION] ERROR: All calibration runs timed out.")
+        import warnings
+        warnings.warn(
+            f"Latency calibration timed out for actuator '{actuator}' and sensor '{sensor}'!",
+            UserWarning
+        )
         if getattr(adapter, "_measured_latency", None) is None:
             print(f"      [LATENCY CALIBRATION] Using default/fallback wait time.")
             adapter._measured_latency = None
         else:
             print(f"      [LATENCY CALIBRATION] Retaining previously measured maximum wait time of {adapter._measured_latency:.3f}s.")
+            
+        adapter._calibration_results.append({
+            "actuator": f"{actuator} ({actuator_feature})",
+            "sensor": f"{sensor} ({sensor_feature})",
+            "status": "timeout"
+        })
     
     return adapter._measured_latency
