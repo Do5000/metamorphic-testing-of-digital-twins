@@ -9,3 +9,4 @@ syntaxes/
 !package-lock.json
 !tsconfig.json
 !langium-config.json
+generated/

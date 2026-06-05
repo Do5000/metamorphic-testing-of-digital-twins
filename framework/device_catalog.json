@@ -118,6 +118,13 @@
         ],
         "attributes": {}
     },
+    "sun.sun": {
+        "full_id": "at.uibk.ut.tenants:sun.sun",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
     "sensor.sun_next_dawn": {
         "full_id": "at.uibk.ut.tenants:sensor.sun_next_dawn",
         "features": [
@@ -155,6 +162,13 @@
     },
     "sensor.sun_next_setting": {
         "full_id": "at.uibk.ut.tenants:sensor.sun_next_setting",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "media_player.bose_amelie_2": {
+        "full_id": "at.uibk.ut.tenants:media_player.bose_amelie_2",
         "features": [
             "state"
         ],
@@ -265,64 +279,8 @@
         ],
         "attributes": {}
     },
-    "media_player.bose_amelie_2": {
-        "full_id": "at.uibk.ut.tenants:media_player.bose_amelie_2",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.wohnzimmer_ein": {
-        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_ein",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.wohnzimmer_aus": {
-        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_aus",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.schlafzimmer_ein": {
-        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_ein",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.schlafzimmer_aus": {
-        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_aus",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.luften": {
-        "full_id": "at.uibk.ut.tenants:automation.luften",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "media_player.bose_amelie": {
-        "full_id": "at.uibk.ut.tenants:media_player.bose_amelie",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
     "binary_sensor.rpi_power_status": {
         "full_id": "at.uibk.ut.tenants:binary_sensor.rpi_power_status",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "tts.google_ubersetzer_en_com_google_translate_en_com": {
-        "full_id": "at.uibk.ut.tenants:tts.google_ubersetzer_en_com_google_translate_en_com",
         "features": [
             "state"
         ],
@@ -398,6 +356,55 @@
         ],
         "attributes": {}
     },
+    "automation.wohnzimmer_ein": {
+        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_ein",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.wohnzimmer_aus": {
+        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_aus",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.schlafzimmer_ein": {
+        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_ein",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.schlafzimmer_aus": {
+        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_aus",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.luften": {
+        "full_id": "at.uibk.ut.tenants:automation.luften",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "media_player.bose_amelie": {
+        "full_id": "at.uibk.ut.tenants:media_player.bose_amelie",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "tts.google_ubersetzer_en_com_google_translate_en_com": {
+        "full_id": "at.uibk.ut.tenants:tts.google_ubersetzer_en_com_google_translate_en_com",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
     "sensor.esp_c3_temperatur": {
         "full_id": "at.uibk.ut.tenants:sensor.esp_c3_temperatur",
         "features": [
@@ -414,6 +421,27 @@
     },
     "sensor.esp_c3_helligkeit": {
         "full_id": "at.uibk.ut.tenants:sensor.esp_c3_helligkeit",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "sensor.esp_c6_temperatur": {
+        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_temperatur",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "sensor.esp_c6_luftfeuchtigkeit": {
+        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_luftfeuchtigkeit",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "sensor.esp_c6_helligkeit": {
+        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_helligkeit",
         "features": [
             "state"
         ],
@@ -513,62 +541,6 @@
         ],
         "attributes": {}
     },
-    "sensor.esp_c6_temperatur": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_temperatur",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.esp_c6_luftfeuchtigkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_luftfeuchtigkeit",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.esp_c6_helligkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_helligkeit",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.arbeitsplatz_helligkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_helligkeit",
-        "features": [
-            "config"
-        ],
-        "attributes": {}
-    },
-    "sensor.arbeitsplatz_temperatur": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_temperatur",
-        "features": [
-            "config"
-        ],
-        "attributes": {}
-    },
-    "sensor.arbeitsplatz_luftfeuchtigkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_luftfeuchtigkeit",
-        "features": [
-            "config"
-        ],
-        "attributes": {}
-    },
-    "sensor.arbeitsplatz_fernbedienung": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_fernbedienung",
-        "features": [
-            "config"
-        ],
-        "attributes": {}
-    },
-    "sensor.arbeitsplatz_helligkeit_2": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_helligkeit_2",
-        "features": [
-            "config"
-        ],
-        "attributes": {}
-    },
     "automation.sonnenuntergang": {
         "full_id": "at.uibk.ut.tenants:automation.sonnenuntergang",
         "features": [
@@ -608,6 +580,62 @@
         "full_id": "at.uibk.ut.tenants:script.sonnenuntergang",
         "features": [
             "state"
+        ],
+        "attributes": {}
+    },
+    "binary_sensor.iphone_von_dorian_focus": {
+        "full_id": "at.uibk.ut.tenants:binary_sensor.iphone_von_dorian_focus",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "automation.fokus": {
+        "full_id": "at.uibk.ut.tenants:automation.fokus",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "scene.fokus": {
+        "full_id": "at.uibk.ut.tenants:scene.fokus",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "sensor.arbeitsplatz_helligkeit": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_helligkeit",
+        "features": [
+            "config"
+        ],
+        "attributes": {}
+    },
+    "sensor.arbeitsplatz_temperatur": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_temperatur",
+        "features": [
+            "config"
+        ],
+        "attributes": {}
+    },
+    "sensor.arbeitsplatz_luftfeuchtigkeit": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_luftfeuchtigkeit",
+        "features": [
+            "config"
+        ],
+        "attributes": {}
+    },
+    "sensor.arbeitsplatz_fernbedienung": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_fernbedienung",
+        "features": [
+            "config"
+        ],
+        "attributes": {}
+    },
+    "sensor.arbeitsplatz_helligkeit_2": {
+        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_helligkeit_2",
+        "features": [
+            "config"
         ],
         "attributes": {}
     }
