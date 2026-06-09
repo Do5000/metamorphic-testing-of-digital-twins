@@ -253,3 +253,79 @@ async def test_stability_relation_validation():
         )
     assert "Fluctuation" in str(exc_info.value)
     print("[TEST SUCCESS] Stability failed correctly when exceeding tolerance.")
+
+@pytest.mark.asyncio
+async def test_inverted_relation_validation():
+    from pytest_dt_mt.plugin import validate_mr_result
+    
+    # 1. Monotonicity normally passes if followup >= source (e.g. 10.0 -> 15.0)
+    # If inverted (not=True), it should FAIL because the original relation passed.
+    result_passing = [10.0, 15.0]
+    
+    with pytest.raises(pytest.fail.Exception) as exc_info:
+        await validate_mr_result(result_passing, dt_adapter=None, type="monotonicity", **{"not": True})
+    assert "expected to fail but passed" in str(exc_info.value)
+    assert "Details: [MR CHECK] Monotonicity PASSED:" in str(exc_info.value)
+    
+    # 2. Monotonicity normally fails if followup < source (e.g. 15.0 -> 10.0)
+    # If inverted (not=True), it should PASS (not raise any error) because the original relation failed.
+    result_failing = [15.0, 10.0]
+    await validate_mr_result(result_failing, dt_adapter=None, type="monotonicity", **{"not": True})
+    
+    print("\n[TEST SUCCESS] Inverted Monotonicity relation successfully validated!")
+
+@pytest.mark.asyncio
+async def test_dsl_runner_inverted_relation():
+    from mt_engine.runner import DslRunner
+    
+    # Arrange: Mock DigitalTwinAdapter
+    adapter = DigitalTwinAdapter()
+    adapter.set_feature_value = AsyncMock(return_value=200)
+    
+    # We want a failing Monotonicity relation normally: e.g. followup goes down
+    # so we return 100 for source and 50 for followup.
+    sensor_vals = [100.0, 50.0]
+    idx = 0
+    async def mock_get_val(device_id, feature_name, silent=True):
+        nonlocal idx
+        val = sensor_vals[idx % len(sensor_vals)]
+        idx += 1
+        return val
+    adapter.get_feature_value = mock_get_val
+    adapter.validate_device = MagicMock()
+    
+    test_data = {
+        "name": "test_monotony_not",
+        "relation": "monotonicity",
+        "not": True,
+        "actuators": [{"deviceId": "light.test", "feature": "state"}],
+        "sensors": [{"deviceId": "sensor.test", "feature": "state"}],
+        "sourceActions": ["on"],
+        "followupActions": ["off"],
+    }
+    
+    runner = DslRunner(adapter, {})
+    
+    # Since 50 < 100, monotonicity fails. But since "not": True, execute_test should PASS.
+    await runner.execute_test(test_data, AsyncMock())
+    
+    # Let's also check that if the relation unexpectedly passes (e.g. sensor values increase),
+    # then with "not": True it should FAIL.
+    sensor_vals_passing = [50.0, 100.0] # 100 >= 50
+    idx_passing = 0
+    async def mock_get_val_passing(device_id, feature_name, silent=True):
+        nonlocal idx_passing
+        val = sensor_vals_passing[idx_passing % len(sensor_vals_passing)]
+        idx_passing += 1
+        return val
+    adapter.get_feature_value = mock_get_val_passing
+    
+    from pytest_dt_mt.relations.base import MetamorphicRelationError
+    with pytest.raises(MetamorphicRelationError) as exc_info:
+        await runner.execute_test(test_data, AsyncMock())
+    assert "expected to fail but passed" in str(exc_info.value)
+    assert "Details: [MR CHECK] Monotonicity PASSED:" in str(exc_info.value)
+    
+    print("\n[TEST SUCCESS] DslRunner inverted relation execution successfully validated!")
+
+

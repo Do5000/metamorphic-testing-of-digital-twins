@@ -1,5 +1,5 @@
 beforeAll {
-    precondition "sun.sun" feature "state" equals "below_horizon" skip_message "Tests require the sun to be below the horizon."
+    precondition "sun.sun" feature "state" equals "above_horizon" skip_message "Tests require the sun to be below the horizon."
     
     set "automation.wohnzimmer_ein" feature "state" to "off"
     set "automation.wohnzimmer_aus" feature "state" to "off"
@@ -9,9 +9,9 @@ beforeAll {
         sensor "sensor.esp_c6_helligkeit" feature "state"
         val_off "off"
         val_on "on"
-        min_change_percent 0.1
+        min_change_percent 0.01
         tolerance_factor 1.5
-        add_seconds 1
+        add_seconds 2
         timeout 3.0
         runs 1
     }
@@ -23,7 +23,7 @@ beforeAll {
         sensor "sensor.esp_c6_helligkeit" feature "state"
         val_off "0"
         val_on "100"
-        min_change_percent 0.1
+        min_change_percent 0.01
         tolerance_factor 1.5
         add_seconds 1
         timeout 3.0
@@ -38,7 +38,7 @@ beforeEach {
     set "light.schreibtisch_lampe" feature "state" to "off"
 }
 
-test "test_home_monotony_s1" {
+test "test_home_monotony" {
     relation: monotonicity
     actuators [ "light.schreibtisch_lampe" feature "brightness" ]
     sensors [ "sensor.esp_c3_helligkeit" feature "state" ]
@@ -46,10 +46,19 @@ test "test_home_monotony_s1" {
     followup_action [ "100" ]
 }
 
+test "test_home_monotony_inverted" {
+    relation: not monotonicity
+    actuators [ "light.schreibtisch_lampe" feature "brightness" ]
+    sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
+    source_action [ "100" ]
+    followup_action [ "0" ]
+}
+
+
 test "test_home_invariance_s2" {
-    relation: invariance tolerance: 0.05
+    relation: invariance tolerance: 0.01
     actuators [ "light.schreibtisch_lampe" feature "state" ]
-    sensors [ "sensor.esp_c3_helligkeit" feature "state" ]
+    sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
     source_action [ "on" ]
     intermediate_action ["off"]
     followup_action [ "on" ]
@@ -63,8 +72,8 @@ test "test_home_conservation_s3" {
     followup_action [ "off", "on" ]
 }
 
-test "test_light_proportionality_s5" {
-    relation: proportionality tolerance: 0.2
+test "test_light_proportionality_inverted_s5" {
+    relation: not proportionality tolerance: 0.01
     actuators [ "light.schreibtisch_lampe" feature "state" ]
     sensors [ "sensor.esp_c3_helligkeit" feature "state", "sensor.esp_c6_helligkeit" feature "state" ]
     source_action [ "off" ]

@@ -143,15 +143,63 @@ async def validate_mr_result(result, dt_adapter=None, **kwargs):
 
     err_msg = None
     if relation:
+        is_inverted = kwargs.get("not", False) or kwargs.get("inverted", False) or kwargs.get("not_", False)
+        clean_pass_msg = ""
         try:
-            if inspect.iscoroutinefunction(relation.evaluate):
-                await relation.evaluate(result, dt_adapter=dt_adapter)
+            if is_inverted:
+                import contextlib
+                import sys
+                
+                class InversionRedirector:
+                    def __init__(self, original):
+                        self.original = original
+                        self.captured = []
+                        self.in_monitor_line = False
+                    def write(self, data):
+                        if not data:
+                            return
+                        if "[LIVE MONITOR]" in data:
+                            self.in_monitor_line = True
+                        if self.in_monitor_line:
+                            self.original.write(data)
+                        else:
+                            self.captured.append(data)
+                        if data.endswith("\n"):
+                            self.in_monitor_line = False
+                    def flush(self):
+                        self.original.flush()
+                        
+                redirector = InversionRedirector(sys.stdout)
+                with contextlib.redirect_stdout(redirector):
+                    if inspect.iscoroutinefunction(relation.evaluate):
+                        await relation.evaluate(result, dt_adapter=dt_adapter)
+                    else:
+                        relation.evaluate(result, dt_adapter=dt_adapter)
+                
+                full_text = "".join(redirector.captured)
+                for line in full_text.split("\n"):
+                    if "[MR CHECK]" in line and "PASSED" in line:
+                        clean_pass_msg = line.strip()
+                        break
             else:
-                relation.evaluate(result, dt_adapter=dt_adapter)
+                if inspect.iscoroutinefunction(relation.evaluate):
+                    await relation.evaluate(result, dt_adapter=dt_adapter)
+                else:
+                    relation.evaluate(result, dt_adapter=dt_adapter)
+            
+            if is_inverted:
+                msg = f"Metamorphic Relation ({mr_type}) expected to fail but passed."
+                if clean_pass_msg:
+                    msg += f" Details: {clean_pass_msg}"
+                err_msg = msg
         except MetamorphicRelationError as e:
-            err_msg = str(e)
+            if is_inverted:
+                print(f"\n      [MR CHECK] Inverted {mr_type} PASSED: (Original failed as expected: {e})")
+            else:
+                err_msg = str(e)
             
     if err_msg:
+        print(f"\n      [MR CHECK] Metamorphic Relation ({mr_type if mr_type else 'unknown'}) failed: {err_msg}")
         pytest.fail(err_msg, pytrace=False)
 
 @pytest.hookimpl(hookwrapper=True)

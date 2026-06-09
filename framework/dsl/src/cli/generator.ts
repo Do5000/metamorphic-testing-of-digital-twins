@@ -26,6 +26,7 @@ function extractElement(e: any): any {
             type: 'TestDefinition',
             name: e.name,
             relation: e.relation,
+            not: !!e.not,
             tolerance: e.tolerance,
             duration: e.duration,
             profile: e.profile,

@@ -176,17 +176,75 @@ class DslRunner:
             kwargs["duration"] = test_data["duration"]
         if test_data.get("profile") is not None:
             kwargs["profile"] = test_data["profile"]
+        if test_data.get("not") is not None:
+            kwargs["not"] = test_data["not"]
             
         import inspect
         relation_instance = relation_class(**kwargs)
+        is_inverted = kwargs.get("not", False)
+        original_failed = False
+        original_error = None
+        clean_pass_msg = ""
         try:
-            if inspect.iscoroutinefunction(relation_instance.evaluate):
-                await relation_instance.evaluate(eval_result, dt_adapter=self.adapter)
+            if is_inverted:
+                import contextlib
+                import sys
+                
+                class InversionRedirector:
+                    def __init__(self, original):
+                        self.original = original
+                        self.captured = []
+                        self.in_monitor_line = False
+                    def write(self, data):
+                        if not data:
+                            return
+                        if "[LIVE MONITOR]" in data:
+                            self.in_monitor_line = True
+                        if self.in_monitor_line:
+                            self.original.write(data)
+                        else:
+                            self.captured.append(data)
+                        if data.endswith("\n"):
+                            self.in_monitor_line = False
+                    def flush(self):
+                        self.original.flush()
+                        
+                redirector = InversionRedirector(sys.stdout)
+                with contextlib.redirect_stdout(redirector):
+                    if inspect.iscoroutinefunction(relation_instance.evaluate):
+                        await relation_instance.evaluate(eval_result, dt_adapter=self.adapter)
+                    else:
+                        relation_instance.evaluate(eval_result, dt_adapter=self.adapter)
+                
+                full_text = "".join(redirector.captured)
+                for line in full_text.split("\n"):
+                    if "[MR CHECK]" in line and "PASSED" in line:
+                        clean_pass_msg = line.strip()
+                        break
             else:
-                relation_instance.evaluate(eval_result, dt_adapter=self.adapter)
-            print(f"      [DSL] {relation_name} Relation Passed successfully!")
+                if inspect.iscoroutinefunction(relation_instance.evaluate):
+                    await relation_instance.evaluate(eval_result, dt_adapter=self.adapter)
+                else:
+                    relation_instance.evaluate(eval_result, dt_adapter=self.adapter)
         except MetamorphicRelationError as e:
-            raise e
+            original_failed = True
+            original_error = e
+
+        if is_inverted:
+            if original_failed:
+                print(f"      [DSL] Inverted {relation_name} Relation Passed successfully! (Original failed as expected: {original_error})")
+            else:
+                msg = f"Metamorphic Relation ({relation_name}) expected to fail but passed."
+                if clean_pass_msg:
+                    msg += f" Details: {clean_pass_msg}"
+                print(f"      [DSL] {msg}")
+                raise MetamorphicRelationError(msg)
+        else:
+            if original_failed:
+                print(f"      [DSL] Metamorphic Relation ({relation_name}) failed: {original_error}")
+                raise original_error
+            else:
+                print(f"      [DSL] {relation_name} Relation Passed successfully!")
 
     async def _execute_generation(self, test_data: Dict[str, Any], wait_dt_callable, verbose: bool):
         actuators = test_data.get("actuators", [])

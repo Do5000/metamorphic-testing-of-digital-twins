@@ -35,7 +35,7 @@ MeasureLatency:
 
 TestDefinition:
     'test' name=STRING '{'
-        'relation' ':' relation=ID ('tolerance' ':' tolerance=NUMBER)? ('duration' ':' duration=NUMBER)? ('profile' ':' profile=STRING)? ('historical_samples' ':' historicalSamples=NUMBER)? ('historical_file' ':' historicalFile=STRING)? ('wait_time' ':' waitTime=NUMBER)?
+        'relation' ':' (not?='not')? relation=ID ('tolerance' ':' tolerance=NUMBER)? ('duration' ':' duration=NUMBER)? ('profile' ':' profile=STRING)? ('historical_samples' ':' historicalSamples=NUMBER)? ('historical_file' ':' historicalFile=STRING)? ('wait_time' ':' waitTime=NUMBER)?
         
         ('actuators' '[' (actuators+=DeviceFeature (',' actuators+=DeviceFeature)*)? ']')?
         ('sensors' '[' (sensors+=DeviceFeature (',' sensors+=DeviceFeature)*)? ']')?
