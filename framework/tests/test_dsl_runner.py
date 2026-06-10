@@ -105,6 +105,7 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
     runner = DslRunner(dt_adapter, full_data)
     
     # Run beforeAll hooks from the same file IF they haven't run yet
+    # Run beforeAll hooks from the same file IF they haven't run yet
     if not full_data.get("_before_all_run", False):
         for el in full_data.get("elements", []):
             if el["type"] == "LifecycleHook" and el.get("hookType") == "beforeAll":
@@ -114,46 +115,53 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
                     SKIPPED_FILES[filepath] = f"Precondition in beforeAll failed: {e}"
                     pytest.skip(SKIPPED_FILES[filepath])
         full_data["_before_all_run"] = True
-        
-        # Store the measured latency and calibration results for the summary report
+
+    try:
+        # Run beforeEach hooks from the same file
+        for el in full_data.get("elements", []):
+            if el["type"] == "LifecycleHook" and el.get("hookType") == "beforeEach":
+                try:
+                    await runner.execute_hook(el)
+                except PreconditionFailedError as e:
+                    pytest.skip(f"Precondition in beforeEach failed: {e}")
+                
+        # Create a dynamic wait wrapper that prioritizes the adapter's measured latency
+        async def dynamic_wait():
+            if hasattr(dt_adapter, "_measured_latency") and dt_adapter._measured_latency is not None:
+                await asyncio.sleep(dt_adapter._measured_latency)
+            else:
+                await wait_dt()
+
+        # Run the test definition
+        verbose = pytestconfig.getoption("--monitor")
+        err_msg = None
+        try:
+            await runner.execute_test(test_data, dynamic_wait, verbose=verbose)
+        except MetamorphicRelationError as e:
+            err_msg = str(e)
+            
+        if err_msg:
+            pytest.fail(err_msg, pytrace=False)
+    finally:
+        # Run afterEach hooks from the same file
+        for el in full_data.get("elements", []):
+            if el["type"] == "LifecycleHook" and el.get("hookType") == "afterEach":
+                try:
+                    await runner.execute_hook(el)
+                except Exception as e:
+                    print(f"\n[ERROR] Error in afterEach hook: {e}")
+                    
+        # Store/update the measured latency and calibration results for the summary report
         from pytest_dt_mt.fixtures import _MODULE_WAIT_DT, _CALIBRATION_REPORTS
         dsl_key = f"DSL: {os.path.basename(filepath)}"
         if hasattr(dt_adapter, "_measured_latency") and dt_adapter._measured_latency is not None:
-            _MODULE_WAIT_DT[dsl_key] = dt_adapter._measured_latency
-        if hasattr(dt_adapter, "_calibration_results"):
-            _CALIBRATION_REPORTS[dsl_key] = dt_adapter._calibration_results
-     
-    
-    # Run beforeEach hooks from the same file
-    for el in full_data.get("elements", []):
-        if el["type"] == "LifecycleHook" and el.get("hookType") == "beforeEach":
-            try:
-                await runner.execute_hook(el)
-            except PreconditionFailedError as e:
-                pytest.skip(f"Precondition in beforeEach failed: {e}")
-            
-    # Create a dynamic wait wrapper that prioritizes the adapter's measured latency
-    async def dynamic_wait():
-        if hasattr(dt_adapter, "_measured_latency") and dt_adapter._measured_latency is not None:
-            await asyncio.sleep(dt_adapter._measured_latency)
-        else:
-            await wait_dt()
-
-    # Run the test definition
-    verbose = pytestconfig.getoption("--monitor")
-    err_msg = None
-    try:
-        await runner.execute_test(test_data, dynamic_wait, verbose=verbose)
-    except MetamorphicRelationError as e:
-        err_msg = str(e)
-        
-    if err_msg:
-        pytest.fail(err_msg, pytrace=False)
-    
-    # Run afterEach hooks from the same file
-    for el in full_data.get("elements", []):
-        if el["type"] == "LifecycleHook" and el.get("hookType") == "afterEach":
-            await runner.execute_hook(el)
+            _MODULE_WAIT_DT[dsl_key] = max(_MODULE_WAIT_DT.get(dsl_key, 0.0), dt_adapter._measured_latency)
+        if hasattr(dt_adapter, "_calibration_results") and dt_adapter._calibration_results:
+            if dsl_key not in _CALIBRATION_REPORTS:
+                _CALIBRATION_REPORTS[dsl_key] = []
+            for res in dt_adapter._calibration_results:
+                if res not in _CALIBRATION_REPORTS[dsl_key]:
+                    _CALIBRATION_REPORTS[dsl_key].append(res)
 
 @pytest_asyncio.fixture(scope="session", autouse=True)
 async def dsl_after_all_teardown():

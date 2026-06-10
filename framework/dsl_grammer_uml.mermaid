@@ -1,0 +1,83 @@
+classDiagram
+    direction TB
+    class Model {
+        +Element[] elements
+    }
+    class Element {
+        <<interface>>
+    }
+    class LifecycleHook {
+        +String type
+        +Statement[] statements
+    }
+    class Statement {
+        <<interface>>
+    }
+    class SetFeature {
+        +String actuator
+        +String feature
+        +Value value
+    }
+    class RequirePrecondition {
+        +String sensor
+        +String feature
+        +Value value
+        +String skipMessage
+    }
+    class MeasureLatency {
+        +String actuator
+        +String actuatorFeature
+        +String sensor
+        +String sensorFeature
+        +Value valOff
+        +Value valOn
+        +Double minChangePercent
+        +Double toleranceFactor
+        +Double addSeconds
+        +Double timeout
+        +Integer runs
+    }
+    class TestDefinition {
+        +String name
+        +Boolean not
+        +String relation
+        +Double tolerance
+        +Double duration
+        +String profile
+        +Integer historicalSamples
+        +String historicalFile
+        +Double waitTime
+        +DeviceFeature[] actuators
+        +DeviceFeature[] sensors
+        +Value[] sourceActions
+        +Value[] intermediateActions
+        +Value[] followupActions
+        +Value[] brightnessLevels
+    }
+    class DeviceFeature {
+        +String deviceId
+        +String feature
+    }
+    class Value {
+        +String stringValue
+        +Double numValue
+        +Boolean boolValue
+    }
+
+    Model *-- Element
+    Element <|-- TestDefinition
+    Element <|-- LifecycleHook
+    LifecycleHook *-- Statement
+    Statement <|-- SetFeature
+    Statement <|-- RequirePrecondition
+    Statement <|-- MeasureLatency
+    SetFeature *-- Value
+    RequirePrecondition *-- Value
+    MeasureLatency *-- Value : valOff
+    MeasureLatency *-- Value : valOn
+    TestDefinition *-- DeviceFeature : actuators
+    TestDefinition *-- DeviceFeature : sensors
+    TestDefinition *-- Value : sourceActions
+    TestDefinition *-- Value : intermediateActions
+    TestDefinition *-- Value : followupActions
+    TestDefinition *-- Value : brightnessLevels

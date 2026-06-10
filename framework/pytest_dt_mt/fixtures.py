@@ -139,3 +139,15 @@ async def dt_function_hooks(request, dt_adapter, wait_dt):
                 await wait_dt()
             except Exception as e:
                 print(f"\n[ERROR] Error in afterEach hook: {e}")
+                
+        # Store/update the measured latency and calibration results for the summary report
+        module_name = request.module.__name__
+        if module_name != "test_dsl_runner":
+            if hasattr(dt_adapter, "_measured_latency") and dt_adapter._measured_latency is not None:
+                _MODULE_WAIT_DT[module_name] = max(_MODULE_WAIT_DT.get(module_name, 0.0), dt_adapter._measured_latency)
+            if hasattr(dt_adapter, "_calibration_results") and dt_adapter._calibration_results:
+                if module_name not in _CALIBRATION_REPORTS:
+                    _CALIBRATION_REPORTS[module_name] = []
+                for res in dt_adapter._calibration_results:
+                    if res not in _CALIBRATION_REPORTS[module_name]:
+                        _CALIBRATION_REPORTS[module_name].append(res)
