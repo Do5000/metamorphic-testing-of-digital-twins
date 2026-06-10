@@ -12,14 +12,14 @@ from pytest_dt_mt.calibration import measure_latency
 
 # Append parent dir so ut_helpers can be imported easily
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from ut_params import UT_TENANT, DITTO_USER, DITTO_PW
+from ut_params import UT_TENANT, DITTO_USER, DITTO_PW, DITTO_NGINX_IP
 
 class DigitalTwinAdapter:
     """
     Adapter to interface with the Digital Twin backend (Ditto).
     Uses a persistent WebSocket to listen for events and HTTP for initial state.
     """
-    def __init__(self, http_url="http://127.0.0.1:8083", ws_url="ws://127.0.0.1:8082/ws/2"):
+    def __init__(self, http_url=f"http://{DITTO_NGINX_IP}:8083", ws_url=f"ws://{DITTO_NGINX_IP}:8082/ws/2"):
         self.http_url = http_url
         self.ws_url = ws_url
         self._ws = None
