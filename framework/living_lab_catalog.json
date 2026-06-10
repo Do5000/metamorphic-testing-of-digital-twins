@@ -1,0 +1,127 @@
+{
+    "cover.cover_sueden": {
+        "full_id": "at.uibk.ut.tenants:cover.cover_sueden",
+        "features": [
+            "current_position",
+            "current_tilt_position"
+        ],
+        "attributes": {}
+    },
+    "cover.cover_norden": {
+        "full_id": "at.uibk.ut.tenants:cover.cover_norden",
+        "features": [
+            "current_position",
+            "current_tilt_position"
+        ],
+        "attributes": {}
+    },
+    "cover.fenster": {
+        "full_id": "at.uibk.ut.tenants:cover.fenster",
+        "features": [
+            "current_position"
+        ],
+        "attributes": {}
+    },
+    "light.sueden_fenster": {
+        "full_id": "at.uibk.ut.tenants:light.sueden_fenster",
+        "features": [
+            "brightness",
+            "state"
+        ],
+        "attributes": {}
+    },
+    "light.norden_fenster": {
+        "full_id": "at.uibk.ut.tenants:light.norden_fenster",
+        "features": [
+            "brightness",
+            "state"
+        ],
+        "attributes": {}
+    },
+    "light.sueden_tuer": {
+        "full_id": "at.uibk.ut.tenants:light.sueden_tuer",
+        "features": [
+            "brightness",
+            "state"
+        ],
+        "attributes": {}
+    },
+    "light.norden_tuer": {
+        "full_id": "at.uibk.ut.tenants:light.norden_tuer",
+        "features": [
+            "brightness",
+            "state"
+        ],
+        "attributes": {}
+    },
+    "switch.licht_schalter": {
+        "full_id": "at.uibk.ut.tenants:switch.licht_schalter",
+        "features": [
+            "state"
+        ],
+        "attributes": {}
+    },
+    "Illuminance.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:Illuminance.Room518a_Ceiling",
+        "features": [
+            "Illuminance"
+        ],
+        "attributes": {}
+    },
+    "TSL1_LowerScreen_spec.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_spec.Room518a_WP1",
+        "features": [
+            "TSL1_LowerScreen_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL1_LowerScreen_spec.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_spec.Room518a_WP2",
+        "features": [
+            "TSL1_LowerScreen_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL2_Keyboard_spec.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_spec.Room518a_WP1",
+        "features": [
+            "TSL2_Keyboard_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL2_Keyboard_spec.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_spec.Room518a_WP2",
+        "features": [
+            "TSL2_Keyboard_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL3_UpperScreen_spec.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_spec.Room518a_WP1",
+        "features": [
+            "TSL3_UpperScreen_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL3_UpperScreen_spec.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_spec.Room518a_WP2",
+        "features": [
+            "TSL3_UpperScreen_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL4_UpperScreen_spec.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_spec.Room518a_WP1",
+        "features": [
+            "TSL4_UpperScreen_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL4_UpperScreen_spec.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_spec.Room518a_WP2",
+        "features": [
+            "TSL4_UpperScreen_spec"
+        ],
+        "attributes": {}
+    }
+}
