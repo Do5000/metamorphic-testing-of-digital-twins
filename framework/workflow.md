@@ -22,27 +22,40 @@ Always: source venv/bin/activate in /framework!!!!
         python set_cover_ditto.py cover.cover_sueden 50 30 (Position and Tilt)
         python set_cover_ditto.py cover.cover_sueden 100 40
 
-### Workflow Testing
-    pytest mr/mt_light_invariance_test.py -v -s --wait-time=5.0 --monitor 
-    pytest mr/mt_light_monotony_test.py -v -s --wait-time=5.0 --monitor 
-    pytest mr/mt_light_conservation_test.py -v -s --wait-time=5.0 --monitor 
-
-    pytest mr/ -v -s --wait-time=5.0 --monitor     (all tests)
-
-    pytest tests/test_home_lab.py -v -s --wait-time=5.0 --monitor 
-    pytest tests/test_living_lab.py -v -s --wait-time=5.0 --monitor 
-
-    
-
-
 ## Workflow Raspi Lab
 
     1) python3 ./translationunit_mockbackend_raspi.py
     2) python3 ./discover_catalog.py
     3) see all connected devices in device_catalog.json or http://localhost:8083/api/2/search/things
 
-## Workflow Substitution Relation
+## Flags
 
-    1) 
+    -k: select specific tests
+    -v: clean output (always required)
+    --capture=no: Turns off all capturing. You see everything live, but no output is saved for test reports
+    --capture=sys: Captures and saves all printed text, but you see nothing on your screen while tests run
+    --capture=tee-sys: Does both. Your print statements display live on your screen, and they are saved internally for test reports or plugins
+
+    --monitor: Prints LiveValues from the Sensors
+    --log: Creates a logfile
+
+### Example Options:
+#### Everything:
+    pytest tests/test_dsl_runner.py -k "test_home_lab"  -v --wait-time=6.0 --capture=tee-sys --monitor --log
+
+#### Without Logfile:
+    pytest tests/test_dsl_runner.py -k "test_home_lab"  -v --wait-time=6.0 --capture=tee-sys --monitor 
+
+#### Without LiveValues
+    pytest tests/test_dsl_runner.py -k "test_home_lab"  -v --wait-time=6.0 --capture=tee-sys --log
+
+#### Minimal Output with log (attention: without --capture=tee-sys --capture=sys --log can't save anything)
+    pytest tests/test_dsl_runner.py -k "test_home_lab"  -v --wait-time=6.0 --capture=sys --log
+
+#### Minimal Output (attention: without --capture=tee-sys or --capture=sys --log can't save anything)
+    pytest tests/test_dsl_runner.py -k "test_home_lab"  -v --wait-time=6.0 
+
+#### Only Terminal Output (attention: without --capture=tee-sys or --capture=sys --log can't save anything ; with --log: only PASSED/FAILED Result is saved in a logfile)
+    pytest tests/test_dsl_runner.py -k "test_home_lab"  -v --wait-time=6.0  --capture=no
 
     

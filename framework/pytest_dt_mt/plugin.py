@@ -7,18 +7,15 @@ import sys
 import datetime
 import json
 
-from pytest_dt_mt.relations.monotonicity import MonotonicityRelation
-from pytest_dt_mt.relations.invariance import InvarianceRelation
-from pytest_dt_mt.relations.conservation import ConservationRelation
-from pytest_dt_mt.relations.proportionality import ProportionalityRelation
-from pytest_dt_mt.relations.substitution import SubstitutionRelation
-from pytest_dt_mt.relations.stability import StabilityRelation
+from pytest_dt_mt.relations import get_relation_class
 from pytest_dt_mt.relations.base import MetamorphicRelationError
 
 def pytest_addoption(parser):
     parser.addoption("--wait-time", action="store", default=30.0, type=float, help="Global wait time in seconds for physical simulation")
     parser.addoption("--monitor", action="store_true", help="Enable live printing of sensor values during tests")
     parser.addoption("--log", action="store_true", help="Enable detailed logging into a session-based folder")
+
+
 
 def pytest_configure(config):
     """
@@ -28,43 +25,7 @@ def pytest_configure(config):
         "markers", "mr(type, tolerance): mark test as a Metamorphic Relation test"
     )
 
-import io
 
-class ManualTee:
-    """Writes to original stdout and captures the text internally."""
-    def __init__(self, original_stdout):
-        self._original = original_stdout
-        self._buffer = io.StringIO()
-
-    def write(self, data):
-        self._original.write(data)
-        self._buffer.write(data)
-
-    def flush(self):
-        self._original.flush()
-        
-    def getvalue(self):
-        return self._buffer.getvalue()
-
-    def __getattr__(self, name):
-        return getattr(self._original, name)
-
-@pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_call(item):
-    """
-    If --monitor is active, capture is disabled (-s). We manually wrap sys.stdout 
-    to both print to the live terminal AND save the text for the log file.
-    """
-    if item.config.getoption("--monitor"):
-        tee = ManualTee(sys.stdout)
-        sys.stdout = tee
-        try:
-            yield
-        finally:
-            sys.stdout = tee._original
-            item._manual_capstdout = tee.getvalue()
-    else:
-        yield
 
 def pytest_collection_modifyitems(items):
     """
@@ -126,93 +87,39 @@ async def validate_mr_result(result, dt_adapter=None, **kwargs):
     __tracebackhide__ = True
     mr_type = kwargs.get("type")
     
-    relation = None
-    
-    if mr_type == "stability":
-        relation = StabilityRelation(**kwargs)
-    elif mr_type == "monotonicity":
-        relation = MonotonicityRelation(**kwargs)
-    elif mr_type == "invariance":
-        relation = InvarianceRelation(**kwargs)
-    elif mr_type == "conservation":
-        relation = ConservationRelation(**kwargs)
-    elif mr_type == "proportionality":
-        relation = ProportionalityRelation(**kwargs)
-    elif mr_type == "substitution":
-        relation = SubstitutionRelation(**kwargs)
+    try:
+        relation_cls = get_relation_class(mr_type)
+        relation = relation_cls(**kwargs)
+    except ValueError as e:
+        pytest.fail(f"Invalid MR Type: {e}", pytrace=False)
+        return
 
     err_msg = None
     if relation:
         is_inverted = kwargs.get("not", False) or kwargs.get("inverted", False) or kwargs.get("not_", False)
-        clean_pass_msg = ""
+        original_failed = False
+        original_error = None
         try:
-            if is_inverted:
-                import contextlib
-                import sys
-                
-                class InversionRedirector:
-                    def __init__(self, original):
-                        self.original = original
-                        self.captured = []
-                        self.in_monitor_line = False
-                    def write(self, data):
-                        if not data:
-                            return
-                        if "[LIVE MONITOR]" in data:
-                            self.in_monitor_line = True
-                        if self.in_monitor_line:
-                            self.original.write(data)
-                        else:
-                            self.captured.append(data)
-                        if data.endswith("\n"):
-                            self.in_monitor_line = False
-                    def flush(self):
-                        self.original.flush()
-                        
-                redirector = InversionRedirector(sys.stdout)
-                with contextlib.redirect_stdout(redirector):
-                    if inspect.iscoroutinefunction(relation.evaluate):
-                        await relation.evaluate(result, dt_adapter=dt_adapter)
-                    else:
-                        relation.evaluate(result, dt_adapter=dt_adapter)
-                
-                full_text = "".join(redirector.captured)
-                for line in full_text.split("\n"):
-                    if "[MR CHECK]" in line and "PASSED" in line:
-                        clean_pass_msg = line.strip()
-                        break
+            if inspect.iscoroutinefunction(relation.evaluate):
+                await relation.evaluate(result, dt_adapter=dt_adapter)
             else:
-                if inspect.iscoroutinefunction(relation.evaluate):
-                    await relation.evaluate(result, dt_adapter=dt_adapter)
-                else:
-                    relation.evaluate(result, dt_adapter=dt_adapter)
-            
-            if is_inverted:
-                msg = f"Metamorphic Relation ({mr_type}) expected to fail but passed."
-                if clean_pass_msg:
-                    msg += f" Details: {clean_pass_msg}"
-                err_msg = msg
+                relation.evaluate(result, dt_adapter=dt_adapter)
         except MetamorphicRelationError as e:
-            if is_inverted:
-                print(f"\n      [MR CHECK] Inverted {mr_type} PASSED: (Original failed as expected: {e})")
+            original_failed = True
+            original_error = e
+
+        if is_inverted:
+            if original_failed:
+                print(f"\n      [MR CHECK] Inverted {mr_type} PASSED: (Original failed as expected: {original_error})")
             else:
-                err_msg = str(e)
+                err_msg = f"Metamorphic Relation ({mr_type}) expected to fail but passed."
+        else:
+            if original_failed:
+                err_msg = str(original_error)
             
     if err_msg:
         print(f"\n      [MR CHECK] Metamorphic Relation ({mr_type if mr_type else 'unknown'}) failed: {err_msg}")
         pytest.fail(err_msg, pytrace=False)
-
-@pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_makereport(item, call):
-    """
-    Because --monitor disables pytest's capture (-s) to allow natural live printing,
-    we inject our manually captured stdout into the report so the --log file
-    still gets the output. (We use a custom attribute since capstdout is read-only).
-    """
-    outcome = yield
-    rep = outcome.get_result()
-    if call.when == "call" and hasattr(item, "_manual_capstdout"):
-        rep._manual_capstdout = item._manual_capstdout
 
 def pytest_terminal_summary(terminalreporter, exitstatus, config):
     """
@@ -268,8 +175,8 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
             for rep in reports:
                 f.write(f"[{outcome.upper()}] {rep.nodeid}\n")
                 
-                # Check normal capstdout OR our custom manual tee output
-                output = rep.capstdout or getattr(rep, "_manual_capstdout", "")
+                # Get the stdout captured by Pytest
+                output = rep.capstdout
                 if output:
                     f.write("--- Captured Output ---\n")
                     f.write(output)

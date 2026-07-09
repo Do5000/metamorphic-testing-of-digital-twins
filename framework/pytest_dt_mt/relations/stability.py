@@ -1,6 +1,6 @@
 import asyncio
 from .base import MetamorphicRelation, MetamorphicRelationError
-from pytest_dt_mt.core import LiveValueMonitor
+from pytest_dt_mt.monitoring import LiveValueMonitor
 
 class StabilityRelation(MetamorphicRelation):
     async def evaluate(self, result, dt_adapter=None):

@@ -28,7 +28,7 @@ async def measure_latency(
         print(f"      [LATENCY CALIBRATION] Performing {runs} calibration runs...")
     
     # 1. Ensure WebSocket is connected and background listener task is active
-    await adapter._get_ws()
+    await adapter._client.get_ws()
     
     latencies = []
     
@@ -58,7 +58,7 @@ async def measure_latency(
         
         while asyncio.get_event_loop().time() - poll_start < timeout:
             # Retrieve from cache
-            current_val = adapter._cache.get(sensor, {}).get(sensorFeature)
+            current_val = adapter._client.cache.get(sensor, {}).get(sensorFeature)
             if current_val is not None and current_val != baseline_val:
                 # Check for numeric difference to avoid minor jitter if float
                 try:

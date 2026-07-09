@@ -1,35 +1,21 @@
 import asyncio
 import time
+import inspect
+import json
+from typing import Dict, Any, List, Tuple, Callable
+
 from pytest_dt_mt.core import DigitalTwinAdapter, PreconditionFailedError
 from pytest_dt_mt.relations.base import MetamorphicRelationError
-from typing import Dict, Any, List
-
-# Import all relations so we can instantiate them dynamically
-from pytest_dt_mt.relations.monotonicity import MonotonicityRelation
-from pytest_dt_mt.relations.invariance import InvarianceRelation
-from pytest_dt_mt.relations.conservation import ConservationRelation
-from pytest_dt_mt.relations.stability import StabilityRelation
-from pytest_dt_mt.relations.proportionality import ProportionalityRelation
-from pytest_dt_mt.relations.substitution import SubstitutionRelation
-
-RELATION_MAP = {
-    "monotonicity": MonotonicityRelation,
-    "invariance": InvarianceRelation,
-    "conservation": ConservationRelation,
-    "stability": StabilityRelation,
-    "proportionality": ProportionalityRelation,
-    "substitution": SubstitutionRelation,
-}
-
+from pytest_dt_mt.relations import get_relation_class
+from pytest_dt_mt.monitoring import LiveValueMonitor
 from contextlib import asynccontextmanager
 
 @asynccontextmanager
-async def multi_monitor(adapter, sensors, verbose):
+async def multi_monitor(adapter: DigitalTwinAdapter, sensors: List[Dict[str, str]], verbose: bool):
     if not verbose or not sensors:
         yield
         return
         
-    from pytest_dt_mt.core import LiveValueMonitor
     monitors = []
     for s in sensors:
         m = LiveValueMonitor(adapter, s["deviceId"], s["feature"], interval=0.5, verbose=True)
@@ -49,7 +35,7 @@ class DslRunner:
         self.adapter = adapter
         self.config = config
 
-    async def execute_hook(self, hook_data: Dict[str, Any]):
+    async def execute_hook(self, hook_data: Dict[str, Any]) -> None:
         print(f"\n[DSL] Executing hook: {hook_data.get('hookType')}")
         statements = hook_data.get("statements", [])
         for stmt in statements:
@@ -61,8 +47,6 @@ class DslRunner:
                 )
             elif stmt["type"] == "MeasureLatency":
                 kwargs = {k: v for k, v in stmt.items() if k != "type" and v is not None}
-                # Mapping camelCase back to snake_case if necessary, or just rely on the API
-                # measure_latency API takes snake_case
                 await self.adapter.measure_latency(
                     actuator=stmt["actuator"],
                     actuatorFeature=stmt.get("actuatorFeature", "state"),
@@ -77,7 +61,36 @@ class DslRunner:
                     runs=stmt.get("runs", 3)
                 )
 
-    async def execute_test(self, test_data: Dict[str, Any], wait_dt_callable, verbose: bool = False):
+    async def _apply_actions(self, actuators: List[Dict[str, str]], actions: List[Any]) -> None:
+        for idx, act in enumerate(actuators):
+            val = actions[idx] if idx < len(actions) else actions[0]
+            await self.adapter.set_feature_value(act["deviceId"], act["feature"], val)
+
+    async def _wait_for_latency(self, sensors: List[Dict[str, str]], verbose: bool, manual_waitTime: Any, wait_dt_callable: Callable) -> None:
+        async with multi_monitor(self.adapter, sensors, verbose):
+            if manual_waitTime is not None:
+                await asyncio.sleep(manual_waitTime)
+            else:
+                await wait_dt_callable()
+
+    async def _read_sensors(self, sensors: List[Dict[str, str]]) -> List[Any]:
+        results = []
+        for s in sensors:
+            val = await self.adapter.get_feature_value(s["deviceId"], s["feature"])
+            results.append(val)
+        return results
+
+    async def _handle_invariance_reset(self, actuators: List[Dict[str, str]], intermediateActions: List[Any], sensors: List[Dict[str, str]], verbose: bool, manual_waitTime: Any, wait_dt_callable: Callable) -> None:
+        for idx, act in enumerate(actuators):
+            if intermediateActions:
+                init_val = intermediateActions[idx] if idx < len(intermediateActions) else intermediateActions[0]
+            else:
+                init_val = "off"
+            await self.adapter.set_feature_value(act["deviceId"], act["feature"], init_val)
+        
+        await self._wait_for_latency(sensors, verbose, manual_waitTime, wait_dt_callable)
+
+    async def execute_test(self, test_data: Dict[str, Any], wait_dt_callable: Callable, verbose: bool = False) -> None:
         print(f"\n[DSL] Executing Test: {test_data.get('name')} (Relation: {test_data.get('relation')})")
         
         relation_name = test_data.get("relation")
@@ -89,77 +102,31 @@ class DslRunner:
         sensors = test_data.get("sensors", [])
         sourceActions = test_data.get("sourceActions", [])
         followUpActions = test_data.get("followupActions", [])
-        
-        # Determine specific test wait logic
         manual_waitTime = test_data.get("waitTime")
         
         # Source Test Case
-        for idx, act in enumerate(actuators):
-            val = sourceActions[idx] if idx < len(sourceActions) else sourceActions[0]
-            await self.adapter.set_feature_value(act["deviceId"], act["feature"], val)
-            
-        # Wait for latency
-        async with multi_monitor(self.adapter, sensors, verbose):
-            if manual_waitTime is not None:
-                await asyncio.sleep(manual_waitTime)
-            else:
-                await wait_dt_callable()
-            
-        # Read source sensor values
-        source_results = []
-        for s in sensors:
-            val = await self.adapter.get_feature_value(s["deviceId"], s["feature"])
-            source_results.append(val)
+        await self._apply_actions(actuators, sourceActions)
+        await self._wait_for_latency(sensors, verbose, manual_waitTime, wait_dt_callable)
+        source_results = await self._read_sensors(sensors)
             
         followup_results = []
         if followUpActions:
-            relation_name = test_data.get("relation")
-            
-            # Revert to intermediate state to ensure clean physics for the followup (ONLY for invariance)
             if relation_name == "invariance":
                 intermediateActions = test_data.get("intermediateActions", [])
-                for idx, act in enumerate(actuators):
-                    # Use the provided intermediate value, fallback to "off" if not given
-                    if intermediateActions:
-                        init_val = intermediateActions[idx] if idx < len(intermediateActions) else intermediateActions[0]
-                    else:
-                        init_val = "off"
-                        
-                    await self.adapter.set_feature_value(act["deviceId"], act["feature"], init_val)
-                    
-                # Wait for physics to settle after reset
-                if manual_waitTime is not None:
-                    await asyncio.sleep(manual_waitTime)
-                else:
-                    await wait_dt_callable()
+                await self._handle_invariance_reset(actuators, intermediateActions, sensors, verbose, manual_waitTime, wait_dt_callable)
             
             # Followup Test Case
-            for idx, act in enumerate(actuators):
-                val = followUpActions[idx] if idx < len(followUpActions) else followUpActions[0]
-                await self.adapter.set_feature_value(act["deviceId"], act["feature"], val)
-                
-            async with multi_monitor(self.adapter, sensors, verbose):
-                if manual_waitTime is not None:
-                    await asyncio.sleep(manual_waitTime)
-                else:
-                    await wait_dt_callable()
-                
-            for s in sensors:
-                val = await self.adapter.get_feature_value(s["deviceId"], s["feature"])
-                followup_results.append(val)
+            await self._apply_actions(actuators, followUpActions)
+            await self._wait_for_latency(sensors, verbose, manual_waitTime, wait_dt_callable)
+            followup_results = await self._read_sensors(sensors)
                 
         # Run Relation
-        relation_name = test_data.get("relation")
-        relation_class = RELATION_MAP.get(relation_name)
-        if not relation_class:
-            raise ValueError(f"Unknown relation type in DSL: {relation_name}")
+        relation_class = get_relation_class(relation_name)
             
-        # Construct result array matching the old pytest fixtures (e.g., [s1, f1] or [s1, f1, s2, f2])
         eval_result = []
         max_len = max(len(source_results), len(followup_results)) if followup_results else len(source_results)
         
         if relation_name == "stability":
-            # Stability uses the sensor explicitly as return, not values
             eval_result = [sensors[0]["deviceId"], sensors[0]["feature"]]
         else:
             for i in range(max_len):
@@ -179,53 +146,16 @@ class DslRunner:
         if test_data.get("not") is not None:
             kwargs["not"] = test_data["not"]
             
-        import inspect
         relation_instance = relation_class(**kwargs)
         is_inverted = kwargs.get("not", False)
         original_failed = False
         original_error = None
-        clean_pass_msg = ""
+
         try:
-            if is_inverted:
-                import contextlib
-                import sys
-                
-                class InversionRedirector:
-                    def __init__(self, original):
-                        self.original = original
-                        self.captured = []
-                        self.in_monitor_line = False
-                    def write(self, data):
-                        if not data:
-                            return
-                        if "[LIVE MONITOR]" in data:
-                            self.in_monitor_line = True
-                        if self.in_monitor_line:
-                            self.original.write(data)
-                        else:
-                            self.captured.append(data)
-                        if data.endswith("\n"):
-                            self.in_monitor_line = False
-                    def flush(self):
-                        self.original.flush()
-                        
-                redirector = InversionRedirector(sys.stdout)
-                with contextlib.redirect_stdout(redirector):
-                    if inspect.iscoroutinefunction(relation_instance.evaluate):
-                        await relation_instance.evaluate(eval_result, dt_adapter=self.adapter)
-                    else:
-                        relation_instance.evaluate(eval_result, dt_adapter=self.adapter)
-                
-                full_text = "".join(redirector.captured)
-                for line in full_text.split("\n"):
-                    if "[MR CHECK]" in line and "PASSED" in line:
-                        clean_pass_msg = line.strip()
-                        break
+            if inspect.iscoroutinefunction(relation_instance.evaluate):
+                await relation_instance.evaluate(eval_result, dt_adapter=self.adapter)
             else:
-                if inspect.iscoroutinefunction(relation_instance.evaluate):
-                    await relation_instance.evaluate(eval_result, dt_adapter=self.adapter)
-                else:
-                    relation_instance.evaluate(eval_result, dt_adapter=self.adapter)
+                relation_instance.evaluate(eval_result, dt_adapter=self.adapter)
         except MetamorphicRelationError as e:
             original_failed = True
             original_error = e
@@ -235,8 +165,6 @@ class DslRunner:
                 print(f"      [DSL] Inverted {relation_name} Relation Passed successfully! (Original failed as expected: {original_error})")
             else:
                 msg = f"Metamorphic Relation ({relation_name}) expected to fail but passed."
-                if clean_pass_msg:
-                    msg += f" Details: {clean_pass_msg}"
                 print(f"      [DSL] {msg}")
                 raise MetamorphicRelationError(msg)
         else:
@@ -246,7 +174,7 @@ class DslRunner:
             else:
                 print(f"      [DSL] {relation_name} Relation Passed successfully!")
 
-    async def _execute_generation(self, test_data: Dict[str, Any], wait_dt_callable, verbose: bool):
+    async def _execute_generation(self, test_data: Dict[str, Any], wait_dt_callable: Callable, verbose: bool) -> None:
         actuators = test_data.get("actuators", [])
         sensors = test_data.get("sensors", [])
         output_file = test_data.get("historicalFile", "sensor_profile.json")
@@ -292,9 +220,7 @@ class DslRunner:
             "profile": profile
         }
         
-        import json
         with open(output_file, "w") as f:
             json.dump(profile_data, f, indent=4)
             
         print(f"      [DSL] Generation Profile saved to {output_file} successfully!")
-
