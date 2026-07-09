@@ -18,32 +18,32 @@ SetFeature:
     'set' actuator=STRING 'feature' feature=STRING 'to' value=Value;
 
 RequirePrecondition:
-    'precondition' sensor=STRING 'feature' feature=STRING 'equals' value=Value ('skip_message' skipMessage=STRING)?;
+    'precondition' sensor=STRING 'feature' feature=STRING 'equals' value=Value ('skipMessage' skipMessage=STRING)?;
 
 MeasureLatency:
-    'calibrate_latency' '{'
+    'calibrateLatency' '{'
         'actuator' actuator=STRING 'feature' actuatorFeature=STRING
         'sensor' sensor=STRING 'feature' sensorFeature=STRING
-        'val_off' valOff=Value
-        'val_on' valOn=Value
-        ('min_change_percent' minChangePercent=NUMBER)?
-        ('tolerance_factor' toleranceFactor=NUMBER)?
-        ('add_seconds' addSeconds=NUMBER)?
+        'valOff' valOff=Value
+        'valOn' valOn=Value
+        ('minChangePercent' minChangePercent=NUMBER)?
+        ('toleranceFactor' toleranceFactor=NUMBER)?
+        ('addSeconds' addSeconds=NUMBER)?
         ('timeout' timeout=NUMBER)?
         ('runs' runs=NUMBER)?
     '}';
 
 TestDefinition:
     'test' name=STRING '{'
-        'relation' ':' (not?='not')? relation=ID ('tolerance' ':' tolerance=NUMBER)? ('duration' ':' duration=NUMBER)? ('profile' ':' profile=STRING)? ('historical_samples' ':' historicalSamples=NUMBER)? ('historical_file' ':' historicalFile=STRING)? ('wait_time' ':' waitTime=NUMBER)?
+        'relation' ':' (not?='not')? relation=ID ('tolerance' ':' tolerance=NUMBER)? ('duration' ':' duration=NUMBER)? ('profile' ':' profile=STRING)? ('historicalSamples' ':' historicalSamples=NUMBER)? ('historicalFile' ':' historicalFile=STRING)? ('waitTime' ':' waitTime=NUMBER)?
         
         ('actuators' '[' (actuators+=DeviceFeature (',' actuators+=DeviceFeature)*)? ']')?
         ('sensors' '[' (sensors+=DeviceFeature (',' sensors+=DeviceFeature)*)? ']')?
         
-        ('source_action' '[' (sourceActions+=Value (',' sourceActions+=Value)*)? ']')?
-        ('intermediate_action' '[' (intermediateActions+=Value (',' intermediateActions+=Value)*)? ']')?
-        ('followup_action' '[' (followupActions+=Value (',' followupActions+=Value)*)? ']')?
-        ('brightness_levels' ('=')? '[' (brightnessLevels+=Value (',' brightnessLevels+=Value)*)? ']')?
+        ('sourceAction' '[' (sourceActions+=Value (',' sourceActions+=Value)*)? ']')?
+        ('intermediateAction' '[' (intermediateActions+=Value (',' intermediateActions+=Value)*)? ']')?
+        ('followUpAction' '[' (followupActions+=Value (',' followupActions+=Value)*)? ']')?
+        ('brightnessLevels' ('=')? '[' (brightnessLevels+=Value (',' brightnessLevels+=Value)*)? ']')?
     '}';
 
 DeviceFeature:

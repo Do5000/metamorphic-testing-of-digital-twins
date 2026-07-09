@@ -24,7 +24,7 @@ export class MtDslValidator {
 
         // Validation for sourceActions
         if (testDef.sourceActions.length > 0 && testDef.sourceActions.length !== actuatorCount) {
-            accept('error', `The number of values in source_action (${testDef.sourceActions.length}) must match the number of defined actuators (${actuatorCount}).`, {
+            accept('error', `The number of values in sourceAction (${testDef.sourceActions.length}) must match the number of defined actuators (${actuatorCount}).`, {
                 node: testDef,
                 property: 'sourceActions'
             });
@@ -32,7 +32,7 @@ export class MtDslValidator {
 
         // Validation for followupActions
         if (testDef.followupActions.length > 0 && testDef.followupActions.length !== actuatorCount) {
-            accept('error', `The number of values in followup_action (${testDef.followupActions.length}) must match the number of defined actuators (${actuatorCount}).`, {
+            accept('error', `The number of values in followUpAction (${testDef.followupActions.length}) must match the number of defined actuators (${actuatorCount}).`, {
                 node: testDef,
                 property: 'followupActions'
             });

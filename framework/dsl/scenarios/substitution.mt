@@ -8,7 +8,7 @@ test "test_sensor_substitution_s6" {
     relation: substitution tolerance: 0.1 profile: "sensor_profile.json"
     actuators [ "light.schreibtisch_lampe" feature "brightness" ]
     sensors [ "sensor.esp_c3_helligkeit" feature "state", "sensor.esp_c6_helligkeit" feature "state" ]
-    source_action [ 60 ]
+    sourceAction [ 60 ]
 }
 
 afterAll {

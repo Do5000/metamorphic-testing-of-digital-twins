@@ -65,14 +65,14 @@ class DslRunner:
                 # measure_latency API takes snake_case
                 await self.adapter.measure_latency(
                     actuator=stmt["actuator"],
-                    actuator_feature=stmt.get("actuatorFeature", "state"),
+                    actuatorFeature=stmt.get("actuatorFeature", "state"),
                     sensor=stmt["sensor"],
-                    sensor_feature=stmt.get("sensorFeature", "state"),
-                    val_off=stmt["valOff"],
-                    val_on=stmt["valOn"],
-                    min_change_percent=stmt.get("minChangePercent", 0.1),
-                    tolerance_factor=stmt.get("toleranceFactor", 1.2),
-                    add_seconds=stmt.get("addSeconds", 0.0),
+                    sensorFeature=stmt.get("sensorFeature", "state"),
+                    valOff=stmt["valOff"],
+                    valOn=stmt["valOn"],
+                    minChangePercent=stmt.get("minChangePercent", 0.1),
+                    toleranceFactor=stmt.get("toleranceFactor", 1.2),
+                    addSeconds=stmt.get("addSeconds", 0.0),
                     timeout=stmt.get("timeout", 5.0),
                     runs=stmt.get("runs", 3)
                 )
@@ -87,21 +87,21 @@ class DslRunner:
             
         actuators = test_data.get("actuators", [])
         sensors = test_data.get("sensors", [])
-        source_actions = test_data.get("sourceActions", [])
-        followup_actions = test_data.get("followupActions", [])
+        sourceActions = test_data.get("sourceActions", [])
+        followUpActions = test_data.get("followupActions", [])
         
         # Determine specific test wait logic
-        manual_wait_time = test_data.get("waitTime")
+        manual_waitTime = test_data.get("waitTime")
         
         # Source Test Case
         for idx, act in enumerate(actuators):
-            val = source_actions[idx] if idx < len(source_actions) else source_actions[0]
+            val = sourceActions[idx] if idx < len(sourceActions) else sourceActions[0]
             await self.adapter.set_feature_value(act["deviceId"], act["feature"], val)
             
         # Wait for latency
         async with multi_monitor(self.adapter, sensors, verbose):
-            if manual_wait_time is not None:
-                await asyncio.sleep(manual_wait_time)
+            if manual_waitTime is not None:
+                await asyncio.sleep(manual_waitTime)
             else:
                 await wait_dt_callable()
             
@@ -112,35 +112,35 @@ class DslRunner:
             source_results.append(val)
             
         followup_results = []
-        if followup_actions:
+        if followUpActions:
             relation_name = test_data.get("relation")
             
             # Revert to intermediate state to ensure clean physics for the followup (ONLY for invariance)
             if relation_name == "invariance":
-                intermediate_actions = test_data.get("intermediateActions", [])
+                intermediateActions = test_data.get("intermediateActions", [])
                 for idx, act in enumerate(actuators):
                     # Use the provided intermediate value, fallback to "off" if not given
-                    if intermediate_actions:
-                        init_val = intermediate_actions[idx] if idx < len(intermediate_actions) else intermediate_actions[0]
+                    if intermediateActions:
+                        init_val = intermediateActions[idx] if idx < len(intermediateActions) else intermediateActions[0]
                     else:
                         init_val = "off"
                         
                     await self.adapter.set_feature_value(act["deviceId"], act["feature"], init_val)
                     
                 # Wait for physics to settle after reset
-                if manual_wait_time is not None:
-                    await asyncio.sleep(manual_wait_time)
+                if manual_waitTime is not None:
+                    await asyncio.sleep(manual_waitTime)
                 else:
                     await wait_dt_callable()
             
             # Followup Test Case
             for idx, act in enumerate(actuators):
-                val = followup_actions[idx] if idx < len(followup_actions) else followup_actions[0]
+                val = followUpActions[idx] if idx < len(followUpActions) else followUpActions[0]
                 await self.adapter.set_feature_value(act["deviceId"], act["feature"], val)
                 
             async with multi_monitor(self.adapter, sensors, verbose):
-                if manual_wait_time is not None:
-                    await asyncio.sleep(manual_wait_time)
+                if manual_waitTime is not None:
+                    await asyncio.sleep(manual_waitTime)
                 else:
                     await wait_dt_callable()
                 

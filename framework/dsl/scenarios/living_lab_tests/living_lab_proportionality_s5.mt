@@ -1,15 +1,15 @@
 beforeAll {
 
-// Calibration for switch.licht_schalter
+set "switch.licht_schalter" feature "state" to "0"
 
-calibrate_latency {
+calibrateLatency {
     actuator "switch.licht_schalter" feature "state"
     sensor "Illuminance.Room518a_Ceiling" feature "Illuminance"
-    val_off "0"
-    val_on "1"
-    min_change_percent 0.05
-    tolerance_factor 1.1
-    add_seconds 5
+    valOff "0"
+    valOn "1"
+    minChangePercent 0.05
+    toleranceFactor 1.1
+    addSeconds 5
     timeout 40.0
     runs 1
 }
@@ -30,8 +30,8 @@ test "test_proportionality_switch_licht_schalter_TSL1_LowerScreen_spec_Room518a_
         "TSL1_LowerScreen_spec.Room518a_WP1" feature "TSL1_LowerScreen_spec",
         "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // Combination 2: TSL1 & TSL3
@@ -42,8 +42,8 @@ test "test_proportionality_switch_licht_schalter_TSL1_LowerScreen_spec_Room518a_
         "TSL1_LowerScreen_spec.Room518a_WP1" feature "TSL1_LowerScreen_spec",
         "TSL3_UpperScreen_spec.Room518a_WP1" feature "TSL3_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // Combination 3: TSL1 & TSL4
@@ -54,8 +54,8 @@ test "test_proportionality_switch_licht_schalter_TSL1_LowerScreen_spec_Room518a_
         "TSL1_LowerScreen_spec.Room518a_WP1" feature "TSL1_LowerScreen_spec",
         "TSL4_UpperScreen_spec.Room518a_WP1" feature "TSL4_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // Combination 4: TSL2 & TSL3
@@ -66,8 +66,8 @@ test "test_proportionality_switch_licht_schalter_TSL2_Keyboard_spec_Room518a_WP1
         "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec",
         "TSL3_UpperScreen_spec.Room518a_WP1" feature "TSL3_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // Combination 5: TSL2 & TSL4
@@ -78,8 +78,8 @@ test "test_proportionality_switch_licht_schalter_TSL2_Keyboard_spec_Room518a_WP1
         "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec",
         "TSL4_UpperScreen_spec.Room518a_WP1" feature "TSL4_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // Combination 6: TSL3 & TSL4
@@ -90,8 +90,8 @@ test "test_proportionality_switch_licht_schalter_TSL3_UpperScreen_spec_Room518a_
         "TSL3_UpperScreen_spec.Room518a_WP1" feature "TSL3_UpperScreen_spec",
         "TSL4_UpperScreen_spec.Room518a_WP1" feature "TSL4_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 
@@ -105,8 +105,8 @@ test "test_proportionality_switch_licht_schalter_TSL1_LowerScreen_spec_Room518a_
         "TSL1_LowerScreen_spec.Room518a_WP2" feature "TSL1_LowerScreen_spec",
         "TSL2_Keyboard_spec.Room518a_WP2" feature "TSL2_Keyboard_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // Combination 2: TSL1 & TSL3
@@ -117,8 +117,8 @@ test "test_proportionality_switch_licht_schalter_TSL1_LowerScreen_spec_Room518a_
         "TSL1_LowerScreen_spec.Room518a_WP2" feature "TSL1_LowerScreen_spec",
         "TSL3_UpperScreen_spec.Room518a_WP2" feature "TSL3_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // Combination 3: TSL1 & TSL4
@@ -129,8 +129,8 @@ test "test_proportionality_switch_licht_schalter_TSL1_LowerScreen_spec_Room518a_
         "TSL1_LowerScreen_spec.Room518a_WP2" feature "TSL1_LowerScreen_spec",
         "TSL4_UpperScreen_spec.Room518a_WP2" feature "TSL4_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // Combination 4: TSL2 & TSL3
@@ -141,8 +141,8 @@ test "test_proportionality_switch_licht_schalter_TSL2_Keyboard_spec_Room518a_WP2
         "TSL2_Keyboard_spec.Room518a_WP2" feature "TSL2_Keyboard_spec",
         "TSL3_UpperScreen_spec.Room518a_WP2" feature "TSL3_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // Combination 5: TSL2 & TSL4
@@ -153,8 +153,8 @@ test "test_proportionality_switch_licht_schalter_TSL2_Keyboard_spec_Room518a_WP2
         "TSL2_Keyboard_spec.Room518a_WP2" feature "TSL2_Keyboard_spec",
         "TSL4_UpperScreen_spec.Room518a_WP2" feature "TSL4_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // Combination 6: TSL3 & TSL4
@@ -165,8 +165,8 @@ test "test_proportionality_switch_licht_schalter_TSL3_UpperScreen_spec_Room518a_
         "TSL3_UpperScreen_spec.Room518a_WP2" feature "TSL3_UpperScreen_spec",
         "TSL4_UpperScreen_spec.Room518a_WP2" feature "TSL4_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // Inverse Tests that should show that light from other Workplaces contributes less to a other workplace than the light directly above workplace
@@ -179,8 +179,8 @@ test "test_not_proportionality_light_norden_fenster_TS1_WP1_vs_WP2" {
         "TSL1_LowerScreen_spec.Room518a_WP1" feature "TSL1_LowerScreen_spec",
         "TSL1_LowerScreen_spec.Room518a_WP2" feature "TSL1_LowerScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // TSL2: WP1 vs WP2
@@ -191,8 +191,8 @@ test "test_not_proportionality_light_norden_fenster_TS2_WP1_vs_WP2" {
         "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec",
         "TSL2_Keyboard_spec.Room518a_WP2" feature "TSL2_Keyboard_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // TSL3: WP1 vs WP2
@@ -203,8 +203,8 @@ test "test_not_proportionality_light_norden_fenster_TS3_WP1_vs_WP2" {
         "TSL3_UpperScreen_spec.Room518a_WP1" feature "TSL3_UpperScreen_spec",
         "TSL3_UpperScreen_spec.Room518a_WP2" feature "TSL3_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // TSL4: WP1 vs WP2 bei WP1-Licht
@@ -215,8 +215,8 @@ test "test_not_proportionality_light_norden_fenster_TS4_WP1_vs_WP2" {
         "TSL4_UpperScreen_spec.Room518a_WP1" feature "TSL4_UpperScreen_spec",
         "TSL4_UpperScreen_spec.Room518a_WP2" feature "TSL4_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 
@@ -228,8 +228,8 @@ test "test_not_proportionality_light_sueden_fenster_TS1_WP2_vs_WP1" {
         "TSL1_LowerScreen_spec.Room518a_WP2" feature "TSL1_LowerScreen_spec",
         "TSL1_LowerScreen_spec.Room518a_WP1" feature "TSL1_LowerScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // TSL2: WP2 vs WP1
@@ -240,8 +240,8 @@ test "test_not_proportionality_light_sueden_fenster_TS2_WP2_vs_WP1" {
         "TSL2_Keyboard_spec.Room518a_WP2" feature "TSL2_Keyboard_spec",
         "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // TSL3: WP2 vs WP1
@@ -252,8 +252,8 @@ test "test_not_proportionality_light_sueden_fenster_TS3_WP2_vs_WP1" {
         "TSL3_UpperScreen_spec.Room518a_WP2" feature "TSL3_UpperScreen_spec",
         "TSL3_UpperScreen_spec.Room518a_WP1" feature "TSL3_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 // TSL4: WP2 vs WP1
@@ -264,8 +264,8 @@ test "test_not_proportionality_light_sueden_fenster_TS4_WP2_vs_WP1" {
         "TSL4_UpperScreen_spec.Room518a_WP2" feature "TSL4_UpperScreen_spec",
         "TSL4_UpperScreen_spec.Room518a_WP1" feature "TSL4_UpperScreen_spec"
     ]
-    source_action [ "0" ]
-    followup_action [ "1" ]
+    sourceAction [ "0" ]
+    followUpAction [ "1" ]
 }
 
 afterAll {

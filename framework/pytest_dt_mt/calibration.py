@@ -3,15 +3,15 @@ import asyncio
 async def measure_latency(
     adapter,
     actuator,
-    actuator_feature,
-    val_off,
-    val_on,
+    actuatorFeature,
+    valOff,
+    valOn,
     sensor,
-    sensor_feature,
-    tolerance_factor=1.5,
-    add_seconds=1.0,
+    sensorFeature,
+    toleranceFactor=1.5,
+    addSeconds=1.0,
     timeout=15.0,
-    min_change_percent=None,
+    minChangePercent=None,
     runs=1
 ):
     """
@@ -20,10 +20,10 @@ async def measure_latency(
     Supports multiple runs and aggregates the maximum calculated wait time across all runs and calls.
     """
     print(f"\n      [LATENCY CALIBRATION] Starting latency calibration...")
-    print(f"      [LATENCY CALIBRATION] Actuator: {actuator} ({actuator_feature})")
-    print(f"      [LATENCY CALIBRATION] Sensor: {sensor} ({sensor_feature})")
-    if min_change_percent is not None:
-        print(f"      [LATENCY CALIBRATION] Minimum change threshold: {min_change_percent * 100:.1f}%")
+    print(f"      [LATENCY CALIBRATION] Actuator: {actuator} ({actuatorFeature})")
+    print(f"      [LATENCY CALIBRATION] Sensor: {sensor} ({sensorFeature})")
+    if minChangePercent is not None:
+        print(f"      [LATENCY CALIBRATION] Minimum change threshold: {minChangePercent * 100:.1f}%")
     if runs > 1:
         print(f"      [LATENCY CALIBRATION] Performing {runs} calibration runs...")
     
@@ -36,20 +36,20 @@ async def measure_latency(
         run_label = f" (Run {run_idx}/{runs})" if runs > 1 else ""
         
         # 2. Set actuator to off state
-        print(f"      [LATENCY CALIBRATION]{run_label} Setting actuator to baseline '{val_off}'...")
-        await adapter.set_feature_value(actuator, actuator_feature, val_off)
+        print(f"      [LATENCY CALIBRATION]{run_label} Setting actuator to baseline '{valOff}'...")
+        await adapter.set_feature_value(actuator, actuatorFeature, valOff)
         
         # 3. Wait to let the system stabilize and ensure baseline is reached
         await asyncio.sleep(3.0)
         
         # 4. Get the baseline sensor value and seed the cache
-        baseline_val = await adapter.get_feature_value(sensor, sensor_feature, silent=True)
+        baseline_val = await adapter.get_feature_value(sensor, sensorFeature, silent=True)
         print(f"      [LATENCY CALIBRATION]{run_label} Baseline sensor value: {baseline_val}")
         
         # 5. Trigger the change: setting actuator to on state
-        print(f"      [LATENCY CALIBRATION]{run_label} Triggering change: setting actuator to '{val_on}'...")
+        print(f"      [LATENCY CALIBRATION]{run_label} Triggering change: setting actuator to '{valOn}'...")
         start_time = asyncio.get_event_loop().time()
-        await adapter.set_feature_value(actuator, actuator_feature, val_on)
+        await adapter.set_feature_value(actuator, actuatorFeature, valOn)
         
         # 6. Poll cache for change
         change_detected = False
@@ -58,15 +58,15 @@ async def measure_latency(
         
         while asyncio.get_event_loop().time() - poll_start < timeout:
             # Retrieve from cache
-            current_val = adapter._cache.get(sensor, {}).get(sensor_feature)
+            current_val = adapter._cache.get(sensor, {}).get(sensorFeature)
             if current_val is not None and current_val != baseline_val:
                 # Check for numeric difference to avoid minor jitter if float
                 try:
                     if isinstance(current_val, (int, float)) and isinstance(baseline_val, (int, float)):
-                        if min_change_percent is not None:
+                        if minChangePercent is not None:
                             denominator = abs(baseline_val) if abs(baseline_val) > 0.001 else 1.0
                             relative_change = abs(current_val - baseline_val) / denominator
-                            if relative_change < min_change_percent:
+                            if relative_change < minChangePercent:
                                 await asyncio.sleep(0.02)
                                 continue
                         else:
@@ -92,11 +92,11 @@ async def measure_latency(
 
     if latencies:
         max_measured = max(latencies)
-        calculated_wait = (max_measured * tolerance_factor) + add_seconds
+        calculated_wait = (max_measured * toleranceFactor) + addSeconds
         if runs > 1:
             print(f"      [LATENCY CALIBRATION] Calibration complete over {runs} runs.")
             print(f"      [LATENCY CALIBRATION] Max measured latency = {max_measured:.3f}s")
-        print(f"      [LATENCY CALIBRATION] Calculated wait_dt (with {tolerance_factor}x factor + {add_seconds}s buffer) = {calculated_wait:.3f}s")
+        print(f"      [LATENCY CALIBRATION] Calculated wait_dt (with {toleranceFactor}x factor + {addSeconds}s buffer) = {calculated_wait:.3f}s")
         
         # Keep the overall maximum wait time across multiple measure_latency calls!
         if getattr(adapter, "_measured_latency", None) is None:
@@ -105,8 +105,8 @@ async def measure_latency(
             adapter._measured_latency = max(adapter._measured_latency, calculated_wait)
 
         adapter._calibration_results.append({
-            "actuator": f"{actuator} ({actuator_feature})",
-            "sensor": f"{sensor} ({sensor_feature})",
+            "actuator": f"{actuator} ({actuatorFeature})",
+            "sensor": f"{sensor} ({sensorFeature})",
             "status": "success",
             "latency": calculated_wait
         })
@@ -124,8 +124,8 @@ async def measure_latency(
             print(f"      [LATENCY CALIBRATION] Retaining previously measured maximum wait time of {adapter._measured_latency:.3f}s.")
             
         adapter._calibration_results.append({
-            "actuator": f"{actuator} ({actuator_feature})",
-            "sensor": f"{sensor} ({sensor_feature})",
+            "actuator": f"{actuator} ({actuatorFeature})",
+            "sensor": f"{sensor} ({sensorFeature})",
             "status": "timeout"
         })
     

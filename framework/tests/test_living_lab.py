@@ -16,23 +16,23 @@ async def beforeEach(dt_adapter):
 async def test_uni_monotony(dt_adapter, live_monitor, wait_dt):
     # Arrange
     actuator = "switch.licht_schalter"
-    actuator_feature = "state"
+    actuatorFeature = "state"
 
     sensor = "Illuminance.Room518a_Ceiling"
-    sensor_feature = "Illuminance"
+    sensorFeature = "Illuminance"
 
     # Act
     # --- Source Test Case ---
-    await dt_adapter.set_feature_value(actuator, actuator_feature, "off")
-    async with live_monitor(sensor, sensor_feature):
+    await dt_adapter.set_feature_value(actuator, actuatorFeature, "off")
+    async with live_monitor(sensor, sensorFeature):
         await wait_dt()
-    source_val = float(await dt_adapter.get_feature_value(sensor, sensor_feature))
+    source_val = float(await dt_adapter.get_feature_value(sensor, sensorFeature))
 
     # --- Follow-up Test Case ---
-    await dt_adapter.set_feature_value(actuator, actuator_feature, "on")
-    async with live_monitor(sensor, sensor_feature):
+    await dt_adapter.set_feature_value(actuator, actuatorFeature, "on")
+    async with live_monitor(sensor, sensorFeature):
         await wait_dt()
-    followup_val = float(await dt_adapter.get_feature_value(sensor, sensor_feature))
+    followup_val = float(await dt_adapter.get_feature_value(sensor, sensorFeature))
 
     # Assert
     return source_val, followup_val

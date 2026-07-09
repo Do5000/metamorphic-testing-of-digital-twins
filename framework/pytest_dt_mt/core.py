@@ -152,7 +152,7 @@ class DigitalTwinAdapter:
         await ws.send(json.dumps(msg))
         return 200
 
-    async def require_precondition(self, device_id, feature_name, expected_value, skip_message=None):
+    async def require_precondition(self, device_id, feature_name, expected_value, skipMessage=None):
         """
         Checks if a precondition is met. If not, skips the test/module.
         Useful in beforeAll or beforeEach to ensure environmental conditions.
@@ -165,14 +165,14 @@ class DigitalTwinAdapter:
         match = (val_str == exp_str)
 
         if not match:
-            if skip_message is None:
-                skip_message = f"Precondition failed: '{device_id}' ({feature_name}) is '{val}'"
-            print(f"      [PRECONDITION FAILED] {skip_message}")
-            raise PreconditionFailedError(skip_message)
+            if skipMessage is None:
+                skipMessage = f"Precondition failed: '{device_id}' ({feature_name}) is '{val}'"
+            print(f"      [PRECONDITION FAILED] {skipMessage}")
+            raise PreconditionFailedError(skipMessage)
         else:
             print(f"      [PRECONDITION MET] '{device_id}' ({feature_name}) is '{val}'")
 
-    async def measure_latency(self, actuator, actuator_feature, val_off, val_on, sensor, sensor_feature, tolerance_factor=1.5, add_seconds=1.0, timeout=15.0, min_change_percent=None, runs=1):
+    async def measure_latency(self, actuator, actuatorFeature, valOff, valOn, sensor, sensorFeature, toleranceFactor=1.5, addSeconds=1.0, timeout=15.0, minChangePercent=None, runs=1):
         """
         Dynamically measures the system latency (time from actuator action to sensor response)
         using the Monotony Relation workflow.
@@ -181,15 +181,15 @@ class DigitalTwinAdapter:
         return await measure_latency(
             self,
             actuator,
-            actuator_feature,
-            val_off,
-            val_on,
+            actuatorFeature,
+            valOff,
+            valOn,
             sensor,
-            sensor_feature,
-            tolerance_factor=tolerance_factor,
-            add_seconds=add_seconds,
+            sensorFeature,
+            toleranceFactor=toleranceFactor,
+            addSeconds=addSeconds,
             timeout=timeout,
-            min_change_percent=min_change_percent,
+            minChangePercent=minChangePercent,
             runs=runs
         )
 

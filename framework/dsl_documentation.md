@@ -49,24 +49,24 @@ set "switch.fernseher" feature "state" to "on"
 
 ### 2.2. Vorbedingungen prüfen (`precondition`)
 Pausiert oder überspringt Tests, falls eine bestimmte Bedingung in der physischen Umgebung nicht erfüllt ist.
-**Syntax:** `precondition "SENSOR" feature "EIGENSCHAFT" equals "WERT" [skip_message "GRUND"]`
+**Syntax:** `precondition "SENSOR" feature "EIGENSCHAFT" equals "WERT" [skipMessage "GRUND"]`
 ```mt
-precondition "automation.nach_sonnenuntergang" feature "state" equals "on" skip_message "Tests erfordern, dass die Sonne untergegangen ist."
+precondition "automation.nach_sonnenuntergang" feature "state" equals "on" skipMessage "Tests erfordern, dass die Sonne untergegangen ist."
 ```
 
-### 2.3. Latenzen kalibrieren (`calibrate_latency`)
+### 2.3. Latenzen kalibrieren (`calibrateLatency`)
 Misst die Laufzeit/Latenz, die benötigt wird, bis sich der Zustand eines Aktuators beim Sensor messbar bemerkbar macht. Parameter sind optional.
 ```mt
-calibrate_latency {
+calibrateLatency {
     actuator "light.schreibtisch_lampe" feature "state"
     sensor "sensor.esp_helligkeit" feature "state"
-    val_off "off"
-    val_on "on"
+    valOff "off"
+    valOn "on"
     
     // Optionale Feinabstimmung:
-    min_change_percent 0.2
-    tolerance_factor 1.1
-    add_seconds 0
+    minChangePercent 0.2
+    toleranceFactor 1.1
+    addSeconds 0
     timeout 3.0
     runs 1
 }
@@ -96,8 +96,8 @@ test "test_home_monotony" {
     actuators [ "light.schreibtisch_lampe" feature "brightness" ]
     sensors [ "sensor.esp_helligkeit" feature "state" ]
     
-    source_action [ "0" ]
-    followup_action [ "100" ]
+    sourceAction [ "0" ]
+    followUpAction [ "100" ]
 }
 ```
 
@@ -108,17 +108,17 @@ Je nach gewählter Metamorpher Relation benötigst du unterschiedliche Parameter
   * `actuators [...]`: Liste der Stellglieder.
   * `sensors [...]`: Liste der Messaufnehmer.
 * **Metamorphe Testwerte:**
-  * `source_action [...]`: Die Ausgangs-Eingabe für das System.
-  * `followup_action [...]`: Die abgewandelte Eingabe (für den Folge-Testfall).
-  * `brightness_levels [...]`: Spezifische Liste von Helligkeitswerten (falls benötigt).
+  * `sourceAction [...]`: Die Ausgangs-Eingabe für das System.
+  * `followUpAction [...]`: Die abgewandelte Eingabe (für den Folge-Testfall).
+  * `brightnessLevels [...]`: Spezifische Liste von Helligkeitswerten (falls benötigt).
 * **Konfiguration & Timing:**
   * `tolerance: <Zahl>`: Erlaubte Abweichung bei Messungen.
   * `duration: <Zahl>`: Dauer einer Messung in Sekunden.
-  * `wait_time: <Zahl>`: Wartezeit nach einer Aktion (wegen Pipeline-Latenzen).
+  * `waitTime: <Zahl>`: Wartezeit nach einer Aktion (wegen Pipeline-Latenzen).
 * **Profile & Historische Daten:**
   * `profile: "Profilname"`: Name eines JSON-Geräteprofils (z.B. für `substitution`).
-  * `historical_samples: <Zahl>`: Anzahl der Abtastwerte (z.B. 0, 1, 2... 100).
-  * `historical_file: "Dateiname.json"`: Name der Ausgabedatei für historische Daten.
+  * `historicalSamples: <Zahl>`: Anzahl der Abtastwerte (z.B. 0, 1, 2... 100).
+  * `historicalFile: "Dateiname.json"`: Name der Ausgabedatei für historische Daten.
 
 ---
 
@@ -129,17 +129,17 @@ Hier ist ein realistisches Skript, das die Lampe kalibriert und anschließend au
 ```mt
 beforeAll {
     // Vorbedingung: Es muss dunkel sein
-    precondition "automation.nach_sonnenuntergang" feature "state" equals "on" skip_message "Zu hell für diesen Test!"
+    precondition "automation.nach_sonnenuntergang" feature "state" equals "on" skipMessage "Zu hell für diesen Test!"
     
     // Setup
     set "automation.wohnzimmer_ein" feature "state" to "off"
     
     // Latenz messen
-    calibrate_latency {
+    calibrateLatency {
         actuator "light.schreibtisch_lampe" feature "state"
         sensor "sensor.esp_c3_helligkeit" feature "state"
-        val_off "off"
-        val_on "on"
+        valOff "off"
+        valOn "on"
         runs 1
     }
     
@@ -158,11 +158,11 @@ test "TC_01_Monotony_DeskLight" {
     actuators [ "light.schreibtisch_lampe" feature "brightness" ]
     sensors [ "sensor.esp_c3_helligkeit" feature "state" ]
     
-    source_action [ "20" ]
-    followup_action [ "80" ]
+    sourceAction [ "20" ]
+    followUpAction [ "80" ]
     
     tolerance: 0.05
-    wait_time: 2.0
+    waitTime: 2.0
 }
 ```
 

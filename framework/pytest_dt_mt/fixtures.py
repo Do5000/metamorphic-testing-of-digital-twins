@@ -34,14 +34,14 @@ _MODULE_WAIT_DT = {}
 _CALIBRATION_REPORTS = {}
 
 @pytest_asyncio.fixture(scope="session")
-def wait_time(request):
+def waitTime(request):
     return request.config.getoption("--wait-time")
 
 @pytest_asyncio.fixture(scope="function")
-async def wait_dt(request, wait_time):
+async def wait_dt(request, waitTime):
     """Wait for the environment physics to catch up using the global wait time."""
     module_name = request.module.__name__
-    actual_wait = _MODULE_WAIT_DT.get(module_name, wait_time)
+    actual_wait = _MODULE_WAIT_DT.get(module_name, waitTime)
     async def _wait():
         await asyncio.sleep(actual_wait)
     return _wait
@@ -62,12 +62,12 @@ async def dt_module_hooks(request):
     """Handles beforeAll and afterAll once per test file."""
     # Setup dependencies for module-scope
     adapter = DigitalTwinAdapter()
-    wait_time = request.config.getoption("--wait-time")
+    waitTime = request.config.getoption("--wait-time")
     
     def get_current_wait():
         if hasattr(adapter, "_measured_latency") and adapter._measured_latency is not None:
             return adapter._measured_latency
-        return wait_time
+        return waitTime
 
     async def _wait():
         await asyncio.sleep(get_current_wait())

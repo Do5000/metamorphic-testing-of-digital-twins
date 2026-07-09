@@ -28,13 +28,13 @@ async def test_measure_latency_success():
     with patch("asyncio.sleep", new_callable=AsyncMock) as mock_sleep:
         result = await adapter.measure_latency(
             actuator="light.test",
-            actuator_feature="state",
-            val_off="off",
-            val_on="on",
+            actuatorFeature="state",
+            valOff="off",
+            valOn="on",
             sensor="sensor.test",
-            sensor_feature="state",
-            tolerance_factor=1.5,
-            add_seconds=1.0,
+            sensorFeature="state",
+            toleranceFactor=1.5,
+            addSeconds=1.0,
             timeout=2.0
         )
         
@@ -45,7 +45,7 @@ async def test_measure_latency_success():
     print(f"\n[TEST SUCCESS] Measured Latency Result: {result:.3f}s")
 
 @pytest.mark.asyncio
-async def test_measure_latency_with_min_change_percent():
+async def test_measure_latency_with_minChangePercent():
     # Arrange
     adapter = DigitalTwinAdapter()
     
@@ -66,12 +66,12 @@ async def test_measure_latency_with_min_change_percent():
         # We expect a timeout because 5% < 10% threshold
         result_fail = await adapter.measure_latency(
             actuator="light.test",
-            actuator_feature="state",
-            val_off="off",
-            val_on="on",
+            actuatorFeature="state",
+            valOff="off",
+            valOn="on",
             sensor="sensor.test",
-            sensor_feature="state",
-            min_change_percent=0.10, # 10%
+            sensorFeature="state",
+            minChangePercent=0.10, # 10%
             timeout=0.2
         )
     assert result_fail is None
@@ -88,17 +88,17 @@ async def test_measure_latency_with_min_change_percent():
         # We expect a success because 15% >= 10% threshold
         result_success = await adapter.measure_latency(
             actuator="light.test",
-            actuator_feature="state",
-            val_off="off",
-            val_on="on",
+            actuatorFeature="state",
+            valOff="off",
+            valOn="on",
             sensor="sensor.test",
-            sensor_feature="state",
-            min_change_percent=0.10, # 10%
+            sensorFeature="state",
+            minChangePercent=0.10, # 10%
             timeout=2.0
         )
     assert result_success is not None
     assert adapter._measured_latency > 1.0
-    print(f"\n[TEST SUCCESS] min_change_percent successfully filtered out <10% and accepted >=10%")
+    print(f"\n[TEST SUCCESS] minChangePercent successfully filtered out <10% and accepted >=10%")
 
 @pytest.mark.asyncio
 async def test_measure_latency_multiple_runs_and_aggregation():
@@ -126,14 +126,14 @@ async def test_measure_latency_multiple_runs_and_aggregation():
     with patch("asyncio.sleep", new_callable=AsyncMock) as mock_sleep:
         res1 = await adapter.measure_latency(
             actuator="light.run_test",
-            actuator_feature="state",
-            val_off="off",
-            val_on="on",
+            actuatorFeature="state",
+            valOff="off",
+            valOn="on",
             sensor="light.run_test", # same for simplicity in mock
-            sensor_feature="state",
+            sensorFeature="state",
             runs=3,
-            tolerance_factor=1.5,
-            add_seconds=1.0,
+            toleranceFactor=1.5,
+            addSeconds=1.0,
             timeout=2.0
         )
         
@@ -167,13 +167,13 @@ async def test_measure_latency_multiple_runs_and_aggregation():
             
             res2 = await adapter.measure_latency(
                 actuator="light.slow",
-                actuator_feature="state",
-                val_off="off",
-                val_on="on",
+                actuatorFeature="state",
+                valOff="off",
+                valOn="on",
                 sensor="sensor.slow",
-                sensor_feature="state",
-                tolerance_factor=1.5,
-                add_seconds=1.0,
+                sensorFeature="state",
+                toleranceFactor=1.5,
+                addSeconds=1.0,
                 timeout=10.0
             )
             
@@ -193,7 +193,7 @@ async def test_wait_dt_fixture_integration():
     mock_request.module.__name__ = module_name
     
     # Resolve fixture using __wrapped__ to avoid direct-call detection
-    wait_func = await wait_dt.__wrapped__(mock_request, wait_time=2.0)
+    wait_func = await wait_dt.__wrapped__(mock_request, waitTime=2.0)
     
     # Time the wait
     start = asyncio.get_event_loop().time()

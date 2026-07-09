@@ -8,14 +8,14 @@ async def beforeAll(dt_adapter):
     # Auto-calibrate wait time using the monotony relation workflow
     await dt_adapter.measure_latency(
         actuator="light.schreibtisch_lampe",
-        actuator_feature="state",
-        val_off="off",
-        val_on="on",
+        actuatorFeature="state",
+        valOff="off",
+        valOn="on",
         sensor="sensor.esp_c3_helligkeit",
-        sensor_feature="state",
-        min_change_percent=0.10,
-        tolerance_factor = 1.1,
-        add_seconds = 0,
+        sensorFeature="state",
+        minChangePercent=0.10,
+        toleranceFactor = 1.1,
+        addSeconds = 0,
         timeout = 3.0,
         runs = 2
 
@@ -33,23 +33,23 @@ async def beforeEach(dt_adapter):
 async def test_monotony(dt_adapter, live_monitor, wait_dt):
     # Arrange
     actuator = "light.schreibtisch_lampe"
-    actuator_feature = "state"
+    actuatorFeature = "state"
 
     sensor = "sensor.esp_c3_helligkeit"
-    sensor_feature = "state"
+    sensorFeature = "state"
 
     # Act
     # --- Source Test Case ---
-    await dt_adapter.set_feature_value(actuator, actuator_feature, "off")
-    async with live_monitor(sensor, sensor_feature):
+    await dt_adapter.set_feature_value(actuator, actuatorFeature, "off")
+    async with live_monitor(sensor, sensorFeature):
         await wait_dt()
-    source_val = float(await dt_adapter.get_feature_value(sensor, sensor_feature))
+    source_val = float(await dt_adapter.get_feature_value(sensor, sensorFeature))
 
     # --- Follow-up Test Case ---
-    await dt_adapter.set_feature_value(actuator, actuator_feature, "on")
-    async with live_monitor(sensor, sensor_feature):
+    await dt_adapter.set_feature_value(actuator, actuatorFeature, "on")
+    async with live_monitor(sensor, sensorFeature):
         await wait_dt()
-    followup_val = float(await dt_adapter.get_feature_value(sensor, sensor_feature))
+    followup_val = float(await dt_adapter.get_feature_value(sensor, sensorFeature))
 
     # Assert
     return source_val, followup_val
