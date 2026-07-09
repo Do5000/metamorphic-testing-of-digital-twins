@@ -92,6 +92,24 @@ def get_test_cases():
     return cases
 
 
+async def _run_hooks(runner, full_data, hook_type, filepath=None):
+    """Helper to execute DSL lifecycle hooks and handle common exceptions."""
+    for el in full_data.get("elements", []):
+        if el["type"] == "LifecycleHook" and el.get("hookType") == hook_type:
+            try:
+                await runner.execute_hook(el)
+            except PreconditionFailedError as e:
+                if hook_type == "beforeAll" and filepath:
+                    SKIPPED_FILES[filepath] = f"Precondition in beforeAll failed: {e}"
+                    pytest.skip(SKIPPED_FILES[filepath])
+                else:
+                    pytest.skip(f"Precondition in {hook_type} failed: {e}")
+            except Exception as e:
+                if hook_type in ("afterEach", "afterAll"):
+                    print(f"\n[ERROR] Error in {hook_type} hook: {e}")
+                else:
+                    raise
+
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("filepath, full_data, test_data", get_test_cases())
@@ -105,25 +123,13 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
     runner = DslRunner(dt_adapter, full_data)
     
     # Run beforeAll hooks from the same file IF they haven't run yet
-    # Run beforeAll hooks from the same file IF they haven't run yet
     if not full_data.get("_before_all_run", False):
-        for el in full_data.get("elements", []):
-            if el["type"] == "LifecycleHook" and el.get("hookType") == "beforeAll":
-                try:
-                    await runner.execute_hook(el)
-                except PreconditionFailedError as e:
-                    SKIPPED_FILES[filepath] = f"Precondition in beforeAll failed: {e}"
-                    pytest.skip(SKIPPED_FILES[filepath])
+        await _run_hooks(runner, full_data, "beforeAll", filepath)
         full_data["_before_all_run"] = True
 
     try:
         # Run beforeEach hooks from the same file
-        for el in full_data.get("elements", []):
-            if el["type"] == "LifecycleHook" and el.get("hookType") == "beforeEach":
-                try:
-                    await runner.execute_hook(el)
-                except PreconditionFailedError as e:
-                    pytest.skip(f"Precondition in beforeEach failed: {e}")
+        await _run_hooks(runner, full_data, "beforeEach")
                 
         # Create a dynamic wait wrapper that prioritizes the adapter's measured latency
         async def dynamic_wait():
@@ -144,12 +150,7 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
             pytest.fail(err_msg, pytrace=False)
     finally:
         # Run afterEach hooks from the same file
-        for el in full_data.get("elements", []):
-            if el["type"] == "LifecycleHook" and el.get("hookType") == "afterEach":
-                try:
-                    await runner.execute_hook(el)
-                except Exception as e:
-                    print(f"\n[ERROR] Error in afterEach hook: {e}")
+        await _run_hooks(runner, full_data, "afterEach")
                     
         # Store/update the measured latency and calibration results for the summary report
         from pytest_dt_mt.fixtures import _MODULE_WAIT_DT, _CALIBRATION_REPORTS
@@ -178,8 +179,6 @@ async def dsl_after_all_teardown():
         if not os.path.exists(filepath): continue
         with open(filepath, "r") as f:
             data = json.load(f)
-        for el in data.get("elements", []):
-            if el["type"] == "LifecycleHook" and el.get("hookType") == "afterAll":
-                await runner.execute_hook(el)
+        await _run_hooks(runner, data, "afterAll")
                 
     await adapter.close()
