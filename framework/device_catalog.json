@@ -1,844 +1,476 @@
 {
-    "update.home_assistant_supervisor_update": {
-        "full_id": "at.uibk.ut.tenants:update.home_assistant_supervisor_update",
+    "cover.cover_sueden": {
+        "full_id": "at.uibk.ut.tenants:cover.cover_sueden",
         "features": [
-            "state"
+            "current_position",
+            "current_tilt_position"
         ],
         "attributes": {}
     },
-    "update.home_assistant_core_update": {
-        "full_id": "at.uibk.ut.tenants:update.home_assistant_core_update",
+    "cover.cover_norden": {
+        "full_id": "at.uibk.ut.tenants:cover.cover_norden",
         "features": [
-            "state"
+            "current_position",
+            "current_tilt_position"
         ],
         "attributes": {}
     },
-    "update.home_assistant_operating_system_update": {
-        "full_id": "at.uibk.ut.tenants:update.home_assistant_operating_system_update",
+    "cover.fenster": {
+        "full_id": "at.uibk.ut.tenants:cover.fenster",
         "features": [
-            "state"
+            "current_position"
         ],
         "attributes": {}
     },
-    "update.openthread_border_router_update": {
-        "full_id": "at.uibk.ut.tenants:update.openthread_border_router_update",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.matter_server_update": {
-        "full_id": "at.uibk.ut.tenants:update.matter_server_update",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.mosquitto_broker_update": {
-        "full_id": "at.uibk.ut.tenants:update.mosquitto_broker_update",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.advanced_ssh_web_terminal_update": {
-        "full_id": "at.uibk.ut.tenants:update.advanced_ssh_web_terminal_update",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.esphome_device_builder_update": {
-        "full_id": "at.uibk.ut.tenants:update.esphome_device_builder_update",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.file_editor_update": {
-        "full_id": "at.uibk.ut.tenants:update.file_editor_update",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.tailscale_update": {
-        "full_id": "at.uibk.ut.tenants:update.tailscale_update",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.music_assistant_update": {
-        "full_id": "at.uibk.ut.tenants:update.music_assistant_update",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.node_red_update": {
-        "full_id": "at.uibk.ut.tenants:update.node_red_update",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "conversation.home_assistant": {
-        "full_id": "at.uibk.ut.tenants:conversation.home_assistant",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "light.kuche_led_leiste": {
-        "full_id": "at.uibk.ut.tenants:light.kuche_led_leiste",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "event.backup_automatic_backup": {
-        "full_id": "at.uibk.ut.tenants:event.backup_automatic_backup",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.backup_backup_manager_state": {
-        "full_id": "at.uibk.ut.tenants:sensor.backup_backup_manager_state",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.backup_next_scheduled_automatic_backup": {
-        "full_id": "at.uibk.ut.tenants:sensor.backup_next_scheduled_automatic_backup",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.backup_last_successful_automatic_backup": {
-        "full_id": "at.uibk.ut.tenants:sensor.backup_last_successful_automatic_backup",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.backup_last_attempted_automatic_backup": {
-        "full_id": "at.uibk.ut.tenants:sensor.backup_last_attempted_automatic_backup",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "script.sonnenaufgang": {
-        "full_id": "at.uibk.ut.tenants:script.sonnenaufgang",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "script.sonnenuntergang": {
-        "full_id": "at.uibk.ut.tenants:script.sonnenuntergang",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sun.sun": {
-        "full_id": "at.uibk.ut.tenants:sun.sun",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.sun_next_dawn": {
-        "full_id": "at.uibk.ut.tenants:sensor.sun_next_dawn",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.sun_next_dusk": {
-        "full_id": "at.uibk.ut.tenants:sensor.sun_next_dusk",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.sun_next_midnight": {
-        "full_id": "at.uibk.ut.tenants:sensor.sun_next_midnight",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.sun_next_noon": {
-        "full_id": "at.uibk.ut.tenants:sensor.sun_next_noon",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.sun_next_rising": {
-        "full_id": "at.uibk.ut.tenants:sensor.sun_next_rising",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.sun_next_setting": {
-        "full_id": "at.uibk.ut.tenants:sensor.sun_next_setting",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "weather.forecast_home": {
-        "full_id": "at.uibk.ut.tenants:weather.forecast_home",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "binary_sensor.iphone_von_dorian_focus": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.iphone_von_dorian_focus",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "device_tracker.iphone_von_dorian": {
-        "full_id": "at.uibk.ut.tenants:device_tracker.iphone_von_dorian",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "notify.iphone_von_dorian": {
-        "full_id": "at.uibk.ut.tenants:notify.iphone_von_dorian",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_battery_level": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_battery_level",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_connection_type": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_connection_type",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_ssid": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_ssid",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_storage": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_storage",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_sim_1": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_sim_1",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_battery_state": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_battery_state",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_bssid": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_bssid",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_sim_2": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_sim_2",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_geocoded_location": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_geocoded_location",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_last_update_trigger": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_last_update_trigger",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_app_version": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_app_version",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_location_permission": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_location_permission",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_audio_output": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_audio_output",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_watch_battery_level": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_watch_battery_level",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_watch_battery_state": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_watch_battery_state",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "device_tracker.iphone_von_amelie": {
-        "full_id": "at.uibk.ut.tenants:device_tracker.iphone_von_amelie",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "notify.iphone_von_amelie": {
-        "full_id": "at.uibk.ut.tenants:notify.iphone_von_amelie",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_battery_level": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_battery_level",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_battery_state": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_battery_state",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_storage": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_storage",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_ssid": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_ssid",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_bssid": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_bssid",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_connection_type": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_connection_type",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_sim_2": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_sim_2",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_sim_1": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_sim_1",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_last_update_trigger": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_last_update_trigger",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_app_version": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_app_version",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_location_permission": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_location_permission",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_audio_output": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_audio_output",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_geocoded_location": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_geocoded_location",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "binary_sensor.shelly1minig3_d885ac0828b8_eingang_0": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.shelly1minig3_d885ac0828b8_eingang_0",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "button.shelly1minig3_d885ac0828b8_neu_starten": {
-        "full_id": "at.uibk.ut.tenants:button.shelly1minig3_d885ac0828b8_neu_starten",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.shelly1minig3_d885ac0828b8_temperatur": {
-        "full_id": "at.uibk.ut.tenants:sensor.shelly1minig3_d885ac0828b8_temperatur",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "switch.led_leiste": {
-        "full_id": "at.uibk.ut.tenants:switch.led_leiste",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.shelly1minig3_d885ac0828b8_firmware": {
-        "full_id": "at.uibk.ut.tenants:update.shelly1minig3_d885ac0828b8_firmware",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "tts.google_ubersetzer_en_com_google_translate_en_com": {
-        "full_id": "at.uibk.ut.tenants:tts.google_ubersetzer_en_com_google_translate_en_com",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "binary_sensor.rpi_power_status": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.rpi_power_status",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "todo.einkaufsliste": {
-        "full_id": "at.uibk.ut.tenants:todo.einkaufsliste",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.esp_c6_temperatur": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_temperatur",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.esp_c6_luftfeuchtigkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_luftfeuchtigkeit",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.esp_c6_helligkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_helligkeit",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.esp_c3_temperatur": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c3_temperatur",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.esp_c3_luftfeuchtigkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c3_luftfeuchtigkeit",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.esp_c3_helligkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c3_helligkeit",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.schalter_wohnzimmer_batterie": {
-        "full_id": "at.uibk.ut.tenants:sensor.schalter_wohnzimmer_batterie",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.tur_batterie": {
-        "full_id": "at.uibk.ut.tenants:sensor.tur_batterie",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.bett_batterie": {
-        "full_id": "at.uibk.ut.tenants:sensor.bett_batterie",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "switch.schreibtisch_steckdose": {
-        "full_id": "at.uibk.ut.tenants:switch.schreibtisch_steckdose",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "switch.tretakt": {
-        "full_id": "at.uibk.ut.tenants:switch.tretakt",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "switch.fernseher_ecke_steckdose": {
-        "full_id": "at.uibk.ut.tenants:switch.fernseher_ecke_steckdose",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "switch.bad_oben_steckdose": {
-        "full_id": "at.uibk.ut.tenants:switch.bad_oben_steckdose",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "switch.steckdose_dorian": {
-        "full_id": "at.uibk.ut.tenants:switch.steckdose_dorian",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "switch.vintage_steckdose": {
-        "full_id": "at.uibk.ut.tenants:switch.vintage_steckdose",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "update.raspberry_pi_5_firmware": {
-        "full_id": "at.uibk.ut.tenants:update.raspberry_pi_5_firmware",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.wohnzimmer_ein": {
-        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_ein",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.wohnzimmer_aus": {
-        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_aus",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.schlafzimmer_ein": {
-        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_ein",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.schlafzimmer_aus": {
-        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_aus",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.luften": {
-        "full_id": "at.uibk.ut.tenants:automation.luften",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.sonnenuntergang": {
-        "full_id": "at.uibk.ut.tenants:automation.sonnenuntergang",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.sonnenaufgang_aktivieren": {
-        "full_id": "at.uibk.ut.tenants:automation.sonnenaufgang_aktivieren",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.nach_sonnenuntergang": {
-        "full_id": "at.uibk.ut.tenants:automation.nach_sonnenuntergang",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.nach_sonnenaufgang": {
-        "full_id": "at.uibk.ut.tenants:automation.nach_sonnenaufgang",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.radio_starten": {
-        "full_id": "at.uibk.ut.tenants:automation.radio_starten",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "automation.radio_stoppen": {
-        "full_id": "at.uibk.ut.tenants:automation.radio_stoppen",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.amelie_lampe_thread_capabilities": {
-        "full_id": "at.uibk.ut.tenants:sensor.amelie_lampe_thread_capabilities",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.amelie_lampe_thread_status": {
-        "full_id": "at.uibk.ut.tenants:sensor.amelie_lampe_thread_status",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "light.amelie_lampe": {
-        "full_id": "at.uibk.ut.tenants:light.amelie_lampe",
+    "light.sueden_fenster": {
+        "full_id": "at.uibk.ut.tenants:light.sueden_fenster",
         "features": [
             "brightness",
             "state"
         ],
         "attributes": {}
     },
-    "button.amelie_lampe_identify": {
-        "full_id": "at.uibk.ut.tenants:button.amelie_lampe_identify",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.schreibtisch_lampe_thread_capabilities": {
-        "full_id": "at.uibk.ut.tenants:sensor.schreibtisch_lampe_thread_capabilities",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.schreibtisch_lampe_thread_status": {
-        "full_id": "at.uibk.ut.tenants:sensor.schreibtisch_lampe_thread_status",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "light.schreibtisch_lampe": {
-        "full_id": "at.uibk.ut.tenants:light.schreibtisch_lampe",
+    "light.norden_fenster": {
+        "full_id": "at.uibk.ut.tenants:light.norden_fenster",
         "features": [
             "brightness",
             "state"
         ],
         "attributes": {}
     },
-    "button.schreibtisch_lampe_identify": {
-        "full_id": "at.uibk.ut.tenants:button.schreibtisch_lampe_identify",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.vintage_lampe_thread_capabilities": {
-        "full_id": "at.uibk.ut.tenants:sensor.vintage_lampe_thread_capabilities",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.vintage_lampe_thread_status": {
-        "full_id": "at.uibk.ut.tenants:sensor.vintage_lampe_thread_status",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "light.vintage_lampe": {
-        "full_id": "at.uibk.ut.tenants:light.vintage_lampe",
+    "light.sueden_tuer": {
+        "full_id": "at.uibk.ut.tenants:light.sueden_tuer",
         "features": [
             "brightness",
             "state"
         ],
         "attributes": {}
     },
-    "button.vintage_lampe_identify": {
-        "full_id": "at.uibk.ut.tenants:button.vintage_lampe_identify",
+    "light.norden_tuer": {
+        "full_id": "at.uibk.ut.tenants:light.norden_tuer",
+        "features": [
+            "brightness",
+            "state"
+        ],
+        "attributes": {}
+    },
+    "switch.licht_schalter": {
+        "full_id": "at.uibk.ut.tenants:switch.licht_schalter",
         "features": [
             "state"
         ],
         "attributes": {}
     },
-    "button.bose_amelie_aktuellen_titel_favorisieren": {
-        "full_id": "at.uibk.ut.tenants:button.bose_amelie_aktuellen_titel_favorisieren",
+    "Illuminance.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:Illuminance.Room518a_Ceiling",
         "features": [
-            "state"
+            "Illuminance"
         ],
         "attributes": {}
     },
-    "media_player.bose_amelie_3": {
-        "full_id": "at.uibk.ut.tenants:media_player.bose_amelie_3",
+    "LowerScreen_PIR.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:LowerScreen_PIR.Room518a_WP1",
         "features": [
-            "state"
+            "LowerScreen_PIR"
         ],
         "attributes": {}
     },
-    "button.wohnzimmer_tv_aktuellen_titel_favorisieren": {
-        "full_id": "at.uibk.ut.tenants:button.wohnzimmer_tv_aktuellen_titel_favorisieren",
+    "LowerScreen_PIR.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:LowerScreen_PIR.Room518a_WP2",
         "features": [
-            "state"
+            "LowerScreen_PIR"
         ],
         "attributes": {}
     },
-    "media_player.wohnzimmer_tv": {
-        "full_id": "at.uibk.ut.tenants:media_player.wohnzimmer_tv",
+    "PIR.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:PIR.Room518a_Ceiling",
         "features": [
-            "state"
+            "PIR"
         ],
         "attributes": {}
     },
-    "button.macbook_air_von_amelie_aktuellen_titel_favorisieren": {
-        "full_id": "at.uibk.ut.tenants:button.macbook_air_von_amelie_aktuellen_titel_favorisieren",
+    "PIR.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:PIR.Room518a_WP1",
         "features": [
-            "state"
+            "PIR"
         ],
         "attributes": {}
     },
-    "media_player.macbook_air_von_amelie": {
-        "full_id": "at.uibk.ut.tenants:media_player.macbook_air_von_amelie",
+    "PIR.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:PIR.Room518a_WP2",
         "features": [
-            "state"
+            "PIR"
         ],
         "attributes": {}
     },
-    "sensor.arbeitsplatz_helligkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_helligkeit",
+    "PTAT.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:PTAT.Room518a_Ceiling",
         "features": [
-            "config"
+            "PTAT"
         ],
         "attributes": {}
     },
-    "sensor.arbeitsplatz_temperatur": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_temperatur",
+    "SHT45_RH.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:SHT45_RH.Room518a_WP1",
         "features": [
-            "config"
+            "SHT45_RH"
         ],
         "attributes": {}
     },
-    "sensor.arbeitsplatz_luftfeuchtigkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_luftfeuchtigkeit",
+    "SHT45_RH.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:SHT45_RH.Room518a_WP2",
         "features": [
-            "config"
+            "SHT45_RH"
         ],
         "attributes": {}
     },
-    "sensor.arbeitsplatz_fernbedienung": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_fernbedienung",
+    "SHT45_Temp.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:SHT45_Temp.Room518a_WP1",
         "features": [
-            "config"
+            "SHT45_Temp"
         ],
         "attributes": {}
     },
-    "sensor.arbeitsplatz_helligkeit_2": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_helligkeit_2",
+    "SHT45_Temp.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:SHT45_Temp.Room518a_WP2",
         "features": [
-            "config"
+            "SHT45_Temp"
+        ],
+        "attributes": {}
+    },
+    "SOUND_AO.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:SOUND_AO.Room518a_WP1",
+        "features": [
+            "SOUND_AO"
+        ],
+        "attributes": {}
+    },
+    "SOUND_AO.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:SOUND_AO.Room518a_WP2",
+        "features": [
+            "SOUND_AO"
+        ],
+        "attributes": {}
+    },
+    "SOUND_DO.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:SOUND_DO.Room518a_WP1",
+        "features": [
+            "SOUND_DO"
+        ],
+        "attributes": {}
+    },
+    "SOUND_DO.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:SOUND_DO.Room518a_WP2",
+        "features": [
+            "SOUND_DO"
+        ],
+        "attributes": {}
+    },
+    "TSL1_LowerScreen_Eh.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_Eh.Room518a_WP1",
+        "features": [
+            "TSL1_LowerScreen_Eh"
+        ],
+        "attributes": {}
+    },
+    "TSL1_LowerScreen_Eh.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_Eh.Room518a_WP2",
+        "features": [
+            "TSL1_LowerScreen_Eh"
+        ],
+        "attributes": {}
+    },
+    "TSL1_LowerScreen_ir.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_ir.Room518a_WP1",
+        "features": [
+            "TSL1_LowerScreen_ir"
+        ],
+        "attributes": {}
+    },
+    "TSL1_LowerScreen_ir.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_ir.Room518a_WP2",
+        "features": [
+            "TSL1_LowerScreen_ir"
+        ],
+        "attributes": {}
+    },
+    "TSL1_LowerScreen_spec.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_spec.Room518a_WP1",
+        "features": [
+            "TSL1_LowerScreen_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL1_LowerScreen_spec.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_spec.Room518a_WP2",
+        "features": [
+            "TSL1_LowerScreen_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL2_Keyboard_Eh.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_Eh.Room518a_WP1",
+        "features": [
+            "TSL2_Keyboard_Eh"
+        ],
+        "attributes": {}
+    },
+    "TSL2_Keyboard_Eh.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_Eh.Room518a_WP2",
+        "features": [
+            "TSL2_Keyboard_Eh"
+        ],
+        "attributes": {}
+    },
+    "TSL2_Keyboard_ir.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_ir.Room518a_WP1",
+        "features": [
+            "TSL2_Keyboard_ir"
+        ],
+        "attributes": {}
+    },
+    "TSL2_Keyboard_ir.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_ir.Room518a_WP2",
+        "features": [
+            "TSL2_Keyboard_ir"
+        ],
+        "attributes": {}
+    },
+    "TSL2_Keyboard_spec.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_spec.Room518a_WP1",
+        "features": [
+            "TSL2_Keyboard_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL2_Keyboard_spec.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_spec.Room518a_WP2",
+        "features": [
+            "TSL2_Keyboard_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL3_UpperScreen_Ev.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_Ev.Room518a_WP1",
+        "features": [
+            "TSL3_UpperScreen_Ev"
+        ],
+        "attributes": {}
+    },
+    "TSL3_UpperScreen_Ev.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_Ev.Room518a_WP2",
+        "features": [
+            "TSL3_UpperScreen_Ev"
+        ],
+        "attributes": {}
+    },
+    "TSL3_UpperScreen_ir.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_ir.Room518a_WP1",
+        "features": [
+            "TSL3_UpperScreen_ir"
+        ],
+        "attributes": {}
+    },
+    "TSL3_UpperScreen_ir.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_ir.Room518a_WP2",
+        "features": [
+            "TSL3_UpperScreen_ir"
+        ],
+        "attributes": {}
+    },
+    "TSL3_UpperScreen_spec.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_spec.Room518a_WP1",
+        "features": [
+            "TSL3_UpperScreen_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL3_UpperScreen_spec.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_spec.Room518a_WP2",
+        "features": [
+            "TSL3_UpperScreen_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL4_UpperScreen_Eh.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_Eh.Room518a_WP1",
+        "features": [
+            "TSL4_UpperScreen_Eh"
+        ],
+        "attributes": {}
+    },
+    "TSL4_UpperScreen_Eh.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_Eh.Room518a_WP2",
+        "features": [
+            "TSL4_UpperScreen_Eh"
+        ],
+        "attributes": {}
+    },
+    "TSL4_UpperScreen_ir.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_ir.Room518a_WP1",
+        "features": [
+            "TSL4_UpperScreen_ir"
+        ],
+        "attributes": {}
+    },
+    "TSL4_UpperScreen_ir.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_ir.Room518a_WP2",
+        "features": [
+            "TSL4_UpperScreen_ir"
+        ],
+        "attributes": {}
+    },
+    "TSL4_UpperScreen_spec.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_spec.Room518a_WP1",
+        "features": [
+            "TSL4_UpperScreen_spec"
+        ],
+        "attributes": {}
+    },
+    "TSL4_UpperScreen_spec.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_spec.Room518a_WP2",
+        "features": [
+            "TSL4_UpperScreen_spec"
+        ],
+        "attributes": {}
+    },
+    "US.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:US.Room518a_WP1",
+        "features": [
+            "US"
+        ],
+        "attributes": {}
+    },
+    "US.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:US.Room518a_WP2",
+        "features": [
+            "US"
+        ],
+        "attributes": {}
+    },
+    "UpperScreen_PIR.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:UpperScreen_PIR.Room518a_WP1",
+        "features": [
+            "UpperScreen_PIR"
+        ],
+        "attributes": {}
+    },
+    "UpperScreen_PIR.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:UpperScreen_PIR.Room518a_WP2",
+        "features": [
+            "UpperScreen_PIR"
+        ],
+        "attributes": {}
+    },
+    "VL53_front.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:VL53_front.Room518a_WP1",
+        "features": [
+            "VL53_front"
+        ],
+        "attributes": {}
+    },
+    "VL53_front.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:VL53_front.Room518a_WP2",
+        "features": [
+            "VL53_front"
+        ],
+        "attributes": {}
+    },
+    "VL53_table_height.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:VL53_table_height.Room518a_WP1",
+        "features": [
+            "VL53_table_height"
+        ],
+        "attributes": {}
+    },
+    "VL53_table_height.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:VL53_table_height.Room518a_WP2",
+        "features": [
+            "VL53_table_height"
+        ],
+        "attributes": {}
+    },
+    "co2.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:co2.Room518a_Ceiling",
+        "features": [
+            "co2"
+        ],
+        "attributes": {}
+    },
+    "co2.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:co2.Room518a_WP1",
+        "features": [
+            "co2"
+        ],
+        "attributes": {}
+    },
+    "co2.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:co2.Room518a_WP2",
+        "features": [
+            "co2"
+        ],
+        "attributes": {}
+    },
+    "hum.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:hum.Room518a_Ceiling",
+        "features": [
+            "hum"
+        ],
+        "attributes": {}
+    },
+    "hum.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:hum.Room518a_WP1",
+        "features": [
+            "hum"
+        ],
+        "attributes": {}
+    },
+    "hum.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:hum.Room518a_WP2",
+        "features": [
+            "hum"
+        ],
+        "attributes": {}
+    },
+    "pressure.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:pressure.Room518a_Ceiling",
+        "features": [
+            "pressure"
+        ],
+        "attributes": {}
+    },
+    "pressure.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:pressure.Room518a_WP1",
+        "features": [
+            "pressure"
+        ],
+        "attributes": {}
+    },
+    "pressure.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:pressure.Room518a_WP2",
+        "features": [
+            "pressure"
+        ],
+        "attributes": {}
+    },
+    "temperature.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:temperature.Room518a_Ceiling",
+        "features": [
+            "temperature"
+        ],
+        "attributes": {}
+    },
+    "temperature.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:temperature.Room518a_WP1",
+        "features": [
+            "temperature"
+        ],
+        "attributes": {}
+    },
+    "temperature.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:temperature.Room518a_WP2",
+        "features": [
+            "temperature"
         ],
         "attributes": {}
     }

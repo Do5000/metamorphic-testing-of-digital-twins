@@ -166,30 +166,69 @@ test "TC_01_Monotony_DeskLight" {
 }
 ```
 
-## Ausführung
+## Ausführung und CLI-Befehle
 
-Von .mt zu .json:
+Die DSL bringt ein Command-Line Interface (CLI) mit, um die geschriebenen `.mt`-Dateien zu validieren und in `.json`-Dateien umzuwandeln, die dann vom Test-Runner verwendet werden.
 
-```
-npm run generate
-```
+### 1. `.mt` in `.json` konvertieren
 
-Test/Tests ausführen:
+* **Alle Dateien im Verzeichnis umwandeln**:
+  ```bash
+  npm run generate
+  ```
+  Sucht alle `.mt`-Dateien im aktuellen Verzeichnis, validiert sie (zeigt Fehler bei Syntax- oder Typ-Problemen an) und generiert die zugehörigen `.json`-Dateien.
 
-```
+* **Spezifische Datei umwandeln**:
+  ```bash
+  npm run generate -- <dateiname>.mt
+  ```
+  Oder direkt über das CLI-Skript:
+  ```bash
+  node out/cli/main.js generate <dateiname>.mt
+  ```
+
+* **Ausgabeverzeichnis definieren**:
+  Über das Argument `-d` oder `--destination` kannst du angeben, wo die JSON-Dateien gespeichert werden sollen:
+  ```bash
+  node out/cli/main.js generate <dateiname>.mt -d /pfad/zum/zielordner
+  ```
+
+### 2. Befehle zur Weiterentwicklung der DSL
+
+Wenn du die Sprache selbst erweitern möchtest (z. B. in der Grammatik `framework/dsl/src/language/mt-dsl.langium`), stehen im `dsl`-Verzeichnis folgende Befehle zur Verfügung:
+
+* **`npm run langium:generate`**:
+  Erzeugt die Infrastruktur (Parser, AST-Typen etc.) neu, basierend auf der `.langium`-Datei. Muss nach jeder Änderung an der Grammatik ausgeführt werden.
+* **`npm run build`**:
+  Kompiliert den TypeScript-Code (inklusive der CLI und des VS Code Plugins).
+* **`npm run build:extension`**:
+  Kompiliert ausschließlich das VS Code Plugin.
+* **`npm run watch`**:
+  Startet einen Hintergrundprozess, der bei jeder Dateiänderung (an TypeScript oder Grammatik) automatisch neu kompiliert. Sehr nützlich während der Entwicklung.
+
+### 3. Test-Ausführung (Python)
+
+Nach der erfolgreichen Generierung der JSON-Dateien können die Tests über den Python-Runner ausgeführt werden:
+
+```bash
 pytest tests/test_dsl_runner.py -v --wait-time=5.0 --monitor --log
 ```
 
-```
+Einen spezifischen Test ausführen (z. B. gefiltert nach dem Namen "substitution"):
+```bash
 pytest tests/test_dsl_runner.py -k "substitution" -v --wait-time=5.0 --monitor --log
 ```
 
-## DSL Plugin starten
+## DSL Plugin (Language Server) in VS Code starten
 
-```
-npm install
-```
+Das Plugin bietet Syntax-Highlighting, Autovervollständigung und Fehlerüberprüfung direkt im Editor:
 
-Taste F5
+1. Navigiere in den `dsl`-Ordner: `cd framework/dsl`
+2. Installiere die Abhängigkeiten:
+   ```bash
+   npm install
+   ```
+3. Öffne das Projekt in VS Code und drücke **F5**. Ein neues VS Code Fenster ("Extension Development Host") öffnet sich, in dem die `.mt`-Dateien mit voller Sprachunterstützung bearbeitet werden können.
+
 
 

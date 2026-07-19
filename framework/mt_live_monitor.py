@@ -1,14 +1,14 @@
 import asyncio
 import sys
 import time
-from pytest_dt_mt.core import DigitalTwinAdapter
+from pytest_dt_mt.client import DittoClient
 from ut_helpers import UT_TENANT
 
 async def monitor_things(thing_ids):
     """
     Monitors a list of things and their features in real-time.
     """
-    dt = DigitalTwinAdapter(http_url="http://127.0.0.1:8083")
+    dt = DittoClient(http_url="http://127.0.0.1:8083")
     
     print("====================================================")
     print("Digital Twin: Live Sensor Monitor")
@@ -28,7 +28,7 @@ async def monitor_things(thing_ids):
                     clean_id = t_id.split(":")[-1]
                 
                 try:
-                    state = await dt.get_state(clean_id)
+                    state = await dt.fetch_state(clean_id)
                     
                     if 'features' in state:
                         for feat_name, feat_data in state['features'].items():

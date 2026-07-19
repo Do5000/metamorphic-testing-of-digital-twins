@@ -4,17 +4,20 @@ import * as fs from 'fs';
 import { createMtDslServices } from '../language/mt-dsl-module.js';
 import { Model } from '../language/generated/ast.js';
 import { generateJson } from './generator.js';
-import { EmptyFileSystem, URI } from 'langium';
+import { URI } from 'langium';
+import { NodeFileSystem } from 'langium/node';
 import * as path from 'path';
 
 export const generateAction = async (fileName: string | undefined, opts: { destination?: string }): Promise<void> => {
-    const services = createMtDslServices(EmptyFileSystem).MtDsl;
+    const services = createMtDslServices(NodeFileSystem).MtDsl;
+    await services.shared.workspace.WorkspaceManager.initializeWorkspace([]);
     
+    const targetDir = process.env.INIT_CWD || process.cwd();
     let filesToProcess: string[] = [];
     if (fileName) {
-        filesToProcess.push(fileName);
+        filesToProcess.push(path.resolve(targetDir, fileName));
     } else {
-        filesToProcess = fs.readdirSync('.').filter(f => f.endsWith('.mt'));
+        filesToProcess = fs.readdirSync(targetDir).filter(f => f.endsWith('.mt')).map(f => path.join(targetDir, f));
         if (filesToProcess.length === 0) {
             console.error(chalk.red(`No .mt files found in the current directory.`));
             process.exit(1);

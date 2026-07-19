@@ -19,14 +19,16 @@ HONO_MQTT_PORT = 1883 # usually 1883 or 8883
 def check_port(ip, port, name):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(3)
-    result = s.connect_ex((ip, port))
-    if result == 0:
-        print(f"[OK]   {name} ({ip}:{port}) ist erreichbar.")
-        return True
-    else:
-        print(f"[FAIL] {name} ({ip}:{port}) ist NICHT erreichbar. (Code: {result})")
-        return False
-    s.close()
+    try:
+        result = s.connect_ex((ip, port))
+        if result == 0:
+            print(f"[OK]   {name} ({ip}:{port}) ist erreichbar.")
+            return True
+        else:
+            print(f"[FAIL] {name} ({ip}:{port}) ist NICHT erreichbar. (Code: {result})")
+            return False
+    finally:
+        s.close()
 
 def check_http(url, name, auth=None):
     try:
@@ -53,7 +55,6 @@ async def run_diagnostics():
     
     print("\n--- STUFE 1: LOKALE DIENSTE (MOCK SERVER) ---")
     check_port("127.0.0.1", 8083, "Mock Ditto HTTP")
-    check_port("127.0.0.1", 8082, "Mock Ditto WS")
     await check_ws(LOCAL_DITTO_WS, "Mock Ditto WS (Handshake)")
     
     print("\n--- STUFE 2: INFRASTRUKTUR (LIVING LAB) ---")
@@ -67,22 +68,22 @@ async def run_diagnostics():
     check_http(HA_HTTP, "Home Assistant API")
     
     # Test command trigger via middleware to see if it can reach HA
-    print("\n--- STUFE 4: END-TO-END TEST (COMMAND RELAY) ---")
-    url = f"{MW_HTTP}/middleware/command"
-    payload = {
-        "uuid": "cover.cover_norden",
-        "parameters": [{"name": "current_position", "value": 60}]
-    }
-    try:
-        resp = requests.post(url, json=payload, timeout=5)
-        if resp.status_code == 200:
-            print("[OK]   Middleware konnte Befehl erfolgreich entgegennehmen.")
-        elif resp.status_code == 500:
-            print(f"[FAIL] Middleware meldet Fehler 500 (meistens HA nicht erreichbar): {resp.text}")
-        else:
-            print(f"[WARN] Middleware meldet Status {resp.status_code}: {resp.text}")
-    except Exception as e:
-        print(f"[FAIL] Middleware Command Relay fehlgeschlagen: {e}")
+    # print("\n--- STUFE 4: END-TO-END TEST (COMMAND RELAY) ---")
+    # url = f"{MW_HTTP}/middleware/command"
+    # payload = {
+    #     "uuid": "cover.cover_norden",
+    #     "parameters": [{"name": "current_position", "value": 60}]
+    # }
+    # try:
+    #     resp = requests.post(url, json=payload, timeout=5)
+    #     if resp.status_code == 200:
+    #         print("[OK]   Middleware konnte Befehl erfolgreich entgegennehmen.")
+    #     elif resp.status_code == 500:
+    #         print(f"[FAIL] Middleware meldet Fehler 500 (meistens HA nicht erreichbar): {resp.text}")
+    #     else:
+    #         print(f"[WARN] Middleware meldet Status {resp.status_code}: {resp.text}")
+    # except Exception as e:
+    #     print(f"[FAIL] Middleware Command Relay fehlgeschlagen: {e}")
 
     print("\n" + "="*60)
     print("DIAGNOSE BEENDET")

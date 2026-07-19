@@ -83,7 +83,7 @@ test "test_light_proportionality_inverted_s5" {
 test "test_sensor_stability" {
     relation: stability tolerance: 0.05 duration: 15.0
     actuators [ "light.schreibtisch_lampe" feature "state" ]
-    sensors [ "sensor.esp_c3_helligkeit" feature "state" ]
+    sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
     sourceAction [ "on" ]
 }
 
