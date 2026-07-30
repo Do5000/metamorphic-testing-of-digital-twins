@@ -16,6 +16,7 @@ calibrateLatency {
     runs 1
 }
 set "light.norden_tuer" feature "state" to "0"
+    set "light.norden_tuer" feature "brightness" to 0.0
 
 calibrateLatency {
     actuator "light.sueden_tuer" feature "state"
@@ -29,6 +30,7 @@ calibrateLatency {
     runs 1
 }
 set "light.sueden_tuer" feature "state" to "0"
+    set "light.sueden_tuer" feature "brightness" to 0.0
 
 calibrateLatency {
     actuator "light.norden_fenster" feature "state"
@@ -42,6 +44,7 @@ calibrateLatency {
     runs 1
 }
 set "light.norden_fenster" feature "state" to "0"
+    set "light.norden_fenster" feature "brightness" to 0.0
 
 calibrateLatency {
     actuator "light.sueden_fenster" feature "state"
@@ -55,6 +58,7 @@ calibrateLatency {
     runs 1
 }
 set "light.sueden_fenster" feature "state" to "0"
+    set "light.sueden_fenster" feature "brightness" to 0.0
 
 
 // Calibrations for sensor TSL2_Keyboard_spec.Room518a_WP1
@@ -71,6 +75,7 @@ calibrateLatency {
     runs 1
 }
 set "light.norden_fenster" feature "state" to "0"
+    set "light.norden_fenster" feature "brightness" to 0.0
 
 calibrateLatency {
     actuator "light.sueden_fenster" feature "state"
@@ -84,6 +89,7 @@ calibrateLatency {
     runs 1
 }
 set "light.sueden_fenster" feature "state" to "0"
+    set "light.sueden_fenster" feature "brightness" to 0.0
 
 
 // Calibrations for sensor TSL2_Keyboard_spec.Room518a_WP2
@@ -100,6 +106,7 @@ calibrateLatency {
     runs 1
 }
 set "light.norden_fenster" feature "state" to "0"
+    set "light.norden_fenster" feature "brightness" to 0.0
 
 calibrateLatency {
     actuator "light.sueden_fenster" feature "state"
@@ -113,6 +120,7 @@ calibrateLatency {
     runs 1
 }
 set "light.sueden_fenster" feature "state" to "0"
+    set "light.sueden_fenster" feature "brightness" to 0.0
 
 }
 
@@ -122,68 +130,68 @@ beforeEach {
 
 test "test_conservation_Illuminance_Room518a_Ceiling_light_norden_tuer_light_sueden_tuer" {
     relation: conservation tolerance: 0.10
-    actuators [ "light.norden_tuer" feature "state", "light.sueden_tuer" feature "state" ]
+    actuators [ "light.norden_tuer" feature "state", "light.norden_tuer" feature "brightness", "light.sueden_tuer" feature "state", "light.sueden_tuer" feature "brightness" ]
     sensors [ "Illuminance.Room518a_Ceiling" feature "Illuminance" ]
-    sourceAction [ "1", "0" ]
-    followUpAction [ "0", "1" ]
+    sourceAction [ "1", 1.0, "0", 0.0 ]
+    followUpAction [ "0", 0.0, "1", 1.0 ]
 }
 
 test "test_conservation_Illuminance_Room518a_Ceiling_light_norden_tuer_light__norden_fenster" {
     relation: conservation tolerance: 0.10
-    actuators [ "light.norden_tuer" feature "state", "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_tuer" feature "state", "light.norden_tuer" feature "brightness", "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [ "Illuminance.Room518a_Ceiling" feature "Illuminance" ]
-    sourceAction [ "1", "0" ]
-    followUpAction [ "0", "1" ]
+    sourceAction [ "1", 1.0, "0", 0.0 ]
+    followUpAction [ "0", 0.0, "1", 1.0 ]
 }
 
 test "test_conservation_Illuminance_Room518a_Ceiling_light_norden_tuer_light__sueden_fenster" {
     relation: conservation tolerance: 0.10
-    actuators [ "light.norden_tuer" feature "state", "light.sueden_fenster" feature "state" ]
+    actuators [ "light.norden_tuer" feature "state", "light.norden_tuer" feature "brightness", "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "Illuminance.Room518a_Ceiling" feature "Illuminance" ]
-    sourceAction [ "1", "0" ]
-    followUpAction [ "0", "1" ]
+    sourceAction [ "1", 1.0, "0", 0.0 ]
+    followUpAction [ "0", 0.0, "1", 1.0 ]
 }
 
 test "test_conservation_Illuminance_Room518a_Ceiling_light_sueden_tuer_light__sueden_fenster" {
     relation: conservation tolerance: 0.10
-    actuators [ "light.sueden_tuer" feature "state", "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_tuer" feature "state", "light.sueden_tuer" feature "brightness", "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "Illuminance.Room518a_Ceiling" feature "Illuminance" ]
-    sourceAction [ "1", "0" ]
-    followUpAction [ "0", "1" ]
+    sourceAction [ "1", 1.0, "0", 0.0 ]
+    followUpAction [ "0", 0.0, "1", 1.0 ]
 }
 
 test "test_conservation_Illuminance_Room518a_Ceiling_light_sueden_tuer_light__norden_fenster" {
     relation: conservation tolerance: 0.10
-    actuators [ "light.sueden_tuer" feature "state", "light.norden_fenster" feature "state" ]
+    actuators [ "light.sueden_tuer" feature "state", "light.sueden_tuer" feature "brightness", "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [ "Illuminance.Room518a_Ceiling" feature "Illuminance" ]
-    sourceAction [ "1", "0" ]
-    followUpAction [ "0", "1" ]
+    sourceAction [ "1", 1.0, "0", 0.0 ]
+    followUpAction [ "0", 0.0, "1", 1.0 ]
 }
 
 test "test_conservation_Illuminance_Room518a_Ceiling_light_norden_fenster_light_sueden_fenster" {
     relation: conservation tolerance: 0.10
-    actuators [ "light.norden_fenster" feature "state", "light.sueden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness", "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "Illuminance.Room518a_Ceiling" feature "Illuminance" ]
-    sourceAction [ "1", "0" ]
-    followUpAction [ "0", "1" ]
+    sourceAction [ "1", 1.0, "0", 0.0 ]
+    followUpAction [ "0", 0.0, "1", 1.0 ]
 }
 
 
 // Inverse Tests that should show that light from other Workplaces contributes less to a other workplace than the light directly above workplace
 test "test_conservation_TSL2_Keyboard_spec_Room518a_WP1_light_norden_fenster_light_sueden_fenster" {
     relation: not conservation tolerance: 0.10
-    actuators [ "light.norden_fenster" feature "state", "light.sueden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness", "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec" ]
-    sourceAction [ "1", "0" ]
-    followUpAction [ "0", "1" ]
+    sourceAction [ "1", 1.0, "0", 0.0 ]
+    followUpAction [ "0", 0.0, "1", 1.0 ]
 }
 
 test "test_conservation_TSL2_Keyboard_spec_Room518a_WP2_light_norden_fenster_light_sueden_fenster" {
     relation: not conservation tolerance: 0.10
-    actuators [ "light.norden_fenster" feature "state", "light.sueden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness", "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "TSL2_Keyboard_spec.Room518a_WP2" feature "TSL2_Keyboard_spec" ]
-    sourceAction [ "1", "0" ]
-    followUpAction [ "0", "1" ]
+    sourceAction [ "1", 1.0, "0", 0.0 ]
+    followUpAction [ "0", 0.0, "1", 1.0 ]
 }
 
 afterAll {
