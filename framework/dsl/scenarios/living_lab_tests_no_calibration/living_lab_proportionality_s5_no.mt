@@ -174,98 +174,98 @@ test "test_proportionality_switch_licht_schalter_TSL3_UpperScreen_spec_Room518a_
 // TSL1: WP1 vs WP2
 test "test_not_proportionality_light_norden_fenster_TS1_WP1_vs_WP2" {
     relation: not proportionality tolerance: 0.01
-    actuators [ "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [
         "TSL1_LowerScreen_spec.Room518a_WP1" feature "TSL1_LowerScreen_spec",
         "TSL1_LowerScreen_spec.Room518a_WP2" feature "TSL1_LowerScreen_spec"
     ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 // TSL2: WP1 vs WP2
 test "test_not_proportionality_light_norden_fenster_TS2_WP1_vs_WP2" {
     relation: not proportionality tolerance: 0.01
-    actuators [ "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [
         "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec",
         "TSL2_Keyboard_spec.Room518a_WP2" feature "TSL2_Keyboard_spec"
     ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 // TSL3: WP1 vs WP2
 test "test_not_proportionality_light_norden_fenster_TS3_WP1_vs_WP2" {
     relation: not proportionality tolerance: 0.01
-    actuators [ "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [
         "TSL3_UpperScreen_spec.Room518a_WP1" feature "TSL3_UpperScreen_spec",
         "TSL3_UpperScreen_spec.Room518a_WP2" feature "TSL3_UpperScreen_spec"
     ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 // TSL4: WP1 vs WP2 bei WP1-Licht
 test "test_not_proportionality_light_norden_fenster_TS4_WP1_vs_WP2" {
     relation: not proportionality tolerance: 0.01
-    actuators [ "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [
         "TSL4_UpperScreen_spec.Room518a_WP1" feature "TSL4_UpperScreen_spec",
         "TSL4_UpperScreen_spec.Room518a_WP2" feature "TSL4_UpperScreen_spec"
     ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 
 // TSL1: WP2 vs WP1
 test "test_not_proportionality_light_sueden_fenster_TS1_WP2_vs_WP1" {
     relation: not proportionality tolerance: 0.01
-    actuators [ "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [
         "TSL1_LowerScreen_spec.Room518a_WP2" feature "TSL1_LowerScreen_spec",
         "TSL1_LowerScreen_spec.Room518a_WP1" feature "TSL1_LowerScreen_spec"
     ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 // TSL2: WP2 vs WP1
 test "test_not_proportionality_light_sueden_fenster_TS2_WP2_vs_WP1" {
     relation: not proportionality tolerance: 0.01
-    actuators [ "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [
         "TSL2_Keyboard_spec.Room518a_WP2" feature "TSL2_Keyboard_spec",
         "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec"
     ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 // TSL3: WP2 vs WP1
 test "test_not_proportionality_light_sueden_fenster_TS3_WP2_vs_WP1" {
     relation: not proportionality tolerance: 0.01
-    actuators [ "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [
         "TSL3_UpperScreen_spec.Room518a_WP2" feature "TSL3_UpperScreen_spec",
         "TSL3_UpperScreen_spec.Room518a_WP1" feature "TSL3_UpperScreen_spec"
     ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 // TSL4: WP2 vs WP1
 test "test_not_proportionality_light_sueden_fenster_TS4_WP2_vs_WP1" {
     relation: not proportionality tolerance: 0.01
-    actuators [ "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [
         "TSL4_UpperScreen_spec.Room518a_WP2" feature "TSL4_UpperScreen_spec",
         "TSL4_UpperScreen_spec.Room518a_WP1" feature "TSL4_UpperScreen_spec"
     ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 afterAll {

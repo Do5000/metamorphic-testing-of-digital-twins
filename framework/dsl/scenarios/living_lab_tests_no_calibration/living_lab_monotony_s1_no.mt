@@ -182,69 +182,69 @@ test "test_inverse_monotonicity_TSL4_UpperScreen_spec_Room518a_WP2_switch_licht_
 
 test "test_monotonicity_TSL1_LowerScreen_spec_Room518a_WP1_light_norden_fenster" {
     relation: monotonicity
-    actuators [ "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [ "TSL1_LowerScreen_spec.Room518a_WP1" feature "TSL1_LowerScreen_spec" ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 test "test_inverse_monotonicity_TSL1_LowerScreen_spec_Room518a_WP1_light_norden_fenster" {
     relation: not monotonicity
-    actuators [ "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [ "TSL1_LowerScreen_spec.Room518a_WP1" feature "TSL1_LowerScreen_spec" ]
-    sourceAction [ "1" ]
-    followUpAction [ "0" ]
+    sourceAction [ "1", 1.0 ]
+    followUpAction [ "0", 0.0 ]
 }
 
 
 test "test_monotonicity_TSL2_Keyboard_spec_Room518a_WP1_light_norden_fenster" {
     relation: monotonicity
-    actuators [ "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [ "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec" ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 test "test_inverse_monotonicity_TSL2_Keyboard_spec_Room518a_WP1_light_norden_fenster" {
     relation: not monotonicity
-    actuators [ "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [ "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec" ]
-    sourceAction [ "1" ]
-    followUpAction [ "0" ]
+    sourceAction [ "1", 1.0 ]
+    followUpAction [ "0", 0.0 ]
 }
 
 
 test "test_monotonicity_TSL3_UpperScreen_spec_Room518a_WP1_light_norden_fenster" {
     relation: monotonicity
-    actuators [ "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [ "TSL3_UpperScreen_spec.Room518a_WP1" feature "TSL3_UpperScreen_spec" ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 test "test_inverse_monotonicity_TSL3_UpperScreen_spec_Room518a_WP1_light_norden_fenster" {
     relation: not monotonicity
-    actuators [ "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [ "TSL3_UpperScreen_spec.Room518a_WP1" feature "TSL3_UpperScreen_spec" ]
-    sourceAction [ "1" ]
-    followUpAction [ "0" ]
+    sourceAction [ "1", 1.0 ]
+    followUpAction [ "0", 0.0 ]
 }
 
 
 test "test_monotonicity_TSL4_UpperScreen_spec_Room518a_WP1_light_norden_fenster" {
     relation: monotonicity
-    actuators [ "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [ "TSL4_UpperScreen_spec.Room518a_WP1" feature "TSL4_UpperScreen_spec" ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 test "test_inverse_monotonicity_TSL4_UpperScreen_spec_Room518a_WP1_light_norden_fenster" {
     relation: not monotonicity
-    actuators [ "light.norden_fenster" feature "state" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [ "TSL4_UpperScreen_spec.Room518a_WP1" feature "TSL4_UpperScreen_spec" ]
-    sourceAction [ "1" ]
-    followUpAction [ "0" ]
+    sourceAction [ "1", 1.0 ]
+    followUpAction [ "0", 0.0 ]
 }
 
 
@@ -252,69 +252,69 @@ test "test_inverse_monotonicity_TSL4_UpperScreen_spec_Room518a_WP1_light_norden_
 
 test "test_monotonicity_TSL1_LowerScreen_spec_Room518a_WP2_light_sueden_fenster" {
     relation: monotonicity
-    actuators [ "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "TSL1_LowerScreen_spec.Room518a_WP2" feature "TSL1_LowerScreen_spec" ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 test "test_inverse_monotonicity_TSL1_LowerScreen_spec_Room518a_WP2_light_sueden_fenster" {
     relation: not monotonicity
-    actuators [ "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "TSL1_LowerScreen_spec.Room518a_WP2" feature "TSL1_LowerScreen_spec" ]
-    sourceAction [ "1" ]
-    followUpAction [ "0" ]
+    sourceAction [ "1", 1.0 ]
+    followUpAction [ "0", 0.0 ]
 }
 
 
 test "test_monotonicity_TSL2_Keyboard_spec_Room518a_WP2_light_sueden_fenster" {
     relation: monotonicity
-    actuators [ "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "TSL2_Keyboard_spec.Room518a_WP2" feature "TSL2_Keyboard_spec" ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 test "test_inverse_monotonicity_TSL2_Keyboard_spec_Room518a_WP2_light_sueden_fenster" {
     relation: not monotonicity
-    actuators [ "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "TSL2_Keyboard_spec.Room518a_WP2" feature "TSL2_Keyboard_spec" ]
-    sourceAction [ "1" ]
-    followUpAction [ "0" ]
+    sourceAction [ "1", 1.0 ]
+    followUpAction [ "0", 0.0 ]
 }
 
 
 test "test_monotonicity_TSL3_UpperScreen_spec_Room518a_WP2_light_sueden_fenster" {
     relation: monotonicity
-    actuators [ "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "TSL3_UpperScreen_spec.Room518a_WP2" feature "TSL3_UpperScreen_spec" ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 test "test_inverse_monotonicity_TSL3_UpperScreen_spec_Room518a_WP2_light_sueden_fenster" {
     relation: not monotonicity
-    actuators [ "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "TSL3_UpperScreen_spec.Room518a_WP2" feature "TSL3_UpperScreen_spec" ]
-    sourceAction [ "1" ]
-    followUpAction [ "0" ]
+    sourceAction [ "1", 1.0 ]
+    followUpAction [ "0", 0.0 ]
 }
 
 
 test "test_monotonicity_TSL4_UpperScreen_spec_Room518a_WP2_light_sueden_fenster" {
     relation: monotonicity
-    actuators [ "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "TSL4_UpperScreen_spec.Room518a_WP2" feature "TSL4_UpperScreen_spec" ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 test "test_inverse_monotonicity_TSL4_UpperScreen_spec_Room518a_WP2_light_sueden_fenster" {
     relation: not monotonicity
-    actuators [ "light.sueden_fenster" feature "state" ]
+    actuators [ "light.sueden_fenster" feature "state", "light.sueden_fenster" feature "brightness" ]
     sensors [ "TSL4_UpperScreen_spec.Room518a_WP2" feature "TSL4_UpperScreen_spec" ]
-    sourceAction [ "1" ]
-    followUpAction [ "0" ]
+    sourceAction [ "1", 1.0 ]
+    followUpAction [ "0", 0.0 ]
 }
 
 
@@ -322,35 +322,35 @@ test "test_inverse_monotonicity_TSL4_UpperScreen_spec_Room518a_WP2_light_sueden_
 
 test "test_monotonicity_Illuminance_Room518a_Ceiling_light_norden_tuer" {
     relation: monotonicity
-    actuators [ "light.norden_tuer" feature "state" ]
+    actuators [ "light.norden_tuer" feature "state", "light.norden_tuer" feature "brightness" ]
     sensors [ "Illuminance.Room518a_Ceiling" feature "Illuminance" ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 test "test_inverse_monotonicity_Illuminance_Room518a_Ceiling_light_norden_tuer" {
     relation: not monotonicity
-    actuators [ "light.norden_tuer" feature "state" ]
+    actuators [ "light.norden_tuer" feature "state", "light.norden_tuer" feature "brightness" ]
     sensors [ "Illuminance.Room518a_Ceiling" feature "Illuminance" ]
-    sourceAction [ "1" ]
-    followUpAction [ "0" ]
+    sourceAction [ "1", 1.0 ]
+    followUpAction [ "0", 0.0 ]
 }
 
 
 test "test_monotonicity_Illuminance_Room518a_Ceiling_light_sueden_tuer" {
     relation: monotonicity
-    actuators [ "light.sueden_tuer" feature "state" ]
+    actuators [ "light.sueden_tuer" feature "state", "light.sueden_tuer" feature "brightness" ]
     sensors [ "Illuminance.Room518a_Ceiling" feature "Illuminance" ]
-    sourceAction [ "0" ]
-    followUpAction [ "1" ]
+    sourceAction [ "0", 0.0 ]
+    followUpAction [ "1", 1.0 ]
 }
 
 test "test_inverse_monotonicity_Illuminance_Room518a_Ceiling_light_sueden_tuer" {
     relation: not monotonicity
-    actuators [ "light.sueden_tuer" feature "state" ]
+    actuators [ "light.sueden_tuer" feature "state", "light.sueden_tuer" feature "brightness" ]
     sensors [ "Illuminance.Room518a_Ceiling" feature "Illuminance" ]
-    sourceAction [ "1" ]
-    followUpAction [ "0" ]
+    sourceAction [ "1", 1.0 ]
+    followUpAction [ "0", 0.0 ]
 }
 
 afterAll {

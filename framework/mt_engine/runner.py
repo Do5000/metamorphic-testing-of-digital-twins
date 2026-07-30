@@ -182,7 +182,8 @@ class DslRunner:
         if not actuators or not sensors:
             raise ValueError("Generation requires at least 1 actuator and 1 sensor.")
             
-        actuator = actuators[0]
+        # Find the feature to iterate over (prefer 'brightness' or anything other than 'state')
+        actuator = next((a for a in actuators if a["feature"] != "state"), actuators[0])
         
         if test_data.get("brightnessLevels"):
             steps = test_data["brightnessLevels"]
@@ -198,6 +199,7 @@ class DslRunner:
             if step_val == 0:
                 await self.adapter.set_feature_value(actuator["deviceId"], "state", "off")
             else:
+                await self.adapter.set_feature_value(actuator["deviceId"], "state", "on")
                 await self.adapter.set_feature_value(actuator["deviceId"], actuator["feature"], step_val)
                 
             async with multi_monitor(self.adapter, sensors, verbose):

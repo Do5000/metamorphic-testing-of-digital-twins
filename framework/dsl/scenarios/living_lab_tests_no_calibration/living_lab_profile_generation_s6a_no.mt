@@ -14,6 +14,7 @@ calibrateLatency {
     runs 1
 }
 set "light.norden_fenster" feature "state" to "0"
+set "light.norden_fenster" feature "brightness" to 0.0
 
 calibrateLatency {
     actuator "light.norden_fenster" feature "state"
@@ -27,12 +28,13 @@ calibrateLatency {
     runs 1
 }
 set "light.norden_fenster" feature "state" to "0"
+set "light.norden_fenster" feature "brightness" to 0.0
 
 }
 
 test "generate_sensor_profile_TSL1_LowerScreen_spec_Room518a_WP1_TSL2_Keyboard_spec_Room518a_WP1_light_norden_fenster" {
     relation: generation historicalFile: "sensor_profile_TSL1_LowerScreen_spec_Room518a_WP1_TSL2_Keyboard_spec_Room518a_WP1.json"
-    actuators [ "light.norden_fenster" feature "brightness" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [
         "TSL1_LowerScreen_spec.Room518a_WP1" feature "TSL1_LowerScreen_spec",
         "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec"
@@ -43,12 +45,12 @@ test "generate_sensor_profile_TSL1_LowerScreen_spec_Room518a_WP1_TSL2_Keyboard_s
 
 test "test_substitution_TSL1_LowerScreen_spec_Room518a_WP1_TSL2_Keyboard_spec_Room518a_WP1_light_norden_fenster_0" {
     relation: substitution tolerance: 0.05 profile: "sensor_profile_TSL1_LowerScreen_spec_Room518a_WP1_TSL2_Keyboard_spec_Room518a_WP1.json"
-    actuators [ "light.norden_fenster" feature "brightness" ]
+    actuators [ "light.norden_fenster" feature "state", "light.norden_fenster" feature "brightness" ]
     sensors [
         "TSL1_LowerScreen_spec.Room518a_WP1" feature "TSL1_LowerScreen_spec",
         "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec"
     ]
-    sourceAction [ 0 ]
+    sourceAction [ "0", 0.0 ]
 }
 
 afterAll {
