@@ -128,15 +128,18 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
         full_data["_before_all_run"] = True
 
     try:
-        # Run beforeEach hooks from the same file
-        await _run_hooks(runner, full_data, "beforeEach")
-                
         # Create a dynamic wait wrapper that prioritizes the adapter's measured latency
         async def dynamic_wait():
             if hasattr(dt_adapter, "_measured_latency") and dt_adapter._measured_latency is not None:
                 await asyncio.sleep(dt_adapter._measured_latency)
             else:
                 await wait_dt()
+
+        # Run beforeEach hooks from the same file
+        await _run_hooks(runner, full_data, "beforeEach")
+        
+        # WICHTIG: Warte nach dem Reset (beforeEach), bevor der eigentliche Test startet!
+        await dynamic_wait()
 
         # Run the test definition
         verbose = pytestconfig.getoption("--monitor")

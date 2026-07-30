@@ -5,13 +5,21 @@ from threading import Thread,Event
 import logging
 logging.getLogger("werkzeug").setLevel(logging.ERROR)
 
-executor1 = ThreadPoolExecutor(max_workers=10)
+executor1 = ThreadPoolExecutor(max_workers=1)
 middleware = Middleware()
 ditto_mock = DittoWebSocket("0.0.0.0", 8082)
 
+import time
+
+def send_with_logging(device, param_val):
+    print(f"[{time.strftime('%H:%M:%S.%f')[:-3]}] 🚀 START Senden an Middleware: {device} -> {param_val}")
+    middleware.send_value(device, param_val)
+    print(f"[{time.strftime('%H:%M:%S.%f')[:-3]}] ✅ DONE Senden an Middleware: {device} -> {param_val}")
+
 def ditto_mock_on_message(device, param, value):
     if value is not None and param != "errors-response":
-        executor1.submit(middleware.send_value, device, {param:value})
+        print(f"[{time.strftime('%H:%M:%S.%f')[:-3]}] 📥 Befehl von Ditto empfangen: {device} -> {param}={value} (Lege in Queue...)")
+        executor1.submit(send_with_logging, device, {param:value})
     else:
         print(f"Info (Hono:{device}):", param, value)
 
