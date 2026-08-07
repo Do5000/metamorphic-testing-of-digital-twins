@@ -8,53 +8,99 @@ import re
 import websockets
 
 device_data_initial = {
-    # 'switch.ac': {
-    # 'attributes': {},
-    # 'features': {'state': 1}},
+    'switch.ac': {
+    'attributes': {},
+    'features': {'state': 1}},
 
-    # 'switch.decorative_light': {
-    # 'attributes': {},
-    # 'features': {'state': 1}},
+    'switch.decorative_light': {
+    'attributes': {},
+    'features': {'state': 1}},
 
-    # 'light.bed_light': {
-    # 'attributes': {},
-    # 'features': {'state': 1, 'brightness': 1}},
+    'light.bed_light': {
+    'attributes': {},
+    'features': {'state': 1, 'brightness': 1}},
 
-    # 'light.ceiling_lights': {
-    # 'attributes': {},
-    # 'features': {'state': 1, 'brightness': 1}},
+    'light.ceiling_lights': {
+    'attributes': {},
+    'features': {'state': 1, 'brightness': 1}},
 
-    # 'light.entrance_color_white_lights': {
-    # 'attributes': {},
-    # 'features': {'state': 1, 'brightness': 1}},
+    'light.entrance_color_white_lights': {
+    'attributes': {},
+    'features': {'state': 1, 'brightness': 1}},
 
-    # 'light.norden_tuer': {
-    # 'attributes': {},
-    # 'features': {'state': 0, 'brightness': 0}},
+    'light.norden_tuer': {
+    'attributes': {},
+    'features': {'state': 0.0, 'brightness': 0.0}},
 
-    # 'light.sueden_tuer': {
-    # 'attributes': {},
-    # 'features': {'state': 0, 'brightness': 0}},
+    'light.sueden_tuer': {
+    'attributes': {},
+    'features': {'state': 0.0, 'brightness': 0.0}},
 
-    # 'light.norden_fenster': {
-    # 'attributes': {},
-    # 'features': {'state': 0, 'brightness': 0}},
+    'light.norden_fenster': {
+    'attributes': {},
+    'features': {'state': 0.0, 'brightness': 0.0}},
 
-    # 'light.sueden_fenster': {
-    # 'attributes': {},
-    # 'features': {'state': 0, 'brightness': 0}},
+    'light.sueden_fenster': {
+    'attributes': {},
+    'features': {'state': 0.0, 'brightness': 0.0}},
 
-    # 'switch.licht_schalter': {
-    # 'attributes': {},
-    # 'features': {'state': 0}},
+    'switch.licht_schalter': {
+    'attributes': {},
+    'features': {'state': 0.0}},
 
-    # 'cover.cover_norden': {
-    # 'attributes': {},
-    # 'features': {'current_position': 0}},
+    'cover.cover_norden': {
+    'attributes': {},
+    'features': {'current_position': 0.0}},
 
-    # 'cover.cover_sueden': {
-    # 'attributes': {},
-    # 'features': {'current_position': 0}},
+    'cover.cover_sueden': {
+    'attributes': {},
+    'features': {'current_position': 0.0}},
+
+    'cover.fenster': {'attributes': {},
+    'features': {'current_position': 0.0}},
+
+    'hum.Room518a_WP1': {'attributes': {},
+    'features': {'hum': 0.0}},
+    'hum.Room518a_WP2': {'attributes': {},
+    'features': {'hum': 0.0}},
+    'hum.Room518a_Ceiling': {'attributes': {},
+    'features': {'hum': 0.0}},
+
+    'pressure.Room518a_WP1': {'attributes': {},
+    'features': {'pressure': 0.0}},
+    'pressure.Room518a_WP2': {'attributes': {},
+    'features': {'pressure': 0.0}},
+    'pressure.Room518a_Ceiling': {'attributes': {},
+    'features': {'pressure': 0.0}},
+
+    'temperature.Room518a_WP1': {'attributes': {},
+    'features': {'temperature': 0.0}},
+    'temperature.Room518a_WP2': {'attributes': {},
+    'features': {'temperature': 0.0}},
+    'temperature.Room518a_Ceiling': {'attributes': {},
+    'features': {'temperature': 0.0}},
+
+    'co2.Room518a_WP1': {'attributes': {},
+    'features': {'co2': 0.0}},
+    'co2.Room518a_WP2': {'attributes': {},
+    'features': {'co2': 0.0}},
+    'co2.Room518a_Ceiling': {'attributes': {},
+    'features': {'co2': 0.0}},
+
+    'PIR.Room518a_WP1': {'attributes': {},
+    'features': {'PIR': 0.0}},
+    'PIR.Room518a_WP2': {'attributes': {},
+    'features': {'PIR': 0.0}},
+    'PIR.Room518a_Ceiling': {'attributes': {},
+    'features': {'PIR': 0.0}},
+
+    'SOUND_AO.Room518a_WP1': {'attributes': {},
+    'features': {'SOUND_AO': 0.0}},
+    'SOUND_AO.Room518a_WP2': {'attributes': {},
+    'features': {'SOUND_AO': 0.0}},
+    
+    'Illuminance.Room518a_WP2': {'attributes': {},
+    'features': {'Illuminance': 0.0}},
 }
 
 MOCK_DEVICE_DATA = {f'{UT_TENANT}:{k}': {
@@ -70,7 +116,7 @@ class WebSocketServer:
         self.uri = f"ws://{host}:{port}"
         self.host = host
         self.port = port
-        self.ws = None
+        self.clients = set()
         self.on_message = None
         self.loop = asyncio.new_event_loop()
         self.server = None
@@ -85,21 +131,20 @@ class WebSocketServer:
         self.server = await websockets.serve(self._handler, self.host, self.port)
 
     async def _handler(self, ws, path=None):
-        if path is None:
-            path=getattr(ws, "path", None)
-            if path is None: path = ws.request.path
-        if path != "/ws/2": 
-            await ws.close()
-            return
-        self.ws = ws
-        while True:
-            try:
-                msg = await ws.recv()
-                if self.on_message: self.on_message(msg)
-            except: break
+        path = path or getattr(ws, "path", None) or ws.request.path
+        if path != "/ws/2": await ws.close(); return
+        self.clients.add(ws)
+        try:
+            while True:
+                try:
+                    msg = await ws.recv()
+                    if self.on_message: self.on_message(msg)
+                except: break
+        finally:
+            self.clients.remove(ws)
 
     async def _send(self, msg):
-        if self.ws: await self.ws.send(msg)
+        await asyncio.gather(*(client.send(msg) for client in self.clients if client))
 
     def send(self, msg):
         asyncio.run_coroutine_threadsafe(self._send(msg), self.loop)
@@ -111,7 +156,6 @@ class WebSocketServer:
         asyncio.run_coroutine_threadsafe(self._stop(), self.loop).result()
         self.loop.call_soon_threadsafe(self.loop.stop)
         self.thread.join()
-
 
 
 
@@ -145,35 +189,19 @@ class DittoWebSocket(WebSocketServer):
 
     def set_attribute(self, device, attribute, value):
         device_id = f'{UT_TENANT}:{device}'
-        self.devices[device_id]['attibutes'][attribute] = value
+        self.devices[device_id]['attributes'][attribute] = value
         self.send(json.dumps(
-            self._create_modified_message(device, f'/attibutes/{attribute}', value)
+            self._create_modified_message(device, f'/attributes/{attribute}', value)
         ))
-
-    def _init_feature_if_missing(self, device_id, feature, value):
-        #init missing feature
-        if feature not in self.devices[device_id]['features']:
-            self.devices[device_id]['features'][feature] = {'properties': {'value': value}}
-
-    def _create_mock_device(self, device_id, feature, value):
-        #create new mock device
-        print(f"Creating new mock device: {device_id} with feature: {feature}")
-        self.devices[device_id] = {
-            'thingId': device_id,
-            'policyId': UT_POLICY,
-            'attributes': {},
-            'features': {
-                feature: {'properties': {'value': value}}
-            }
-        }
 
     def set_feature(self, device, feature, value):
         device_id = f'{UT_TENANT}:{device}'
         if device_id not in self.devices:
-            # Dynamically create the device if it doesn't exist
-            self._create_mock_device(device_id, feature, value)
-        self._init_feature_if_missing(device_id, feature, value)
-        
+            # TODO: send error
+            return
+        if feature not in self.devices[device_id]['features']:
+            print("Unknown feature:", feature)
+            return
         self.devices[device_id]['features'][feature]['properties']['value'] = value
         self.send(json.dumps(
             self._create_modified_message(device, f'/features/{feature}/properties/value', value)
@@ -276,5 +304,3 @@ class DittoWebSocket(WebSocketServer):
 
         
         return self.app
-
-
