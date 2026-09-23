@@ -11,6 +11,9 @@ ditto_mock = DittoWebSocket("0.0.0.0", 8082)
 
 import time
 
+# Speicher für die zuletzt gesendeten Befehle und deren Zeitstempel
+command_timestamps = {}
+
 def send_with_logging(device, param_val):
     print(f"[{time.strftime('%H:%M:%S.%f')[:-3]}] 🚀 START Senden an Middleware: {device} -> {param_val}")
     middleware.send_value(device, param_val)
@@ -18,6 +21,11 @@ def send_with_logging(device, param_val):
 
 def ditto_mock_on_message(device, param, value):
     if value is not None and param != "errors-response":
+        # Befehl speichern, um Echo-Schleifen zu verhindern
+        if device not in command_timestamps:
+            command_timestamps[device] = {}
+        command_timestamps[device][param] = (value, time.time())
+        
         print(f"[{time.strftime('%H:%M:%S.%f')[:-3]}] 📥 Befehl von Ditto empfangen: {device} -> {param}={value} (Lege in Queue...)")
         executor1.submit(send_with_logging, device, {param:value})
     else:
@@ -25,9 +33,17 @@ def ditto_mock_on_message(device, param, value):
 
 def middleware_on_device_param_updated(device, param, value):
     param_val = middleware.parse_to_hono({param:value})
-    param,value = list(param_val.items())[0]
-    if value is not None:
-        ditto_mock.set_feature(device, param, value)
+    hono_param, hono_value = list(param_val.items())[0]
+    
+    # ECHO LOOP FILTER:
+    if device in command_timestamps and hono_param in command_timestamps[device]:
+        cmd_val, cmd_time = command_timestamps[device][hono_param]
+        if cmd_val != hono_value and (time.time() - cmd_time) < 25.0:
+            print(f"[{time.strftime('%H:%M:%S.%f')[:-3]}] 🛑 Blockiere Echo-Loop: Ignoriere physischen Status {device}->{hono_value}, da wir kürzlich {cmd_val} befohlen haben!")
+            return
+            
+    if hono_value is not None:
+        ditto_mock.set_feature(device, hono_param, hono_value)
     else:
         print("Info:", param_val)
 

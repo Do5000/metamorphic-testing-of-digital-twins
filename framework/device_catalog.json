@@ -1,45 +1,36 @@
 {
-    "cover.cover_sueden": {
-        "full_id": "at.uibk.ut.tenants:cover.cover_sueden",
+    "switch.ac": {
+        "full_id": "at.uibk.ut.tenants:switch.ac",
         "features": [
-            "current_position",
-            "current_tilt_position"
+            "state"
         ],
         "attributes": {}
     },
-    "cover.cover_norden": {
-        "full_id": "at.uibk.ut.tenants:cover.cover_norden",
+    "switch.decorative_light": {
+        "full_id": "at.uibk.ut.tenants:switch.decorative_light",
         "features": [
-            "current_position",
-            "current_tilt_position"
+            "state"
         ],
         "attributes": {}
     },
-    "cover.fenster": {
-        "full_id": "at.uibk.ut.tenants:cover.fenster",
-        "features": [
-            "current_position"
-        ],
-        "attributes": {}
-    },
-    "light.sueden_fenster": {
-        "full_id": "at.uibk.ut.tenants:light.sueden_fenster",
+    "light.bed_light": {
+        "full_id": "at.uibk.ut.tenants:light.bed_light",
         "features": [
             "brightness",
             "state"
         ],
         "attributes": {}
     },
-    "light.norden_fenster": {
-        "full_id": "at.uibk.ut.tenants:light.norden_fenster",
+    "light.ceiling_lights": {
+        "full_id": "at.uibk.ut.tenants:light.ceiling_lights",
         "features": [
             "brightness",
             "state"
         ],
         "attributes": {}
     },
-    "light.sueden_tuer": {
-        "full_id": "at.uibk.ut.tenants:light.sueden_tuer",
+    "light.entrance_color_white_lights": {
+        "full_id": "at.uibk.ut.tenants:light.entrance_color_white_lights",
         "features": [
             "brightness",
             "state"
@@ -54,6 +45,30 @@
         ],
         "attributes": {}
     },
+    "light.sueden_tuer": {
+        "full_id": "at.uibk.ut.tenants:light.sueden_tuer",
+        "features": [
+            "brightness",
+            "state"
+        ],
+        "attributes": {}
+    },
+    "light.norden_fenster": {
+        "full_id": "at.uibk.ut.tenants:light.norden_fenster",
+        "features": [
+            "brightness",
+            "state"
+        ],
+        "attributes": {}
+    },
+    "light.sueden_fenster": {
+        "full_id": "at.uibk.ut.tenants:light.sueden_fenster",
+        "features": [
+            "brightness",
+            "state"
+        ],
+        "attributes": {}
+    },
     "switch.licht_schalter": {
         "full_id": "at.uibk.ut.tenants:switch.licht_schalter",
         "features": [
@@ -61,360 +76,24 @@
         ],
         "attributes": {}
     },
-    "Illuminance.Room518a_Ceiling": {
-        "full_id": "at.uibk.ut.tenants:Illuminance.Room518a_Ceiling",
+    "cover.cover_norden": {
+        "full_id": "at.uibk.ut.tenants:cover.cover_norden",
         "features": [
-            "Illuminance"
+            "current_position"
         ],
         "attributes": {}
     },
-    "LowerScreen_PIR.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:LowerScreen_PIR.Room518a_WP1",
+    "cover.cover_sueden": {
+        "full_id": "at.uibk.ut.tenants:cover.cover_sueden",
         "features": [
-            "LowerScreen_PIR"
+            "current_position"
         ],
         "attributes": {}
     },
-    "LowerScreen_PIR.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:LowerScreen_PIR.Room518a_WP2",
+    "cover.fenster": {
+        "full_id": "at.uibk.ut.tenants:cover.fenster",
         "features": [
-            "LowerScreen_PIR"
-        ],
-        "attributes": {}
-    },
-    "PIR.Room518a_Ceiling": {
-        "full_id": "at.uibk.ut.tenants:PIR.Room518a_Ceiling",
-        "features": [
-            "PIR"
-        ],
-        "attributes": {}
-    },
-    "PIR.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:PIR.Room518a_WP1",
-        "features": [
-            "PIR"
-        ],
-        "attributes": {}
-    },
-    "PIR.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:PIR.Room518a_WP2",
-        "features": [
-            "PIR"
-        ],
-        "attributes": {}
-    },
-    "PTAT.Room518a_Ceiling": {
-        "full_id": "at.uibk.ut.tenants:PTAT.Room518a_Ceiling",
-        "features": [
-            "PTAT"
-        ],
-        "attributes": {}
-    },
-    "SHT45_RH.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:SHT45_RH.Room518a_WP1",
-        "features": [
-            "SHT45_RH"
-        ],
-        "attributes": {}
-    },
-    "SHT45_RH.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:SHT45_RH.Room518a_WP2",
-        "features": [
-            "SHT45_RH"
-        ],
-        "attributes": {}
-    },
-    "SHT45_Temp.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:SHT45_Temp.Room518a_WP1",
-        "features": [
-            "SHT45_Temp"
-        ],
-        "attributes": {}
-    },
-    "SHT45_Temp.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:SHT45_Temp.Room518a_WP2",
-        "features": [
-            "SHT45_Temp"
-        ],
-        "attributes": {}
-    },
-    "SOUND_AO.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:SOUND_AO.Room518a_WP1",
-        "features": [
-            "SOUND_AO"
-        ],
-        "attributes": {}
-    },
-    "SOUND_AO.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:SOUND_AO.Room518a_WP2",
-        "features": [
-            "SOUND_AO"
-        ],
-        "attributes": {}
-    },
-    "SOUND_DO.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:SOUND_DO.Room518a_WP1",
-        "features": [
-            "SOUND_DO"
-        ],
-        "attributes": {}
-    },
-    "SOUND_DO.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:SOUND_DO.Room518a_WP2",
-        "features": [
-            "SOUND_DO"
-        ],
-        "attributes": {}
-    },
-    "TSL1_LowerScreen_Eh.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_Eh.Room518a_WP1",
-        "features": [
-            "TSL1_LowerScreen_Eh"
-        ],
-        "attributes": {}
-    },
-    "TSL1_LowerScreen_Eh.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_Eh.Room518a_WP2",
-        "features": [
-            "TSL1_LowerScreen_Eh"
-        ],
-        "attributes": {}
-    },
-    "TSL1_LowerScreen_ir.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_ir.Room518a_WP1",
-        "features": [
-            "TSL1_LowerScreen_ir"
-        ],
-        "attributes": {}
-    },
-    "TSL1_LowerScreen_ir.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_ir.Room518a_WP2",
-        "features": [
-            "TSL1_LowerScreen_ir"
-        ],
-        "attributes": {}
-    },
-    "TSL1_LowerScreen_spec.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_spec.Room518a_WP1",
-        "features": [
-            "TSL1_LowerScreen_spec"
-        ],
-        "attributes": {}
-    },
-    "TSL1_LowerScreen_spec.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:TSL1_LowerScreen_spec.Room518a_WP2",
-        "features": [
-            "TSL1_LowerScreen_spec"
-        ],
-        "attributes": {}
-    },
-    "TSL2_Keyboard_Eh.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_Eh.Room518a_WP1",
-        "features": [
-            "TSL2_Keyboard_Eh"
-        ],
-        "attributes": {}
-    },
-    "TSL2_Keyboard_Eh.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_Eh.Room518a_WP2",
-        "features": [
-            "TSL2_Keyboard_Eh"
-        ],
-        "attributes": {}
-    },
-    "TSL2_Keyboard_ir.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_ir.Room518a_WP1",
-        "features": [
-            "TSL2_Keyboard_ir"
-        ],
-        "attributes": {}
-    },
-    "TSL2_Keyboard_ir.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_ir.Room518a_WP2",
-        "features": [
-            "TSL2_Keyboard_ir"
-        ],
-        "attributes": {}
-    },
-    "TSL2_Keyboard_spec.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_spec.Room518a_WP1",
-        "features": [
-            "TSL2_Keyboard_spec"
-        ],
-        "attributes": {}
-    },
-    "TSL2_Keyboard_spec.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:TSL2_Keyboard_spec.Room518a_WP2",
-        "features": [
-            "TSL2_Keyboard_spec"
-        ],
-        "attributes": {}
-    },
-    "TSL3_UpperScreen_Ev.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_Ev.Room518a_WP1",
-        "features": [
-            "TSL3_UpperScreen_Ev"
-        ],
-        "attributes": {}
-    },
-    "TSL3_UpperScreen_Ev.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_Ev.Room518a_WP2",
-        "features": [
-            "TSL3_UpperScreen_Ev"
-        ],
-        "attributes": {}
-    },
-    "TSL3_UpperScreen_ir.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_ir.Room518a_WP1",
-        "features": [
-            "TSL3_UpperScreen_ir"
-        ],
-        "attributes": {}
-    },
-    "TSL3_UpperScreen_ir.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_ir.Room518a_WP2",
-        "features": [
-            "TSL3_UpperScreen_ir"
-        ],
-        "attributes": {}
-    },
-    "TSL3_UpperScreen_spec.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_spec.Room518a_WP1",
-        "features": [
-            "TSL3_UpperScreen_spec"
-        ],
-        "attributes": {}
-    },
-    "TSL3_UpperScreen_spec.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:TSL3_UpperScreen_spec.Room518a_WP2",
-        "features": [
-            "TSL3_UpperScreen_spec"
-        ],
-        "attributes": {}
-    },
-    "TSL4_UpperScreen_Eh.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_Eh.Room518a_WP1",
-        "features": [
-            "TSL4_UpperScreen_Eh"
-        ],
-        "attributes": {}
-    },
-    "TSL4_UpperScreen_Eh.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_Eh.Room518a_WP2",
-        "features": [
-            "TSL4_UpperScreen_Eh"
-        ],
-        "attributes": {}
-    },
-    "TSL4_UpperScreen_ir.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_ir.Room518a_WP1",
-        "features": [
-            "TSL4_UpperScreen_ir"
-        ],
-        "attributes": {}
-    },
-    "TSL4_UpperScreen_ir.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_ir.Room518a_WP2",
-        "features": [
-            "TSL4_UpperScreen_ir"
-        ],
-        "attributes": {}
-    },
-    "TSL4_UpperScreen_spec.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_spec.Room518a_WP1",
-        "features": [
-            "TSL4_UpperScreen_spec"
-        ],
-        "attributes": {}
-    },
-    "TSL4_UpperScreen_spec.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:TSL4_UpperScreen_spec.Room518a_WP2",
-        "features": [
-            "TSL4_UpperScreen_spec"
-        ],
-        "attributes": {}
-    },
-    "US.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:US.Room518a_WP1",
-        "features": [
-            "US"
-        ],
-        "attributes": {}
-    },
-    "US.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:US.Room518a_WP2",
-        "features": [
-            "US"
-        ],
-        "attributes": {}
-    },
-    "UpperScreen_PIR.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:UpperScreen_PIR.Room518a_WP1",
-        "features": [
-            "UpperScreen_PIR"
-        ],
-        "attributes": {}
-    },
-    "UpperScreen_PIR.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:UpperScreen_PIR.Room518a_WP2",
-        "features": [
-            "UpperScreen_PIR"
-        ],
-        "attributes": {}
-    },
-    "VL53_front.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:VL53_front.Room518a_WP1",
-        "features": [
-            "VL53_front"
-        ],
-        "attributes": {}
-    },
-    "VL53_front.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:VL53_front.Room518a_WP2",
-        "features": [
-            "VL53_front"
-        ],
-        "attributes": {}
-    },
-    "VL53_table_height.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:VL53_table_height.Room518a_WP1",
-        "features": [
-            "VL53_table_height"
-        ],
-        "attributes": {}
-    },
-    "VL53_table_height.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:VL53_table_height.Room518a_WP2",
-        "features": [
-            "VL53_table_height"
-        ],
-        "attributes": {}
-    },
-    "co2.Room518a_Ceiling": {
-        "full_id": "at.uibk.ut.tenants:co2.Room518a_Ceiling",
-        "features": [
-            "co2"
-        ],
-        "attributes": {}
-    },
-    "co2.Room518a_WP1": {
-        "full_id": "at.uibk.ut.tenants:co2.Room518a_WP1",
-        "features": [
-            "co2"
-        ],
-        "attributes": {}
-    },
-    "co2.Room518a_WP2": {
-        "full_id": "at.uibk.ut.tenants:co2.Room518a_WP2",
-        "features": [
-            "co2"
-        ],
-        "attributes": {}
-    },
-    "hum.Room518a_Ceiling": {
-        "full_id": "at.uibk.ut.tenants:hum.Room518a_Ceiling",
-        "features": [
-            "hum"
+            "current_position"
         ],
         "attributes": {}
     },
@@ -432,10 +111,10 @@
         ],
         "attributes": {}
     },
-    "pressure.Room518a_Ceiling": {
-        "full_id": "at.uibk.ut.tenants:pressure.Room518a_Ceiling",
+    "hum.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:hum.Room518a_Ceiling",
         "features": [
-            "pressure"
+            "hum"
         ],
         "attributes": {}
     },
@@ -453,10 +132,10 @@
         ],
         "attributes": {}
     },
-    "temperature.Room518a_Ceiling": {
-        "full_id": "at.uibk.ut.tenants:temperature.Room518a_Ceiling",
+    "pressure.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:pressure.Room518a_Ceiling",
         "features": [
-            "temperature"
+            "pressure"
         ],
         "attributes": {}
     },
@@ -471,6 +150,83 @@
         "full_id": "at.uibk.ut.tenants:temperature.Room518a_WP2",
         "features": [
             "temperature"
+        ],
+        "attributes": {}
+    },
+    "temperature.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:temperature.Room518a_Ceiling",
+        "features": [
+            "temperature"
+        ],
+        "attributes": {}
+    },
+    "co2.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:co2.Room518a_WP1",
+        "features": [
+            "co2"
+        ],
+        "attributes": {}
+    },
+    "co2.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:co2.Room518a_WP2",
+        "features": [
+            "co2"
+        ],
+        "attributes": {}
+    },
+    "co2.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:co2.Room518a_Ceiling",
+        "features": [
+            "co2"
+        ],
+        "attributes": {}
+    },
+    "PIR.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:PIR.Room518a_WP1",
+        "features": [
+            "PIR"
+        ],
+        "attributes": {}
+    },
+    "PIR.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:PIR.Room518a_WP2",
+        "features": [
+            "PIR"
+        ],
+        "attributes": {}
+    },
+    "PIR.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:PIR.Room518a_Ceiling",
+        "features": [
+            "PIR"
+        ],
+        "attributes": {}
+    },
+    "SOUND_AO.Room518a_WP1": {
+        "full_id": "at.uibk.ut.tenants:SOUND_AO.Room518a_WP1",
+        "features": [
+            "SOUND_AO"
+        ],
+        "attributes": {}
+    },
+    "SOUND_AO.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:SOUND_AO.Room518a_WP2",
+        "features": [
+            "SOUND_AO"
+        ],
+        "attributes": {}
+    },
+    "Illuminance.Room518a_WP2": {
+        "full_id": "at.uibk.ut.tenants:Illuminance.Room518a_WP2",
+        "features": [
+            "Illuminance"
+        ],
+        "attributes": {}
+    },
+    "Illuminance.Room518a_Ceiling": {
+        "full_id": "at.uibk.ut.tenants:Illuminance.Room518a_Ceiling",
+        "features": [
+            "Illuminance"
         ],
         "attributes": {}
     }

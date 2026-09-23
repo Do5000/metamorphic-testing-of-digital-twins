@@ -1,0 +1,45 @@
+flowchart LR
+    subgraph MT_Framework [Interne Struktur des MT Frameworks]
+        direction TB
+
+        subgraph DSL [1. DSL und Test Definition - TypeScript / Langium]
+            direction TB
+            MTFiles(["*.mt Test Scripts"])
+            Compiler["CLI Compiler / Generator"]
+            JSONOutput(["Generierte JSON Testfälle"])
+
+            MTFiles --> Compiler
+            Compiler --> JSONOutput
+        end
+
+        subgraph PytestPlugin [2. Test Execution Engine - Python / Pytest]
+            direction TB
+            Runner["Test Runner\n(test_dsl_runner.py)"]
+            Core["MT Engine Core\n(core.py / fixtures.py)"]
+            Relations["Metamorphic Relations\n(invariance, monotonicity, etc.)"]
+            Calibration["Latenz Kalibrierung\n(calibration.py)"]
+            Monitoring["Live Monitoring und Logging\n(monitoring.py)"]
+
+            Runner --> Core
+            Core --> Relations
+            Core --> Calibration
+            Core --> Monitoring
+        end
+
+        DTClient["3. DT Client\n(client.py)"]
+
+        JSONOutput -.->|Testkonfiguration| Runner
+
+        Relations --> DTClient
+        Calibration --> DTClient
+        Monitoring --> DTClient
+    end
+
+    DTBackend["DT Backend\n(Eclipse Ditto / Hono)"]
+
+    DTClient <-->|HTTP / WebSocket| DTBackend
+
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef highlight fill:#e1f5fe,stroke:#03a9f4,stroke-width:2px;
+    class MT_Framework,DSL,PytestPlugin default;
+    class DTClient,Compiler,Runner,Core,Relations,Calibration,Monitoring highlight;

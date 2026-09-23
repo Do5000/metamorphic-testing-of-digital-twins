@@ -8,25 +8,6 @@ import re
 import websockets
 
 device_data_initial = {
-    'switch.ac': {
-    'attributes': {},
-    'features': {'state': 1}},
-
-    'switch.decorative_light': {
-    'attributes': {},
-    'features': {'state': 1}},
-
-    'light.bed_light': {
-    'attributes': {},
-    'features': {'state': 1, 'brightness': 1}},
-
-    'light.ceiling_lights': {
-    'attributes': {},
-    'features': {'state': 1, 'brightness': 1}},
-
-    'light.entrance_color_white_lights': {
-    'attributes': {},
-    'features': {'state': 1, 'brightness': 1}},
 
     'light.norden_tuer': {
     'attributes': {},
@@ -48,59 +29,12 @@ device_data_initial = {
     'attributes': {},
     'features': {'state': 0.0}},
 
-    'cover.cover_norden': {
-    'attributes': {},
-    'features': {'current_position': 0.0}},
+    'Illuminance.Room518a_Ceiling': {'attributes': {},
+        'features': {'Illuminance': 0.0}},
 
-    'cover.cover_sueden': {
-    'attributes': {},
-    'features': {'current_position': 0.0}},
-
-    'cover.fenster': {'attributes': {},
-    'features': {'current_position': 0.0}},
-
-    'hum.Room518a_WP1': {'attributes': {},
-    'features': {'hum': 0.0}},
-    'hum.Room518a_WP2': {'attributes': {},
-    'features': {'hum': 0.0}},
-    'hum.Room518a_Ceiling': {'attributes': {},
-    'features': {'hum': 0.0}},
-
-    'pressure.Room518a_WP1': {'attributes': {},
-    'features': {'pressure': 0.0}},
-    'pressure.Room518a_WP2': {'attributes': {},
-    'features': {'pressure': 0.0}},
-    'pressure.Room518a_Ceiling': {'attributes': {},
-    'features': {'pressure': 0.0}},
-
-    'temperature.Room518a_WP1': {'attributes': {},
-    'features': {'temperature': 0.0}},
-    'temperature.Room518a_WP2': {'attributes': {},
-    'features': {'temperature': 0.0}},
-    'temperature.Room518a_Ceiling': {'attributes': {},
-    'features': {'temperature': 0.0}},
-
-    'co2.Room518a_WP1': {'attributes': {},
-    'features': {'co2': 0.0}},
-    'co2.Room518a_WP2': {'attributes': {},
-    'features': {'co2': 0.0}},
-    'co2.Room518a_Ceiling': {'attributes': {},
-    'features': {'co2': 0.0}},
-
-    'PIR.Room518a_WP1': {'attributes': {},
-    'features': {'PIR': 0.0}},
-    'PIR.Room518a_WP2': {'attributes': {},
-    'features': {'PIR': 0.0}},
     'PIR.Room518a_Ceiling': {'attributes': {},
-    'features': {'PIR': 0.0}},
+        'features': {'PIR': 0.0}},
 
-    'SOUND_AO.Room518a_WP1': {'attributes': {},
-    'features': {'SOUND_AO': 0.0}},
-    'SOUND_AO.Room518a_WP2': {'attributes': {},
-    'features': {'SOUND_AO': 0.0}},
-    
-    'Illuminance.Room518a_WP2': {'attributes': {},
-    'features': {'Illuminance': 0.0}},
 }
 
 MOCK_DEVICE_DATA = {f'{UT_TENANT}:{k}': {
