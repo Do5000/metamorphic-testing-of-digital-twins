@@ -41,56 +41,21 @@ print("Sende Auto-Discovery Konfigurationen an Home Assistant...")
 client.publish("homeassistant/sensor/arbeitsplatz_helligkeit/config", json.dumps({
     "name": "Arbeitsplatz Helligkeit",
     "state_topic": "homeassistant/sensor/arbeitsplatz_helligkeit/state",
-    "unit_of_measurement": "lx",
-    "device_class": "illuminance",
+    "unit_of_measurement": "V",
+    "device_class": "voltage",
+    "state_class": "measurement",
+    "suggested_display_precision": 2,
     "unique_id": "arduino_ldr_01"
 }), retain=True)
 
-client.publish("homeassistant/sensor/arbeitsplatz_helligkeit_2/config", json.dumps({
-    "name": "Arbeitsplatz Helligkeit 2",
-    "state_topic": "homeassistant/sensor/arbeitsplatz_helligkeit_2/state",
-    "unit_of_measurement": "lx",
-    "device_class": "illuminance",
-    "unique_id": "arduino_ldr_02"
+client.publish("homeassistant/binary_sensor/arbeitsplatz_praesenz/config", json.dumps({
+    "name": "Arbeitsplatz Präsenz",
+    "state_topic": "homeassistant/binary_sensor/arbeitsplatz_praesenz/state",
+    "device_class": "occupancy",
+    "payload_on": "ON",
+    "payload_off": "OFF",
+    "unique_id": "arduino_pir_am312"
 }), retain=True)
-
-client.publish("homeassistant/sensor/arbeitsplatz_temperatur/config", json.dumps({
-    "name": "Arbeitsplatz Temperatur",
-    "state_topic": "homeassistant/sensor/arbeitsplatz_temperatur/state",
-    "unit_of_measurement": "°C",
-    "device_class": "temperature",
-    "unique_id": "arduino_dht11_temp"
-}), retain=True)
-
-client.publish("homeassistant/sensor/arbeitsplatz_luftfeuchtigkeit/config", json.dumps({
-    "name": "Arbeitsplatz Luftfeuchtigkeit",
-    "state_topic": "homeassistant/sensor/arbeitsplatz_luftfeuchtigkeit/state",
-    "unit_of_measurement": "%",
-    "device_class": "humidity",
-    "unique_id": "arduino_dht11_hum"
-}), retain=True)
-
-client.publish("homeassistant/sensor/arbeitsplatz_fernbedienung/config", json.dumps({
-    "name": "Arbeitsplatz Fernbedienung",
-    "state_topic": "homeassistant/sensor/arbeitsplatz_fernbedienung/state",
-    "icon": "mdi:remote-tv",
-    "unique_id": "arduino_ir_remote"
-}), retain=True)
-
-# Übersetzungstabelle für deine schwarze ELEGOO Fernbedienung (Hex -> String)
-ELEGOO_MAP = {
-    "45": "POWER", "46": "VOL+", "47": "FUNC",
-    "44": "PREV", "40": "PLAY", "43": "NEXT",
-    "7": "DOWN", "15": "VOL-", "9": "UP",
-    "16": "0", "19": "EQ", "13": "ST_REPT",
-    "c": "1", "18": "2", "5e": "3",
-    "8": "4", "1c": "5", "5a": "6",
-    "42": "7", "52": "8", "4a": "9"
-}
-
-def reset_ir_sensor():
-    # Setzt den Sensor nach 0.5 Sekunden zurück, damit die gleiche Taste doppelt gedrückt werden kann
-    client.publish("homeassistant/sensor/arbeitsplatz_fernbedienung/state", "idle")
 
 # 2. Endlos-Schleife: USB Auslesen und an MQTT weitergeben
 print("Starte Sensor-Überwachung...")
@@ -103,7 +68,6 @@ while True:
         # Das verhindert die 99% CPU Last (Busy Waiting).
         with serial.Serial(PORT, 9600, timeout=1) as ser:
             print(f"✅ Arduino auf {PORT} verbunden!")
-            client.publish("homeassistant/sensor/arbeitsplatz_fernbedienung/state", "idle")
 
             while True:
                 # Hier "schläft" das Skript nun effizient, bis der Arduino eine Zeile sendet
@@ -116,26 +80,16 @@ while True:
                     try:
                         data = json.loads(line)
 
-                        # Fall 1: Infrarot
-                        if "ir_btn" in data:
-                            current_time = time.time()
-                            if current_time - last_press_time > 0.8:
-                                last_press_time = current_time
-                                hex_val = data["ir_btn"].lower()
-                                btn_name = ELEGOO_MAP.get(hex_val, f"UNKNOWN_{hex_val}")
+                        # Fall 1: Präsenz (PIR)
+                        if "pir" in data:
+                            print(f"Update -> PIR: {data['pir']}")
+                            state_str = "ON" if data["pir"] == 1 else "OFF"
+                            client.publish("homeassistant/binary_sensor/arbeitsplatz_praesenz/state", state_str, retain=True)
 
-                                print(f"🔘 Taste: {btn_name}")
-                                client.publish("homeassistant/sensor/arbeitsplatz_fernbedienung/state", btn_name, retain=True)
-                                threading.Timer(0.5, reset_ir_sensor).start()
-
-                        # Fall 2: Sensoren
+                        # Fall 2: Helligkeitssensor
                         elif "light" in data:
-                            print(f"Update -> L1: {data['light']} | L2: {data.get('light2', 'N/A')} | T: {data['temp']} | H: {data['hum']}")
+                            print(f"Update -> L1: {data['light']}")
                             client.publish("homeassistant/sensor/arbeitsplatz_helligkeit/state", data["light"], retain=True)
-                            if "light2" in data:
-                                client.publish("homeassistant/sensor/arbeitsplatz_helligkeit_2/state", data["light2"], retain=True)
-                            client.publish("homeassistant/sensor/arbeitsplatz_temperatur/state", data["temp"], retain=True)
-                            client.publish("homeassistant/sensor/arbeitsplatz_luftfeuchtigkeit/state", data["hum"], retain=True)
 
                     except json.JSONDecodeError:
                         pass  # Kaputtes JSON ignorieren
