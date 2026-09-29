@@ -1,6 +1,7 @@
 beforeAll {
-    precondition "sun.sun" feature "state" equals "above_horizon" skipMessage "Tests require the sun to be below the horizon."
-    
+    // precondition "sun.sun" feature "state" equals "above_horizon" skipMessage "Tests require the sun to be below the horizon."
+    precondition "binary_sensor.arbeitsplatz_prasenz" feature "state" equals "0" skipMessage "Tests require nobody is in the Room"
+
     set "automation.wohnzimmer_ein" feature "state" to "off"
     set "automation.wohnzimmer_aus" feature "state" to "off"
     
