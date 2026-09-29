@@ -170,7 +170,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
         f.write(f"{'='*80}\n\n")
         
         # Process all outcomes
-        for outcome in ["passed", "failed", "error"]:
+        for outcome in ["passed", "failed", "error", "skipped"]:
             reports = terminalreporter.stats.get(outcome, [])
             for rep in reports:
                 f.write(f"[{outcome.upper()}] {rep.nodeid}\n")
@@ -198,7 +198,8 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
         # Session Summary
         passed = len(terminalreporter.stats.get('passed', []))
         failed = len(terminalreporter.stats.get('failed', []))
-        f.write(f"\nTOTAL RESULT: {passed} PASSED, {failed} FAILED\n")
+        skipped = len(terminalreporter.stats.get('skipped', []))
+        f.write(f"\nTOTAL RESULT: {passed} PASSED, {failed} FAILED, {skipped} SKIPPED\n")
         
         from pytest_dt_mt.fixtures import _CALIBRATION_REPORTS
         if _MODULE_WAIT_DT or _CALIBRATION_REPORTS:
