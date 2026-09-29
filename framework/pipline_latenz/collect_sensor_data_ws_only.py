@@ -36,7 +36,7 @@ POLL_INTERVAL = 0.1
 
 class WSOnlyCollector:
     def __init__(self):
-        self.dt = DigitalTwinAdapter(ws_url="ws://127.0.0.1:8082/ws/2")
+        self.dt = DigitalTwinAdapter()
         self.data_points = []
         self.trigger_time = 0.0
         self.current_values = {s: None for s in SENSOR_FEATURES}

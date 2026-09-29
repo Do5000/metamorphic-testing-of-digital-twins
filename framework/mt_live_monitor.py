@@ -8,7 +8,7 @@ async def monitor_things(thing_ids):
     """
     Monitors a list of things and their features in real-time.
     """
-    dt = DittoClient(http_url="http://127.0.0.1:8083")
+    dt = DittoClient()
     
     print("====================================================")
     print("Digital Twin: Live Sensor Monitor")

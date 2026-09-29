@@ -2,15 +2,17 @@ import requests
 import json
 import os
 
+from ut_params import DITTO_NGINX_IP
+
 # Configuration (matching DigitalTwinAdapter defaults)
-HTTP_URL = "http://127.0.0.1:8083"
+HTTP_URL = f"http://{DITTO_NGINX_IP}:8083"
 CATALOG_FILE = "device_catalog.json"
 
 def discover_devices():
     print(f"[*] Discovering devices from {HTTP_URL}...")
     try:
         # Querying the search API of the mock backend (or real Ditto)
-        response = requests.get(f"{HTTP_URL}/api/2/search/things", timeout=5)
+        response = requests.get(f"{HTTP_URL}/api/2/search/things?option=size(1000)", timeout=5)
         
         if response.status_code == 200:
             data = response.json()

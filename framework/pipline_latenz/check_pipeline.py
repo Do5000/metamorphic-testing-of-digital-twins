@@ -5,10 +5,21 @@ import asyncio
 import websockets
 from datetime import datetime
 
+import os
+import sys
+from pathlib import Path
+path_root = Path(__file__).parents[1]
+sys.path.append(str(path_root))
+
+try:
+    from ut_params import DITTO_NGINX_IP
+except ImportError:
+    DITTO_NGINX_IP = "127.0.0.1"
+
 # configuration from ut_params.py
-LOCAL_DITTO_WS = "ws://127.0.0.1:8082/ws/2"
-LOCAL_DITTO_HTTP = "http://127.0.0.1:8083"
-REAL_DITTO_HTTP = "http://127.0.0.1:8080"
+LOCAL_DITTO_WS = f"ws://{DITTO_NGINX_IP}:8082/ws/2"
+LOCAL_DITTO_HTTP = f"http://{DITTO_NGINX_IP}:8083"
+REAL_DITTO_HTTP = f"http://{DITTO_NGINX_IP}:8080"
 HA_IP = "138.232.83.30"
 HA_HTTP = f"http://{HA_IP}:8123"
 MW_HTTP = f"http://{HA_IP}:8081"
@@ -54,7 +65,7 @@ async def run_diagnostics():
     print("="*60)
     
     print("\n--- STUFE 1: LOKALE DIENSTE (MOCK SERVER) ---")
-    check_port("127.0.0.1", 8083, "Mock Ditto HTTP")
+    check_port(DITTO_NGINX_IP, 8083, "Mock Ditto HTTP")
     await check_ws(LOCAL_DITTO_WS, "Mock Ditto WS (Handshake)")
     
     print("\n--- STUFE 2: INFRASTRUKTUR (LIVING LAB) ---")

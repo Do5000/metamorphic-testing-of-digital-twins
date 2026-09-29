@@ -25,7 +25,7 @@ RECORD_DURATION = 30.0
 POLL_INTERVAL = 0.1  # Poll every 100ms
 
 async def run_collection():
-    dt = DigitalTwinAdapter(http_url="http://127.0.0.1:8083", ws_url="ws://127.0.0.1:8082/ws/2")
+    dt = DigitalTwinAdapter()
     
     data_points = []
     
