@@ -38,6 +38,9 @@ Always: source venv/bin/activate in /framework!!!!
 
     --monitor: Prints LiveValues from the Sensors
     --log: Creates a logfile
+    --wait-time=x: default wait-time
+    --count=x: Defines how many times the tests should be executed (e.g. --count=2 runs them twice). Useful for stress testing or finding flaky tests.
+    --repeat-scope=session: Modifies the repetition order. Instead of repeating each test immediately (Test A -> Test A -> Test B -> Test B), it ensures the entire test suite is completed first before starting the next loop (Test A -> Test B -> Test A -> Test B), simulating a much more realistic execution flow.
 
 ### Example Options:
 #### Everything:

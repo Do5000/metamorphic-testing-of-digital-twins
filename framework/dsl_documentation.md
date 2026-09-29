@@ -101,6 +101,12 @@ test "test_home_monotony" {
 }
 ```
 
+**Umgekehrte Relationen (`not`)**
+Man kann jede Relation umkehren (negieren), indem man das Schlüsselwort `not` direkt vor den Namen der Relation setzt. Dies ist besonders nützlich, um z. B. eine strikte *Abnahme* (Inverted Monotonicity) zu testen oder um sicherzustellen, dass sich ein Sensorwert definitiv ändert (was nützlich ist, um "eingefrorene" Sensoren aufzudecken).
+```mt
+    relation: not monotonicity
+```
+
 ### 3.2. Verfügbare Parameter im Testblock
 Je nach gewählter Metamorpher Relation benötigst du unterschiedliche Parameter. Folgende Schlüsselwörter stehen zur Verfügung:
 
@@ -208,16 +214,7 @@ Wenn du die Sprache selbst erweitern möchtest (z. B. in der Grammatik `framewor
 
 ### 3. Test-Ausführung (Python)
 
-Nach der erfolgreichen Generierung der JSON-Dateien können die Tests über den Python-Runner ausgeführt werden:
-
-```bash
-pytest tests/test_dsl_runner.py -v --wait-time=5.0 --monitor --log
-```
-
-Einen spezifischen Test ausführen (z. B. gefiltert nach dem Namen "substitution"):
-```bash
-pytest tests/test_dsl_runner.py -k "substitution" -v --wait-time=5.0 --monitor --log
-```
+siehe workflow.md
 
 ## DSL Plugin (Language Server) in VS Code starten
 
