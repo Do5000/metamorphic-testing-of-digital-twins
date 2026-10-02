@@ -18,7 +18,7 @@ async def multi_monitor(adapter: DigitalTwinAdapter, sensors: List[Dict[str, str
         
     monitors = []
     for s in sensors:
-        m = LiveValueMonitor(adapter, s["deviceId"], s["feature"], interval=0.5, verbose=True)
+        m = LiveValueMonitor(adapter, s["deviceId"], s["feature"], verbose=True)
         monitors.append(m)
         
     for m in monitors:
@@ -54,13 +54,13 @@ class DslRunner:
                     sensorFeature=stmt.get("sensorFeature", "state"),
                     valOff=stmt["valOff"],
                     valOn=stmt["valOn"],
-                    minChangePercent=stmt.get("minChangePercent", 0.1),
-                    maxSettleTolerance=stmt.get("maxSettleTolerance", None),
-                    toleranceFactor=stmt.get("toleranceFactor", 1.2),
-                    addSeconds=stmt.get("addSeconds", 0.0),
-                    runs=stmt.get("runs", 3),
-                    settleTime=stmt.get("settleTime", None),
-                    waitTime=wait_time if wait_time is not None else 3.0
+                    minChangePercent=stmt.get("minChangePercent"),
+                    maxSettleTolerance=stmt.get("maxSettleTolerance"),
+                    toleranceFactor=stmt.get("toleranceFactor"),
+                    addSeconds=stmt.get("addSeconds"),
+                    runs=stmt.get("runs"),
+                    settleTime=stmt.get("settleTime"),
+                    waitTime=wait_time
                 )
 
     async def _apply_actions(self, actuators: List[Dict[str, str]], actions: List[Any]) -> None:

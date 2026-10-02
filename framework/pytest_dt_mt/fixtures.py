@@ -6,6 +6,7 @@ from typing import Callable, Any, Optional
 
 from .core import DigitalTwinAdapter, PreconditionFailedError
 from .monitoring import LiveValueMonitor
+from . import config
 
 _MODULE_WAIT_DT = {}
 _CALIBRATION_REPORTS = {}
@@ -29,7 +30,7 @@ def live_monitor(request: pytest.FixtureRequest, dt_adapter: DigitalTwinAdapter)
             await asyncio.sleep(10)
     """
     verbose = request.config.getoption("--monitor")
-    def _create_monitor(device_id: str, feature_name: str, interval: float = 1.0) -> LiveValueMonitor:
+    def _create_monitor(device_id: str, feature_name: str, interval: float = config.DEFAULT_MONITOR_INTERVAL) -> LiveValueMonitor:
         return LiveValueMonitor(dt_adapter, device_id, feature_name, interval=interval, verbose=verbose)
     return _create_monitor
 

@@ -1,5 +1,7 @@
 import asyncio
 
+from . import config
+
 async def measure_latency(
     adapter,
     actuator,
@@ -8,15 +10,24 @@ async def measure_latency(
     valOn,
     sensor,
     sensorFeature,
-    toleranceFactor=1.5,
-    addSeconds=1.0,
-    timeout=15.0,
+    toleranceFactor=None,
+    addSeconds=None,
+    timeout=None,
     minChangePercent=None,
     maxSettleTolerance=None,
-    runs=1,
+    runs=None,
     settleTime=None,
-    waitTime=3.0
+    waitTime=None
 ):
+    toleranceFactor = toleranceFactor if toleranceFactor is not None else config.DEFAULT_TOLERANCE_FACTOR
+    addSeconds = addSeconds if addSeconds is not None else config.DEFAULT_ADD_SECONDS
+    timeout = timeout if timeout is not None else config.DEFAULT_TIMEOUT
+    minChangePercent = minChangePercent if minChangePercent is not None else config.DEFAULT_MIN_CHANGE_PERCENT
+    maxSettleTolerance = maxSettleTolerance if maxSettleTolerance is not None else config.DEFAULT_MAX_SETTLE_TOLERANCE
+    runs = runs if runs is not None else config.DEFAULT_CALIBRATION_RUNS
+    settleTime = settleTime if settleTime is not None else config.DEFAULT_SETTLE_TIME
+    waitTime = waitTime if waitTime is not None else config.DEFAULT_CALIBRATION_WAIT_TIME
+
     """
     Dynamically measures the system latency (time from actuator action to sensor response)
     using the Monotony Relation workflow.

@@ -1,9 +1,11 @@
 from .base import MetamorphicRelation, MetamorphicRelationError
 
+from .. import config
+
 class InvarianceRelation(MetamorphicRelation):
     def evaluate(self, result, dt_adapter=None):
         __tracebackhide__ = True
-        tolerance = self.kwargs.get("tolerance", 0.0)
+        tolerance = self.kwargs.get("tolerance", config.DEFAULT_RELATION_TOLERANCE)
         source_val = result[0]
         followup_val = result[1]
         intermediate_val = result[2] if len(result) > 2 else None

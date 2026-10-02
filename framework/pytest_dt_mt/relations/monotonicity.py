@@ -1,9 +1,11 @@
 from .base import MetamorphicRelation, MetamorphicRelationError
 
+from .. import config
+
 class MonotonicityRelation(MetamorphicRelation):
     def evaluate(self, result, dt_adapter=None):
         __tracebackhide__ = True
-        tolerance = self.kwargs.get("tolerance", 0.0)
+        tolerance = self.kwargs.get("tolerance", config.DEFAULT_RELATION_TOLERANCE)
         source_val, followup_val = result[0], result[1]
         
         try:

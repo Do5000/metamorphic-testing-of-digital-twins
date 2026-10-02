@@ -1,6 +1,7 @@
 import asyncio
 from .base import MetamorphicRelation, MetamorphicRelationError
 from pytest_dt_mt.monitoring import LiveValueMonitor
+from .. import config
 
 class StabilityRelation(MetamorphicRelation):
     async def evaluate(self, result, dt_adapter=None):
@@ -14,13 +15,13 @@ class StabilityRelation(MetamorphicRelation):
         sensor_id = result[0]
         feature_name = result[1] if len(result) > 1 else self.kwargs.get("feature", "state")
         
-        duration = self.kwargs.get("duration", 10.0)
-        tolerance = self.kwargs.get("tolerance", 0.0)
+        duration = self.kwargs.get("duration", config.DEFAULT_STABILITY_DURATION)
+        tolerance = self.kwargs.get("tolerance", config.DEFAULT_RELATION_TOLERANCE)
         verbose = self.kwargs.get("verbose", False)
             
         print(f"\n      [MR CHECK] Stability: Monitoring '{sensor_id}' ({feature_name}) for {duration}s (allowed fluctuation tolerance: {tolerance})...")
         
-        monitor = LiveValueMonitor(dt_adapter, sensor_id, feature_name, interval=0.5, verbose=verbose)
+        monitor = LiveValueMonitor(dt_adapter, sensor_id, feature_name, interval=config.DEFAULT_MONITOR_INTERVAL, verbose=verbose)
         async with monitor:
             await asyncio.sleep(duration)
             
