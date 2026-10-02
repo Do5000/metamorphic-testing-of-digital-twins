@@ -26,7 +26,7 @@ async def measure_latency(
     maxSettleTolerance = maxSettleTolerance if maxSettleTolerance is not None else config.DEFAULT_MAX_SETTLE_TOLERANCE
     runs = runs if runs is not None else config.DEFAULT_CALIBRATION_RUNS
     settleTime = settleTime if settleTime is not None else config.DEFAULT_SETTLE_TIME
-    waitTime = waitTime if waitTime is not None else config.DEFAULT_CALIBRATION_WAIT_TIME
+    waitTime = waitTime if waitTime is not None else config.DEFAULT_CALIBRATION_BASELINE_WAIT
 
     """
     Dynamically measures the system latency (time from actuator action to sensor response)
@@ -70,13 +70,12 @@ async def measure_latency(
         measured_latency = None
         poll_start = asyncio.get_event_loop().time()
         initial_change_time = None
-        
-        effective_timeout = timeout if settleTime is None else max(timeout, settleTime * 2.0 + 15.0)
+
         
         history = []
         last_poll_time = 0
         
-        while asyncio.get_event_loop().time() - poll_start < effective_timeout:
+        while asyncio.get_event_loop().time() - poll_start < timeout:
             now = asyncio.get_event_loop().time()
             current_val = adapter._client.cache.get(sensor, {}).get(sensorFeature)
             
@@ -86,12 +85,12 @@ async def measure_latency(
                     try:
                         if isinstance(current_val, (int, float)) and isinstance(baseline_val, (int, float)):
                             if minChangePercent is not None:
-                                denominator = abs(baseline_val) if abs(baseline_val) > 0.001 else 1.0
+                                denominator = abs(baseline_val) if abs(baseline_val) > config.DEFAULT_CALIBRATION_EPSILON else 1.0
                                 relative_change = abs(current_val - baseline_val) / denominator
                                 if relative_change < minChangePercent:
                                     is_significant_change = False
                             else:
-                                if abs(current_val - baseline_val) < 0.001:
+                                if abs(current_val - baseline_val) < config.DEFAULT_CALIBRATION_EPSILON:
                                     is_significant_change = False
                     except Exception:
                         pass
@@ -111,7 +110,7 @@ async def measure_latency(
                 if current_val != history[-1][1]:
                     history.append((now, current_val))
                 
-                if now - last_poll_time >= 0.5:
+                if now - last_poll_time >= config.DEFAULT_MONITOR_INTERVAL:
                     if history[-1][0] != now:
                         history.append((now, current_val))
                     last_poll_time = now
@@ -120,7 +119,7 @@ async def measure_latency(
                 while len(history) > 1 and now - history[1][0] >= settleTime:
                     history.pop(0)
                 
-                if now - history[0][0] >= settleTime - 0.05:
+                if now - history[0][0] >= settleTime - config.DEFAULT_CALIBRATION_TIMING_EPSILON:
                     is_stable = True
                     try:
                         vals = [v for t, v in history if isinstance(v, (int, float))]
@@ -128,11 +127,11 @@ async def measure_latency(
                             min_val = min(vals)
                             max_val = max(vals)
                             if maxSettleTolerance is not None:
-                                denominator = abs(min_val) if abs(min_val) > 0.001 else 1.0
+                                denominator = abs(min_val) if abs(min_val) > config.DEFAULT_CALIBRATION_EPSILON else 1.0
                                 if (max_val - min_val) / denominator > maxSettleTolerance:
                                     is_stable = False
                             else:
-                                if max_val - min_val > 0.001:
+                                if max_val - min_val > config.DEFAULT_CALIBRATION_EPSILON:
                                     is_stable = False
                         else:
                             if len(set(v for t, v in history)) > 1:
@@ -147,15 +146,15 @@ async def measure_latency(
                         print(f"      [LATENCY CALIBRATION]{run_label} Value settled for {settleTime}s window starting at {measured_latency:.3f}s.")
                         break
             
-            await asyncio.sleep(0.02)
+            await asyncio.sleep(config.DEFAULT_CALIBRATION_POLL_RATE)
         
         if change_detected and measured_latency is not None:
             print(f"      [LATENCY CALIBRATION]{run_label} SUCCESS: Measured latency = {measured_latency:.3f}s")
             latencies.append(measured_latency)
         elif change_detected and measured_latency is None:
-            print(f"      [LATENCY CALIBRATION]{run_label} ERROR: Calibration timed out! Sensor changed but did not settle within {effective_timeout}s.")
+            print(f"      [LATENCY CALIBRATION]{run_label} ERROR: Calibration timed out! Sensor changed but did not settle within {timeout}s.")
         else:
-            print(f"      [LATENCY CALIBRATION]{run_label} ERROR: Calibration timed out! No sensor change detected within {effective_timeout}s.")
+            print(f"      [LATENCY CALIBRATION]{run_label} ERROR: Calibration timed out! No sensor change detected within {timeout}s.")
     
     if not hasattr(adapter, "_calibration_results"):
         adapter._calibration_results = []

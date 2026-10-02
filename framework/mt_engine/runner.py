@@ -58,6 +58,7 @@ class DslRunner:
                     maxSettleTolerance=stmt.get("maxSettleTolerance"),
                     toleranceFactor=stmt.get("toleranceFactor"),
                     addSeconds=stmt.get("addSeconds"),
+                    timeout=stmt.get("timeout"),
                     runs=stmt.get("runs"),
                     settleTime=stmt.get("settleTime"),
                     waitTime=wait_time

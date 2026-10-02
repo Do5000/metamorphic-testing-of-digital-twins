@@ -9,9 +9,10 @@ import json
 
 from pytest_dt_mt.relations import get_relation_class
 from pytest_dt_mt.relations.base import MetamorphicRelationError
+from . import config
 
 def pytest_addoption(parser):
-    parser.addoption("--wait-time", action="store", default=30.0, type=float, help="Global wait time in seconds for physical simulation")
+    parser.addoption("--wait-time", action="store", default=config.DEFAULT_GLOBAL_WAIT_TIME, type=float, help="Global wait time in seconds for physical simulation")
     parser.addoption("--monitor", action="store_true", help="Enable live printing of sensor values during tests")
     parser.addoption("--log", action="store_true", help="Enable detailed logging into a session-based folder")
 

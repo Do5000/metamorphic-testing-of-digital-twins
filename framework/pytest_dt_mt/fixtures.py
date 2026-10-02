@@ -27,7 +27,7 @@ def live_monitor(request: pytest.FixtureRequest, dt_adapter: DigitalTwinAdapter)
     Provides a factory to create LiveValueMonitor instances.
     Usage:
         async with live_monitor(device_id, feature_name):
-            await asyncio.sleep(10)
+            await asyncio.sleep(config.DEFAULT_GLOBAL_WAIT_TIME)
     """
     verbose = request.config.getoption("--monitor")
     def _create_monitor(device_id: str, feature_name: str, interval: float = config.DEFAULT_MONITOR_INTERVAL) -> LiveValueMonitor:
