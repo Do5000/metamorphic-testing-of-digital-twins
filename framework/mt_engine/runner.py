@@ -82,7 +82,7 @@ class DslRunner:
             results.append(val)
         return results
 
-    async def _handle_invariance_reset(self, actuators: List[Dict[str, str]], intermediateActions: List[Any], sensors: List[Dict[str, str]], verbose: bool, manual_waitTime: Any, wait_dt_callable: Callable) -> None:
+    async def _handle_invariance_reset(self, actuators: List[Dict[str, str]], intermediateActions: List[Any], sensors: List[Dict[str, str]], verbose: bool, manual_waitTime: Any, wait_dt_callable: Callable) -> List[Any]:
         for idx, act in enumerate(actuators):
             if intermediateActions:
                 init_val = intermediateActions[idx] if idx < len(intermediateActions) else intermediateActions[0]
@@ -91,6 +91,7 @@ class DslRunner:
             await self.adapter.set_feature_value(act["deviceId"], act["feature"], init_val)
         
         await self._wait_for_latency(sensors, verbose, manual_waitTime, wait_dt_callable)
+        return await self._read_sensors(sensors)
 
     async def execute_test(self, test_data: Dict[str, Any], wait_dt_callable: Callable, verbose: bool = False) -> None:
         print(f"\n[DSL] Executing Test: {test_data.get('name')} (Relation: {test_data.get('relation')})")
@@ -112,10 +113,11 @@ class DslRunner:
         source_results = await self._read_sensors(sensors)
             
         followup_results = []
+        intermediate_results = []
         if followUpActions:
             if relation_name == "invariance":
                 intermediateActions = test_data.get("intermediateActions", [])
-                await self._handle_invariance_reset(actuators, intermediateActions, sensors, verbose, manual_waitTime, wait_dt_callable)
+                intermediate_results = await self._handle_invariance_reset(actuators, intermediateActions, sensors, verbose, manual_waitTime, wait_dt_callable)
             
             # Followup Test Case
             await self._apply_actions(actuators, followUpActions)
@@ -136,6 +138,8 @@ class DslRunner:
                     eval_result.append(source_results[i])
                 if i < len(followup_results):
                     eval_result.append(followup_results[i])
+                if relation_name == "invariance" and i < len(intermediate_results):
+                    eval_result.append(intermediate_results[i])
                 
         # Build kwargs dynamically from the DSL config
         kwargs = {"verbose": verbose}
