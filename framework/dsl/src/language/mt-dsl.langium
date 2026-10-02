@@ -27,10 +27,12 @@ MeasureLatency:
         'valOff' valOff=Value
         'valOn' valOn=Value
         ('minChangePercent' minChangePercent=NUMBER)?
+        ('maxSettleTolerance' maxSettleTolerance=NUMBER)?
         ('toleranceFactor' toleranceFactor=NUMBER)?
         ('addSeconds' addSeconds=NUMBER)?
         ('timeout' timeout=NUMBER)?
         ('runs' runs=NUMBER)?
+        ('settleTime' settleTime=NUMBER)?
     '}';
 
 TestDefinition:

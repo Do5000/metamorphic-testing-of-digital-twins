@@ -35,7 +35,7 @@ class DslRunner:
         self.adapter = adapter
         self.config = config
 
-    async def execute_hook(self, hook_data: Dict[str, Any]) -> None:
+    async def execute_hook(self, hook_data: Dict[str, Any], wait_time: Optional[float] = None) -> None:
         print(f"\n[DSL] Executing hook: {hook_data.get('hookType')}")
         statements = hook_data.get("statements", [])
         for stmt in statements:
@@ -55,10 +55,12 @@ class DslRunner:
                     valOff=stmt["valOff"],
                     valOn=stmt["valOn"],
                     minChangePercent=stmt.get("minChangePercent", 0.1),
+                    maxSettleTolerance=stmt.get("maxSettleTolerance", None),
                     toleranceFactor=stmt.get("toleranceFactor", 1.2),
                     addSeconds=stmt.get("addSeconds", 0.0),
-                    timeout=stmt.get("timeout", 5.0),
-                    runs=stmt.get("runs", 3)
+                    runs=stmt.get("runs", 3),
+                    settleTime=stmt.get("settleTime", None),
+                    waitTime=wait_time if wait_time is not None else 3.0
                 )
 
     async def _apply_actions(self, actuators: List[Dict[str, str]], actions: List[Any]) -> None:

@@ -12,7 +12,10 @@ async def measure_latency(
     addSeconds=1.0,
     timeout=15.0,
     minChangePercent=None,
-    runs=1
+    maxSettleTolerance=None,
+    runs=1,
+    settleTime=None,
+    waitTime=3.0
 ):
     """
     Dynamically measures the system latency (time from actuator action to sensor response)
@@ -40,7 +43,7 @@ async def measure_latency(
         await adapter.set_feature_value(actuator, actuatorFeature, valOff)
         
         # 3. Wait to let the system stabilize and ensure baseline is reached
-        await asyncio.sleep(3.0)
+        await asyncio.sleep(waitTime)
         
         # 4. Get the baseline sensor value and seed the cache
         baseline_val = await adapter.get_feature_value(sensor, sensorFeature, silent=True)
@@ -55,37 +58,93 @@ async def measure_latency(
         change_detected = False
         measured_latency = None
         poll_start = asyncio.get_event_loop().time()
+        initial_change_time = None
         
-        while asyncio.get_event_loop().time() - poll_start < timeout:
-            # Retrieve from cache
+        effective_timeout = timeout if settleTime is None else max(timeout, settleTime * 2.0 + 15.0)
+        
+        history = []
+        last_poll_time = 0
+        
+        while asyncio.get_event_loop().time() - poll_start < effective_timeout:
+            now = asyncio.get_event_loop().time()
             current_val = adapter._client.cache.get(sensor, {}).get(sensorFeature)
-            if current_val is not None and current_val != baseline_val:
-                # Check for numeric difference to avoid minor jitter if float
-                try:
-                    if isinstance(current_val, (int, float)) and isinstance(baseline_val, (int, float)):
-                        if minChangePercent is not None:
-                            denominator = abs(baseline_val) if abs(baseline_val) > 0.001 else 1.0
-                            relative_change = abs(current_val - baseline_val) / denominator
-                            if relative_change < minChangePercent:
-                                await asyncio.sleep(0.02)
-                                continue
+            
+            if not change_detected:
+                if current_val is not None and current_val != baseline_val:
+                    is_significant_change = True
+                    try:
+                        if isinstance(current_val, (int, float)) and isinstance(baseline_val, (int, float)):
+                            if minChangePercent is not None:
+                                denominator = abs(baseline_val) if abs(baseline_val) > 0.001 else 1.0
+                                relative_change = abs(current_val - baseline_val) / denominator
+                                if relative_change < minChangePercent:
+                                    is_significant_change = False
+                            else:
+                                if abs(current_val - baseline_val) < 0.001:
+                                    is_significant_change = False
+                    except Exception:
+                        pass
+                        
+                    if is_significant_change:
+                        change_detected = True
+                        initial_change_time = now
+                        print(f"      [LATENCY CALIBRATION]{run_label} Initial change detected at {now - start_time:.3f}s (value: {current_val})")
+                        if settleTime is None:
+                            measured_latency = now - start_time
+                            break
                         else:
-                            if abs(current_val - baseline_val) < 0.001:
-                                await asyncio.sleep(0.02)
-                                continue
-                except Exception:
-                    pass
-                    
-                measured_latency = asyncio.get_event_loop().time() - start_time
-                change_detected = True
-                break
+                            history.append((now, current_val))
+                            last_poll_time = now
+                            print(f"      [LIVE MONITOR] {sensor} @ 0.0s: {current_val}")
+            else:
+                if current_val != history[-1][1]:
+                    history.append((now, current_val))
+                
+                if now - last_poll_time >= 0.5:
+                    if history[-1][0] != now:
+                        history.append((now, current_val))
+                    last_poll_time = now
+                    print(f"      [LIVE MONITOR] {sensor} @ {now - initial_change_time:.1f}s: {current_val}")
+                
+                while len(history) > 1 and now - history[1][0] >= settleTime:
+                    history.pop(0)
+                
+                if now - history[0][0] >= settleTime - 0.05:
+                    is_stable = True
+                    try:
+                        vals = [v for t, v in history if isinstance(v, (int, float))]
+                        if len(vals) == len(history):
+                            min_val = min(vals)
+                            max_val = max(vals)
+                            if maxSettleTolerance is not None:
+                                denominator = abs(min_val) if abs(min_val) > 0.001 else 1.0
+                                if (max_val - min_val) / denominator > maxSettleTolerance:
+                                    is_stable = False
+                            else:
+                                if max_val - min_val > 0.001:
+                                    is_stable = False
+                        else:
+                            if len(set(v for t, v in history)) > 1:
+                                is_stable = False
+                    except Exception:
+                        if len(set(v for t, v in history)) > 1:
+                            is_stable = False
+                            
+                    if is_stable:
+                        settled_time = history[0][0]
+                        measured_latency = settled_time - start_time
+                        print(f"      [LATENCY CALIBRATION]{run_label} Value settled for {settleTime}s window starting at {measured_latency:.3f}s.")
+                        break
+            
             await asyncio.sleep(0.02)
         
         if change_detected and measured_latency is not None:
             print(f"      [LATENCY CALIBRATION]{run_label} SUCCESS: Measured latency = {measured_latency:.3f}s")
             latencies.append(measured_latency)
+        elif change_detected and measured_latency is None:
+            print(f"      [LATENCY CALIBRATION]{run_label} ERROR: Calibration timed out! Sensor changed but did not settle within {effective_timeout}s.")
         else:
-            print(f"      [LATENCY CALIBRATION]{run_label} ERROR: Calibration timed out! No sensor change detected within {timeout}s.")
+            print(f"      [LATENCY CALIBRATION]{run_label} ERROR: Calibration timed out! No sensor change detected within {effective_timeout}s.")
     
     if not hasattr(adapter, "_calibration_results"):
         adapter._calibration_results = []

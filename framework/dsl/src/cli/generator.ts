@@ -70,10 +70,12 @@ function extractStatement(s: any): any {
             valOff: extractValue(s.valOff),
             valOn: extractValue(s.valOn),
             minChangePercent: s.minChangePercent,
+            maxSettleTolerance: s.maxSettleTolerance,
             toleranceFactor: s.toleranceFactor,
             addSeconds: s.addSeconds,
             timeout: s.timeout,
-            runs: s.runs
+            runs: s.runs,
+            settleTime: s.settleTime
         };
     }
     return {};

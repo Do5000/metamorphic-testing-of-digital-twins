@@ -81,7 +81,7 @@ class DigitalTwinAdapter:
         else:
             print(f"      [PRECONDITION MET] '{device_id}' ({feature_name}) is '{val}'")
 
-    async def measure_latency(self, actuator: str, actuatorFeature: str, valOff: Any, valOn: Any, sensor: str, sensorFeature: str, toleranceFactor: float = 1.5, addSeconds: float = 1.0, timeout: float = 15.0, minChangePercent: Optional[float] = None, runs: int = 1) -> float:
+    async def measure_latency(self, actuator: str, actuatorFeature: str, valOff: Any, valOn: Any, sensor: str, sensorFeature: str, toleranceFactor: float = 1.5, addSeconds: float = 1.0, timeout: float = 15.0, minChangePercent: Optional[float] = None, maxSettleTolerance: Optional[float] = None, runs: int = 1, settleTime: Optional[float] = None, waitTime: float = 3.0) -> float:
         """
         Dynamically measures the system latency (time from actuator action to sensor response)
         using the Monotony Relation workflow.
@@ -99,5 +99,8 @@ class DigitalTwinAdapter:
             addSeconds=addSeconds,
             timeout=timeout,
             minChangePercent=minChangePercent,
-            runs=runs
+            maxSettleTolerance=maxSettleTolerance,
+            runs=runs,
+            settleTime=settleTime,
+            waitTime=waitTime
         )

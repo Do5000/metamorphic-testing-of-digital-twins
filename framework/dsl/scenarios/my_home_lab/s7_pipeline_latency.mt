@@ -16,6 +16,7 @@ beforeAll {
         minChangePercent 0.01
         toleranceFactor 1
         runs 1
+        settleTime 5.0
     }
     set "light.schreibtisch_lampe" feature "state" to "off"
 

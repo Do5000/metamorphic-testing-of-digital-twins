@@ -92,12 +92,12 @@ def get_test_cases():
     return cases
 
 
-async def _run_hooks(runner, full_data, hook_type, filepath=None):
+async def _run_hooks(runner, full_data, hook_type, filepath=None, wait_time=None):
     """Helper to execute DSL lifecycle hooks and handle common exceptions."""
     for el in full_data.get("elements", []):
         if el["type"] == "LifecycleHook" and el.get("hookType") == hook_type:
             try:
-                await runner.execute_hook(el)
+                await runner.execute_hook(el, wait_time=wait_time)
             except PreconditionFailedError as e:
                 if hook_type == "beforeAll" and filepath:
                     SKIPPED_FILES[filepath] = f"Precondition in beforeAll failed: {e}"
@@ -124,7 +124,7 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
     
     # Run beforeAll hooks from the same file IF they haven't run yet
     if not full_data.get("_before_all_run", False):
-        await _run_hooks(runner, full_data, "beforeAll", filepath)
+        await _run_hooks(runner, full_data, "beforeAll", filepath, wait_time=pytestconfig.getoption("--wait-time"))
         full_data["_before_all_run"] = True
 
     try:
@@ -136,7 +136,7 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
                 await wait_dt()
 
         # Run beforeEach hooks from the same file
-        await _run_hooks(runner, full_data, "beforeEach")
+        await _run_hooks(runner, full_data, "beforeEach", wait_time=pytestconfig.getoption("--wait-time"))
         
         # WICHTIG: Warte nach dem Reset (beforeEach), bevor der eigentliche Test startet!
         await dynamic_wait()
@@ -153,7 +153,7 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
             pytest.fail(err_msg, pytrace=False)
     finally:
         # Run afterEach hooks from the same file
-        await _run_hooks(runner, full_data, "afterEach")
+        await _run_hooks(runner, full_data, "afterEach", wait_time=pytestconfig.getoption("--wait-time"))
                     
         # Store/update the measured latency and calibration results for the summary report
         from pytest_dt_mt.fixtures import _MODULE_WAIT_DT, _CALIBRATION_REPORTS
