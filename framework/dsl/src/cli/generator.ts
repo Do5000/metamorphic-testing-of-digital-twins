@@ -71,11 +71,11 @@ function extractStatement(s: any): any {
             valOn: extractValue(s.valOn),
             minChangePercent: s.minChangePercent,
             maxSettleTolerance: s.maxSettleTolerance,
+            settleTime: s.settleTime,
             toleranceFactor: s.toleranceFactor,
             addSeconds: s.addSeconds,
             timeout: s.timeout,
-            runs: s.runs,
-            settleTime: s.settleTime
+            runs: s.runs
         };
     }
     return {};

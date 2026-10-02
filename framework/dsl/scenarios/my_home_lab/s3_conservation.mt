@@ -13,9 +13,11 @@ beforeAll {
         valOff "0"
         valOn "1"
         minChangePercent 0.01
+        maxSettleTolerance 0.1
+        settleTime 5.0
         toleranceFactor 1.2
-        addSeconds 2
-        timeout 3.0
+        addSeconds 0.5
+        timeout 5.0
         runs 1
     }
 
@@ -28,9 +30,11 @@ beforeAll {
         valOff "0"
         valOn "1"
         minChangePercent 0.01
+        maxSettleTolerance 0.1
+        settleTime 5.0
         toleranceFactor 1.2
-        addSeconds 2
-        timeout 3.0
+        addSeconds 0.5
+        timeout 5.0
         runs 1
     }
 

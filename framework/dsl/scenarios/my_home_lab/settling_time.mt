@@ -13,26 +13,13 @@ beforeAll {
         sensor "sensor.esp_c6_helligkeit" feature "state"
         valOff "0"
         valOn "100"
-
-        // --- Optionale Parameter (Müssen genau in dieser Reihenfolge stehen) ---
-
-        // 1. Ab wieviel Prozent Änderung gegenüber Baseline (valOff) startet der Monitor?
         minChangePercent 0.01
-
-        // 2. Maximal erlaubte Schwankung (hier 10%) innerhalb des Settle-Fensters
         maxSettleTolerance 0.01
-
-        // 3. Multiplikator, der auf die am Ende gemessene Settle-Latenz aufgeschlagen wird
-        toleranceFactor 1
-
-
-
-        // 4. Wie viele Kalibrierungsdurchläufe?
-        runs 5
-
-
-        // 5. Wie groß ist das Sliding Window in dem die Sensoren sich beruhigen müssen? (in Sekunden)
         settleTime 5.0
+        toleranceFactor 1.2
+        addSeconds 0.5
+        timeout 5.0
+        runs 1
     }
 
 

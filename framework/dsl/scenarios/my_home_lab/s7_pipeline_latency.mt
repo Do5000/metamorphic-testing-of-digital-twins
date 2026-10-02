@@ -14,9 +14,12 @@ beforeAll {
         valOff "0"
         valOn "100"
         minChangePercent 0.01
-        toleranceFactor 1
-        runs 1
+        maxSettleTolerance 0.1
         settleTime 5.0
+        toleranceFactor 1.2
+        addSeconds 0.5
+        timeout 5.0
+        runs 1
     }
     set "light.schreibtisch_lampe" feature "state" to "off"
 
@@ -27,7 +30,11 @@ beforeAll {
         valOff "0"
         valOn "100"
         minChangePercent 0.01
-        toleranceFactor 1
+        maxSettleTolerance 0.1
+        settleTime 5.0
+        toleranceFactor 1.2
+        addSeconds 0.5
+        timeout 5.0
         runs 1
     }
 
@@ -39,7 +46,11 @@ beforeAll {
         valOff "0"
         valOn "100"
         minChangePercent 0.01
-        toleranceFactor 1
+        maxSettleTolerance 0.1
+        settleTime 5.0
+        toleranceFactor 1.2
+        addSeconds 0.5
+        timeout 5.0
         runs 1
     }
 
@@ -57,7 +68,11 @@ beforeEach {
         valOff "0"
         valOn "100"
         minChangePercent 0.01
-        toleranceFactor 1
+        maxSettleTolerance 0.1
+        settleTime 5.0
+        toleranceFactor 1.2
+        addSeconds 0.5
+        timeout 5.0
         runs 1
     }
     set "light.schreibtisch_lampe" feature "state" to "off"
@@ -69,7 +84,11 @@ beforeEach {
         valOff "0"
         valOn "100"
         minChangePercent 0.01
-        toleranceFactor 1
+        maxSettleTolerance 0.1
+        settleTime 5.0
+        toleranceFactor 1.2
+        addSeconds 0.5
+        timeout 5.0
         runs 1
     }
 
@@ -81,7 +100,11 @@ beforeEach {
         valOff "0"
         valOn "100"
         minChangePercent 0.01
-        toleranceFactor 1
+        maxSettleTolerance 0.1
+        settleTime 5.0
+        toleranceFactor 1.2
+        addSeconds 0.5
+        timeout 5.0
         runs 1
     }
 
