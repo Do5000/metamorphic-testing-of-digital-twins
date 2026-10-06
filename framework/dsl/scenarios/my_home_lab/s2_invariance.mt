@@ -8,16 +8,16 @@ beforeAll {
     set "light.schreibtisch_lampe" feature "state" to "off"
 
     calibrateLatency {
-        actuator "light.schreibtisch_lampe" feature "state"
+        actuator "light.schreibtisch_lampe" feature "brightness"
         sensor "sensor.esp_c6_helligkeit" feature "state"
         valOff "0"
-        valOn "1"
+        valOn "100"
         minChangePercent 0.01
-        maxSettleTolerance 0.1
+        maxSettleTolerance 0.01
         settleTime 5.0
         toleranceFactor 1.2
-        addSeconds 0.5
-        timeout 5.0
+        addSeconds 1
+        timeout 30.0
         runs 1
     }
 

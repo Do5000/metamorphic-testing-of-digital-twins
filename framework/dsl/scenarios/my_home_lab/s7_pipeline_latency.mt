@@ -14,12 +14,12 @@ beforeAll {
         valOff "0"
         valOn "100"
         minChangePercent 0.01
-        maxSettleTolerance 0.1
+        maxSettleTolerance 0.01
         settleTime 5.0
-        toleranceFactor 1.2
-        addSeconds 0.5
-        timeout 5.0
-        runs 1
+        toleranceFactor 1
+        addSeconds 0
+        timeout 30.0
+        runs 5
     }
     set "light.schreibtisch_lampe" feature "state" to "off"
 
@@ -30,12 +30,12 @@ beforeAll {
         valOff "0"
         valOn "100"
         minChangePercent 0.01
-        maxSettleTolerance 0.1
+        maxSettleTolerance 0.01
         settleTime 5.0
-        toleranceFactor 1.2
-        addSeconds 0.5
-        timeout 5.0
-        runs 1
+        toleranceFactor 1
+        addSeconds 0
+        timeout 30.0
+        runs 5
     }
 
     set "light.nanoleaf_lampe" feature "state" to "off"
@@ -46,12 +46,12 @@ beforeAll {
         valOff "0"
         valOn "100"
         minChangePercent 0.01
-        maxSettleTolerance 0.1
+        maxSettleTolerance 0.01
         settleTime 5.0
-        toleranceFactor 1.2
-        addSeconds 0.5
-        timeout 5.0
-        runs 1
+        toleranceFactor 1
+        addSeconds 0
+        timeout 30.0
+        runs 5
     }
 
 }
@@ -62,53 +62,6 @@ beforeEach {
     set "light.vintage_lampe" feature "state" to "off"
     set "light.schreibtisch_lampe" feature "state" to "off"
 
-    calibrateLatency {
-        actuator "light.schreibtisch_lampe" feature "brightness"
-        sensor "sensor.esp_c6_helligkeit" feature "state"
-        valOff "0"
-        valOn "100"
-        minChangePercent 0.01
-        maxSettleTolerance 0.1
-        settleTime 5.0
-        toleranceFactor 1.2
-        addSeconds 0.5
-        timeout 5.0
-        runs 1
-    }
-    set "light.schreibtisch_lampe" feature "state" to "off"
-
-
-    calibrateLatency {
-        actuator "light.nanoleaf_lampe" feature "brightness"
-        sensor "sensor.esp_c3_helligkeit" feature "state"
-        valOff "0"
-        valOn "100"
-        minChangePercent 0.01
-        maxSettleTolerance 0.1
-        settleTime 5.0
-        toleranceFactor 1.2
-        addSeconds 0.5
-        timeout 5.0
-        runs 1
-    }
-
-    set "light.nanoleaf_lampe" feature "state" to "off"
-
-    calibrateLatency {
-        actuator "light.vintage_lampe" feature "brightness"
-        sensor "sensor.arbeitsplatz_helligkeit" feature "state"
-        valOff "0"
-        valOn "100"
-        minChangePercent 0.01
-        maxSettleTolerance 0.1
-        settleTime 5.0
-        toleranceFactor 1.2
-        addSeconds 0.5
-        timeout 5.0
-        runs 1
-    }
-
-    set "light.vintage_lampe" feature "state" to "off"
 
 }
 

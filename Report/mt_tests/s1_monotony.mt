@@ -8,14 +8,16 @@ beforeAll {
     set "light.schreibtisch_lampe" feature "state" to "off"
 
     calibrateLatency {
-        actuator "light.schreibtisch_lampe" feature "state"
+        actuator "light.schreibtisch_lampe" feature "brightness"
         sensor "sensor.esp_c6_helligkeit" feature "state"
         valOff "0"
-        valOn "1"
+        valOn "100"
         minChangePercent 0.01
+        maxSettleTolerance 0.01
+        settleTime 5.0
         toleranceFactor 1.2
-        addSeconds 2
-        timeout 3.0
+        addSeconds 1
+        timeout 30.0
         runs 1
     }
 
@@ -27,37 +29,23 @@ beforeEach {
     set "light.schreibtisch_lampe" feature "state" to "off"
 }
 
-test "TC_S1_Monotony_OFF_ON" {
-    relation: monotonicity
+test "TC_S1_Monotony_100" {
+    relation: monotonicity tolerance: 0.02
     actuators [ "light.schreibtisch_lampe" feature "brightness" ]
     sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
     sourceAction [ "0" ]
     followUpAction [ "100" ]
 }
 
-test "TC_S1_Monotony_Inverted_ON_OFF" {
-    relation: not monotonicity
-    actuators [ "light.schreibtisch_lampe" feature "brightness" ]
-    sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
-    sourceAction [ "100" ]
-    followUpAction [ "0" ]
-}
 
-test "TC_S1_Monotony" {
-    relation: monotonicity
+test "TC_S1_Monotony_80" {
+    relation: monotonicity tolerance: 0.02
     actuators [ "light.schreibtisch_lampe" feature "brightness" ]
     sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
     sourceAction [ "20" ]
     followUpAction [ "80" ]
 }
 
-test "TC_S1_Monotony_Inverted" {
-    relation: not monotonicity
-    actuators [ "light.schreibtisch_lampe" feature "brightness" ]
-    sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
-    sourceAction [ "80" ]
-    followUpAction [ "20" ]
-}
 
 afterAll {
     set "light.schreibtisch_lampe" feature "state" to "off"

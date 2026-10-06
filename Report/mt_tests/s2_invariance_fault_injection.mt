@@ -7,7 +7,6 @@ beforeAll {
     set "light.vintage_lampe" feature "state" to "off"
     set "light.schreibtisch_lampe" feature "state" to "off"
 
-
     calibrateLatency {
         actuator "light.schreibtisch_lampe" feature "brightness"
         sensor "sensor.esp_c6_helligkeit" feature "state"
@@ -17,30 +16,26 @@ beforeAll {
         maxSettleTolerance 0.01
         settleTime 5.0
         toleranceFactor 1.2
-        addSeconds 0.5
-        timeout 5.0
+        addSeconds 1
+        timeout 30.0
         runs 1
     }
-
 
 }
 
 beforeEach {
-
     set "light.nanoleaf_lampe" feature "state" to "off"
     set "light.vintage_lampe" feature "state" to "off"
     set "light.schreibtisch_lampe" feature "state" to "off"
-
-
 }
 
-test "TC_S7_Stability" {
-    relation: stability tolerance: 0.05 duration: 5.0
+test "TC_S2_Invariance" {
+    relation: invariance tolerance: 0.05
     actuators [ "light.schreibtisch_lampe" feature "brightness" ]
-    sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
-
-    // The lamp is set to 50% and the sensor value is checked for stability for 5 seconds.
-    sourceAction [ "50" ]
+    sensors [ "sensor.arbeitsplatz_helligkeit" feature "state" ]
+    sourceAction [ "75" ]
+    intermediateAction [ "0" ]
+    followUpAction [ "75" ]
 }
 
 afterAll {

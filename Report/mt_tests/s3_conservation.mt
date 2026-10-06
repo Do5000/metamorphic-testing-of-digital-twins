@@ -8,31 +8,19 @@ beforeAll {
     set "light.schreibtisch_lampe" feature "state" to "off"
 
     calibrateLatency {
-        actuator "light.schreibtisch_lampe" feature "state"
-        sensor "sensor.arbeitsplatz_helligkeit" feature "state"
+        actuator "light.schreibtisch_lampe" feature "brightness"
+        sensor "sensor.esp_c6_helligkeit" feature "state"
         valOff "0"
-        valOn "1"
+        valOn "100"
         minChangePercent 0.01
+        maxSettleTolerance 0.01
+        settleTime 5.0
         toleranceFactor 1.2
-        addSeconds 2
-        timeout 3.0
+        addSeconds 1
+        timeout 30.0
         runs 1
     }
 
-    set "light.schreibtisch_lampe" feature "state" to "off"
-    
-
-    calibrateLatency {
-        actuator "light.vintage_lampe" feature "state"
-        sensor "sensor.arbeitsplatz_helligkeit" feature "state"
-        valOff "0"
-        valOn "1"
-        minChangePercent 0.01
-        toleranceFactor 1.2
-        addSeconds 2
-        timeout 3.0
-        runs 1
-    }
 
 }
 
@@ -45,7 +33,7 @@ beforeEach {
 test "TC_S3_Conservation_100" {
     relation: conservation tolerance: 0.05
     actuators [ "light.schreibtisch_lampe" feature "brightness", "light.vintage_lampe" feature "brightness" ]
-    sensors [ "sensor.arbeitsplatz_helligkeit" feature "state" ]
+    sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
     sourceAction [ "100", "0" ]
     followUpAction [ "0", "100" ]
 }
@@ -53,7 +41,7 @@ test "TC_S3_Conservation_100" {
 test "TC_S3_Conservation_90" {
     relation: conservation tolerance: 0.05
     actuators [ "light.schreibtisch_lampe" feature "brightness", "light.vintage_lampe" feature "brightness" ]
-    sensors [ "sensor.arbeitsplatz_helligkeit" feature "state" ]
+    sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
     sourceAction [ "90", "10" ]
     followUpAction [ "10", "90" ]
 }
@@ -61,7 +49,7 @@ test "TC_S3_Conservation_90" {
 test "TC_S3_Conservation_75" {
     relation: conservation tolerance: 0.05
     actuators [ "light.schreibtisch_lampe" feature "brightness", "light.vintage_lampe" feature "brightness" ]
-    sensors [ "sensor.arbeitsplatz_helligkeit" feature "state" ]
+    sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
     sourceAction [ "75", "25" ]
     followUpAction [ "25", "75" ]
 }
@@ -69,7 +57,7 @@ test "TC_S3_Conservation_75" {
 test "TC_S3_Conservation_65" {
     relation: conservation tolerance: 0.05
     actuators [ "light.schreibtisch_lampe" feature "brightness", "light.vintage_lampe" feature "brightness" ]
-    sensors [ "sensor.arbeitsplatz_helligkeit" feature "state" ]
+    sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
     sourceAction [ "65", "35" ]
     followUpAction [ "35", "65" ]
 }

@@ -7,55 +7,98 @@ Picture of the test setup: [home_lab.pdf](home_lab.pdf)
 ### Control Adaptation
 * **S1 (Monotonicity)**
   * **Goal:** Check monotonicity and reveal scaling, sign, or device-mapping faults.
-  * **Log:** [s1_monotony.log](reports_final/s1_monotony.log)
-  * **Result:** **20 PASSED**, 0 FAILED.
-  * **Detail:** Monotonicity correctly held in all cases. No mapping faults detected.
+  * **2% Tolerance:**
+    * **Log:** [s1_2%.log](reports_final/s1_2%25.log)
+    * **Result:** **10 PASSED**, 0 FAILED.
+    * **Detail:** Monotonicity correctly held in all cases. No mapping faults detected.
+    
+  *  **5% Tolerance:**
+      * **Log:** [s1_5%.log](reports_final/s1_5%.log)
+      * **Result:** **5 PASSED**, 5 FAILED.
+      * **Detail:** Only half of the Tests PASSED (brightness change from 0 to 100), change from 20 to 80, a tolerance from 5% is too big.
+  *  **Fault injection (sensor is not connected = stuck value)**
+      * **Log:** [s1_2%_fault.log](reports_final/s1_2%25_fault.log)
+      * **Result:** **0 PASSED**, 10 FAILED.
+      * **Detail:** Fault injection shows, that stuck sensors can be detected.
+
+
 
 * **S2 (Invariance)**
   * **Goal:** Check invariance and reveal stale state, duplicate processing, or non-deterministic behavior.
-  * **Log:** [s2_invariance.log](reports_final/s2_invariance.log)
-  * **Result:** **5 PASSED**, 0 FAILED.
-  * **Detail:** The DT responded deterministically. No failure states were found.
+  * **Test on DT without fault injection**
+    * **Log:** [s2.log](reports_final/s2.log)
+    * **Result:** **5 PASSED**, 0 FAILED.
+    * **Detail:** The DT responded deterministically. No failure states were found.
+  * **with fault injection**
+    * **Log:** [s2_fault.log](reports_final/s2_fault.log)
+    * **Result:** **0 PASSED**, 5 FAILED.
+    * **Detail:** Fault injection shows, that stuck sensors can be detected.
+
 
 * **S3 (Conservation)**
   * **Goal:** Check conservation of aggregate illuminance.
-  * **Log:** [s3_conservation.log](reports_final/s3_conservation.log)
-  * **Result:** **15 PASSED**, **5 FAILED**.
-  * **Detail:** 5 tests failed (Explanation in S8)
+  * **Test on DT without fault injection**
+    * **Log:** [s3_passed_vintage_lampe_nahe.log](reports_final/s3_passed_vintage_lampe_nahe.log)
+    * **Result:** **20 PASSED**, **0 FAILED**.
+    * **Detail:** measured brightness on sensor stays in 5% tolerance in every light configuration (100/0; 90/10; 75/25; 65/35)
+  * **with fault injection (shifted one light source away from the sensor)**
+    * **Log:** [s3_fault.log](reports_final/s3_fault.log)
+    * **Result:** **15 PASSED**, **5 FAILED**.
+    * **Detail:** light configuration 100/0 failed
+
 
 ### Model / Device Evolution
 * **S4 (Integrate additional luminaire)**
-  * **Goal:** Check successful registration, addressability, and local response.
-  * **Result:** **No tests available.**
-  * **Detail:** Same test like S1.
+  * **Goal:** Check successful registration, addressability, and local response (monotony and invariance relation).
+  * **Check successful registration, addressability, and local response only.**
+    * **Log:** [s4_without_conservation.log](reports_final/s4_without_conservation.log)
+    * **Result:** **10 PASSED, 0 FAILED**
+    * **Detail:** Shows that the new luminare response correctly.
+  * **with Conservation**
+    * **Log:** [s4_with_conservation.log](reports_final/s4_with_conservation.log)
+    * **Result:** 10 PASSED, 20 FAILED
+    * **Detail:** 20 Conservation Tests failed intentionally, because new luminare (nanoleaf_lampe) don't replace an existing(like schreibtisch_lampe), instead it is an additionally luminare, further away => conservation fails
 
 * **S5 (Cross-workplace / Integrate additional sensor )**
   * **Goal:** Check correct spatial binding, consistency, and cross-workplace interference.
-  * **Result (Cross-Workplace):** 0 PASSED, **10 FAILED**.
-    * **Log:** [s5_cross-workplace_daylight.log](reports_final/s5_cross-workplace_daylight.log)
+  * **Result (Cross-Workplace without wall):** 0 PASSED, **10 FAILED**.
+    * **Log:** [s5_cross-workplace_without_wall.log](reports_final/s5_cross-workplace_without_wall.log)
     * **Detail:** A `not proportionality` relation was defined to ensure a luminaire doesn't affect an unrelated workspace. All 10 tests failed because they *were* proportional, revealing significant light leakage across workspaces.
+  * **Result (Cross-Workplace with wall):** 10 PASSED, **0 FAILED**.
+    * **Log:** [s5_cross-workplace_with_wall.log](reports_final/s5_cross-workplace_with_wall.log)
+    * **Detail:** A `not proportionality` relation was defined to ensure a luminaire doesn't affect an unrelated workspace. All 10 tests passed because they were *not* proportional, because of a "wall" between the two workplaces to block the light.
+  
   * **Result (Proportionality bounds / additional sensor ):** 10 PASSED, **5 FAILED**.
-    * **Log:** [s5_proportionality.log](reports_final/s5_proportionality.log)
-    * **Detail:** 5 tests violated the strict 5% tolerance, with observed percentage changes deviating by 11% to 13%. These failures occurred exclusively in `TC_S5_Proportionality_100`, which tests the transition from a completely off state (0%) to fully on (100%). Explanation??
+    * **Log:** [s5_prop_failed3.log](reports_final/s5_prop_failed.log)
+    * **Detail:** 5 tests violated the strict 5% tolerance, with observed percentage changes deviating by over 80%. These failures occurred exclusively in `TC_S5_Proportionality_100`, which tests the transition from a completely off state (0%) to fully on (100%). Explanation??
 
 * **S6 (Replace existing sensor)**
   * **Goal:** Check DT preservation of device semantics and consistent relations after replacement.
-  * **Result:** 30 PASSED, **5 FAILED**.
-  * **Detail:** Interface rebinding succeeded, and while 5 conservation tests failed, this is actually the expected behavior. The original sensor also failed these same conservation tests (e.g., `TC_S8_Conservation_100`, which is analogous to `TC_S6_Conservation_100`), demonstrating that the replaced sensor accurately preserves the original device semantics.
+  * **Log:** [s6.log](reports_final/s6.log)
+  * **Result:** 30 PASSED, **0 FAILED**.
+  * **Detail:** esp_c6_helligkeit sensor got replaced and passed all 30 Tests, similar to the S1, S2 and S3 tests.
 
 ### Timing and Context
 * **S7 (Observe pipeline latency)**
   * **Goal:** Measure the latency between issuing an input command and detecting the corresponding change at the sensor.
-  * **Log:** [s7_pipeline_latency_stability.log](reports_final/s7_pipeline_latency_stability.log)
-  * **Result Latency:** min: 0.399s; max: 0.991s; mean: 0.715s
-  * **Result Stability:** 0 PASSED, **5 FAILED**.
-  * **Detail:** The 5 stability tests failed due to insufficient wait time for sensor settling, rather than actual fluctuations in the sensor readings. For this scenario, these stability failures are negligible, as the primary objective was to measure the pipeline latency.
+  * **Log:** [s7.log](reports_final/s7.log)
+  * **Result Settling Time:** 
+    * [SUCCESS] sensor.esp_c6_helligkeit (state): 2.192s
+    * [SUCCESS] sensor.esp_c3_helligkeit (state): 3.030s
+    * [SUCCESS] sensor.arbeitsplatz_helligkeit (state): 2.004s
+  * **Result Initial change** 
+    * [SUCCESS] sensor.esp_c6_helligkeit (state): 1.327s
+    * [SUCCESS] sensor.esp_c3_helligkeit (state): 2.379s
+    * [SUCCESS] sensor.arbeitsplatz_helligkeit (state): 1.008s
+  * **Result Stability:** 1 PASSED, **0 FAILED**.
+  * **Detail:** The stability test passed due to sufficient wait time for sensor settling.
+
 
 * **S8 (Different daylight conditions)**
   * **Goal:** Check relative relation consistency under changing daylight.
-  * **Log:** [s8_combi_twilight.log](reports_final/s8_combi_twilight.log)
-  * **Result:** **119 PASSED**, **21 FAILED**.
-  * **Detail:** Relative relations held robustly for most cases, but 21 conservation tests failed. Of these, 20 failures occurred in `TC_S8_Conservation_100`. This suggests that when one light is completely off, the sensor measures a noticeably different value. Possible reasons include the sensor's imperfect measurement of spectral illuminance, differing incidence angles from the two light sources, or non-linear brightness curves of the bulbs (i.e., they are disproportionately brighter at lower dimming levels). The single remaining failure occurred in `TC_S8_Conservation_90` during the final trial of 20 repetitions, likely caused by interference from the sun shining at a low angle.
+  * **Log:** [s8.log](reports_final/s8.log)
+  * **Result:** **180 PASSED**, **0 FAILED**.
+  * **Detail:** relations held robustly for 30 repetitions under changing daylight
 
 ### Environmental Variation
 * **S9 (Toggle occupancy input)**
@@ -66,6 +109,11 @@ Picture of the test setup: [home_lab.pdf](home_lab.pdf)
 
 * **S10 (Observe sensor over continuous period)**
   * **Goal:** Check reading stability and reveal sensor drift.
-  * **Log:** [s10_stability.log](reports_final/s10_stability.log)
-  * **Result:** **10 PASSED**, 0 FAILED.
-  * **Detail:** Sensor readings remained stable and variance was within acceptable noise margins (5%) over the tested time (200 seconds).
+  * **200sec**
+    * **Log:** [s10_stability_200.log](reports_final/s10_stability_200.log)
+    * **Result:** **10 PASSED**, 0 FAILED.
+    * **Detail:** Sensor readings remained stable and variance was within acceptable noise margins (5%) over the tested time (200 seconds).
+  * **3hours**
+    * **Log:** [s10_fail.log](reports_final/s10_fail.log)
+    * **Result:** **0 PASSED**, **1 FAILED**
+    * **Detail:** The Test failed, because of a value jump in the beginning of the Test (maybe light from outside), but the remaining hours, there was no sensor drift. ![s10_fail_chart.png](reports_final/s10_fail_chart.png)
