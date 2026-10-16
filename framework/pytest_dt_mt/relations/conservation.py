@@ -6,8 +6,14 @@ class ConservationRelation(MetamorphicRelation):
         tolerance = self.kwargs.get("tolerance", 0.0)
         source_val, followup_val = result[0], result[1]
         
-        diff = abs(followup_val - source_val)
-        max_val = max(abs(source_val), abs(followup_val), 1.0)
+        try:
+            source_val_f = float(source_val)
+            followup_val_f = float(followup_val)
+        except (TypeError, ValueError):
+            raise MetamorphicRelationError(f"Metamorphic Relation (Conservation) failed: Non-numeric values found ({source_val}, {followup_val})")
+
+        diff = abs(followup_val_f - source_val_f)
+        max_val = max(abs(source_val_f), abs(followup_val_f), 1.0)
         allowed = tolerance if tolerance > 1.0 else max_val * tolerance
         
         if diff > allowed:

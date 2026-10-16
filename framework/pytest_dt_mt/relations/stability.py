@@ -29,10 +29,21 @@ class StabilityRelation(MetamorphicRelation):
         if not vals:
             raise MetamorphicRelationError(f"Stability check failed: No valid data points received from '{sensor_id}' in {duration}s")
             
-        # Optional: verify if all values are numeric. If not, just check exact equality
-        all_numeric = all(isinstance(v, (int, float)) for v in vals)
+        # Try to parse all values as floats (since JSON/APIs often return numbers as strings like "586.67")
+        parsed_vals = []
+        all_numeric = True
+        for v in vals:
+            if isinstance(v, (int, float)):
+                parsed_vals.append(v)
+            else:
+                try:
+                    parsed_vals.append(float(v))
+                except (ValueError, TypeError):
+                    all_numeric = False
+                    break
         
         if all_numeric:
+            vals = parsed_vals  # Use the actual numbers for math
             max_v = max(vals)
             min_v = min(vals)
             diff = abs(max_v - min_v)
@@ -45,6 +56,14 @@ class StabilityRelation(MetamorphicRelation):
             print(f"      [MR CHECK] Stability PASSED: Fluctuation diff {diff:.3f} <= allowed tolerance {tolerance*100}% [= {allowed:.3f}] (Max: {max_v}, Min: {min_v}) over {duration}s")
         else:
             first_v = vals[0]
-            if any(v != first_v for v in vals):
-                raise MetamorphicRelationError(f"Metamorphic Relation (Stability) failed: Value changed during monitoring period")
+            changed_v = None
+            changed_idx = -1
+            for i, v in enumerate(vals):
+                if v != first_v:
+                    changed_v = v
+                    changed_idx = i
+                    break
+                    
+            if changed_v is not None:
+                raise MetamorphicRelationError(f"Metamorphic Relation (Stability) failed: Value changed during monitoring period. Expected '{first_v}' but got '{changed_v}' at index {changed_idx}.")
             print(f"      [MR CHECK] Stability PASSED: Value remained '{first_v}' for {duration}s")
