@@ -12,6 +12,7 @@ from pytest_dt_mt.core import PreconditionFailedError
 # Assuming the user compiles their .mt files into .json
 DSL_OUT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "dsl")
 
+
 def compile_mt_files():
     import subprocess
     # Find all .mt files in dsl folder, ignoring node_modules
@@ -22,7 +23,7 @@ def compile_mt_files():
         for file in files:
             if file.endswith(".mt"):
                 mt_files.append(os.path.join(root, file))
-                
+
     if not mt_files:
         return
 
@@ -31,15 +32,15 @@ def compile_mt_files():
     paths_to_add = []
     if os.name != "nt":
         paths_to_add = ["/opt/homebrew/bin", "/usr/local/bin"]
-    
+
     current_path = env.get("PATH", "")
     new_paths = paths_to_add + ([current_path] if current_path else [])
     env["PATH"] = os.pathsep.join(new_paths)
-    
+
     cli_path = os.path.join("out", "cli", "main.js")
     generated_dir = os.path.join(DSL_OUT_DIR, "generated")
     os.makedirs(generated_dir, exist_ok=True)
-    
+
     for mt_file in mt_files:
         try:
             result = subprocess.run(
@@ -54,10 +55,12 @@ def compile_mt_files():
         except Exception as e:
             print(f"[DSL RUNNER ERROR] Exception while compiling {mt_file}: {e}")
 
+
 # Compile .mt files to .json automatically before test collection
 compile_mt_files()
 
 JSON_FILES = glob.glob(os.path.join(DSL_OUT_DIR, "generated", "*.json"))
+
 
 # Ignore langium configuration files or other non-test json files
 def is_test_json(filepath):
@@ -72,9 +75,11 @@ def is_test_json(filepath):
     except:
         return False
 
+
 TEST_JSONS = [f for f in JSON_FILES if is_test_json(f)]
 SKIPPED_FILES = {}
 EXECUTED_FILES = set()
+
 
 def get_test_cases():
     cases = []
@@ -82,11 +87,12 @@ def get_test_cases():
         try:
             with open(filepath, "r") as f:
                 data = json.load(f)
-                
+
             for el in data.get("elements", []):
                 if el["type"] == "TestDefinition":
                     # Parameterize expects a tuple or list of arguments
-                    cases.append(pytest.param(filepath, data, el, id=f"{os.path.basename(filepath)}::{el.get('name', 'Unnamed')}"))
+                    cases.append(pytest.param(filepath, data, el,
+                                              id=f"{os.path.basename(filepath)}::{el.get('name', 'Unnamed')}"))
         except Exception:
             pass
     return cases
@@ -116,12 +122,12 @@ async def _run_hooks(runner, full_data, hook_type, filepath=None, wait_time=None
 async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath, full_data, test_data):
     if filepath in SKIPPED_FILES:
         pytest.skip(SKIPPED_FILES[filepath])
-        
+
     EXECUTED_FILES.add(filepath)
-        
+
     __tracebackhide__ = True
     runner = DslRunner(dt_adapter, full_data)
-    
+
     # Run beforeAll hooks from the same file IF they haven't run yet
     if not full_data.get("_before_all_run", False):
         await _run_hooks(runner, full_data, "beforeAll", filepath, wait_time=pytestconfig.getoption("--wait-time"))
@@ -137,7 +143,7 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
 
         # Run beforeEach hooks from the same file
         await _run_hooks(runner, full_data, "beforeEach", wait_time=pytestconfig.getoption("--wait-time"))
-        
+
         # WICHTIG: Warte nach dem Reset (beforeEach), bevor der eigentliche Test startet!
         await dynamic_wait()
 
@@ -148,13 +154,13 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
             await runner.execute_test(test_data, dynamic_wait, verbose=verbose)
         except MetamorphicRelationError as e:
             err_msg = str(e)
-            
+
         if err_msg:
             pytest.fail(err_msg, pytrace=False)
     finally:
         # Run afterEach hooks from the same file
         await _run_hooks(runner, full_data, "afterEach", wait_time=pytestconfig.getoption("--wait-time"))
-                    
+
         # Store/update the measured latency and calibration results for the summary report
         from pytest_dt_mt.fixtures import _MODULE_WAIT_DT, _CALIBRATION_REPORTS
         dsl_key = f"DSL: {os.path.basename(filepath)}"
@@ -167,15 +173,16 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
                 if res not in _CALIBRATION_REPORTS[dsl_key]:
                     _CALIBRATION_REPORTS[dsl_key].append(res)
 
+
 @pytest_asyncio.fixture(scope="session", autouse=True)
 async def dsl_after_all_teardown():
     """Executes AfterAll hooks for any DSL files that were run during this session."""
     yield
     from pytest_dt_mt.core import DigitalTwinAdapter
-    
+
     if not EXECUTED_FILES:
         return
-        
+
     adapter = DigitalTwinAdapter()
     runner = DslRunner(adapter, {})
     for filepath in EXECUTED_FILES:
@@ -183,5 +190,5 @@ async def dsl_after_all_teardown():
         with open(filepath, "r") as f:
             data = json.load(f)
         await _run_hooks(runner, data, "afterAll")
-                
+
     await adapter.close()
