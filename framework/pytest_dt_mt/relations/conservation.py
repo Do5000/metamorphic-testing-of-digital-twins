@@ -6,6 +6,11 @@ class ConservationRelation(MetamorphicRelation):
         tolerance = self.kwargs.get("tolerance", 0.0)
         source_val, followup_val = result[0], result[1]
         
+        if source_val is None or followup_val is None:
+            raise AssertionError(
+                f"Conservation check failed: Sensor value is None (source: {source_val}, follow-up: {followup_val})"
+            )
+        
         try:
             source_val_f = float(source_val)
             followup_val_f = float(followup_val)

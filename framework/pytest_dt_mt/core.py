@@ -73,6 +73,11 @@ class DigitalTwinAdapter:
         exp_str = str(expected_value).lower()
         
         match = (val_str == exp_str)
+        if not match:
+            try:
+                match = (float(val) == float(expected_value))
+            except (ValueError, TypeError):
+                pass
 
         if not match:
             if skipMessage is None:

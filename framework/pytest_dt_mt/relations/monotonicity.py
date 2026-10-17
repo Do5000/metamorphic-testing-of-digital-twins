@@ -8,6 +8,11 @@ class MonotonicityRelation(MetamorphicRelation):
         tolerance = self.kwargs.get("tolerance", config.DEFAULT_RELATION_TOLERANCE)
         source_val, followup_val = result[0], result[1]
         
+        if source_val is None or followup_val is None:
+            raise AssertionError(
+                f"Monotonicity check failed: Sensor value is None (source: {source_val}, follow-up: {followup_val})"
+            )
+        
         try:
             cmp_source = float(source_val)
             cmp_followup = float(followup_val)

@@ -27,7 +27,7 @@ class StabilityRelation(MetamorphicRelation):
             
         vals = [v for (_, v) in monitor.history if v is not None]
         if not vals:
-            raise MetamorphicRelationError(f"Stability check failed: No valid data points received from '{sensor_id}' in {duration}s")
+            raise AssertionError(f"Stability check failed: No valid data points received from '{sensor_id}' in {duration}s (sensor returned None).")
             
         # Try to parse all values as floats (since JSON/APIs often return numbers as strings like "586.67")
         parsed_vals = []

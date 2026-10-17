@@ -10,6 +10,11 @@ class InvarianceRelation(MetamorphicRelation):
         followup_val = result[1]
         intermediate_val = result[2] if len(result) > 2 else None
         
+        if source_val is None or followup_val is None:
+            raise AssertionError(
+                f"Invariance check failed: Sensor value is None (source: {source_val}, follow-up: {followup_val})"
+            )
+        
         try:
             cmp_source = float(source_val)
             cmp_followup = float(followup_val)

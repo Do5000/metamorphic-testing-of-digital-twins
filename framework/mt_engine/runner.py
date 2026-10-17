@@ -112,6 +112,10 @@ class DslRunner:
         await self._apply_actions(actuators, sourceActions)
         await self._wait_for_latency(sensors, verbose, manual_waitTime, wait_dt_callable)
         source_results = await self._read_sensors(sensors)
+        for idx, val in enumerate(source_results):
+            if val is None:
+                s_info = sensors[idx] if idx < len(sensors) else {"deviceId": "unknown", "feature": "unknown"}
+                raise AssertionError(f"Sensor '{s_info.get('deviceId')}' ({s_info.get('feature')}) returned None during source test case (device offline or feature not found in Digital Twin).")
             
         followup_results = []
         intermediate_results = []
@@ -119,11 +123,19 @@ class DslRunner:
             if relation_name == "invariance":
                 intermediateActions = test_data.get("intermediateActions", [])
                 intermediate_results = await self._handle_invariance_reset(actuators, intermediateActions, sensors, verbose, manual_waitTime, wait_dt_callable)
+                for idx, val in enumerate(intermediate_results):
+                    if val is None:
+                        s_info = sensors[idx] if idx < len(sensors) else {"deviceId": "unknown", "feature": "unknown"}
+                        raise AssertionError(f"Sensor '{s_info.get('deviceId')}' ({s_info.get('feature')}) returned None during intermediate reset (device offline or feature not found in Digital Twin).")
             
             # Followup Test Case
             await self._apply_actions(actuators, followUpActions)
             await self._wait_for_latency(sensors, verbose, manual_waitTime, wait_dt_callable)
             followup_results = await self._read_sensors(sensors)
+            for idx, val in enumerate(followup_results):
+                if val is None:
+                    s_info = sensors[idx] if idx < len(sensors) else {"deviceId": "unknown", "feature": "unknown"}
+                    raise AssertionError(f"Sensor '{s_info.get('deviceId')}' ({s_info.get('feature')}) returned None during follow-up test case (device offline or feature not found in Digital Twin).")
                 
         # Run Relation
         relation_class = get_relation_class(relation_name)

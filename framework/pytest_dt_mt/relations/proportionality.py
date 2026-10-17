@@ -7,6 +7,11 @@ class ProportionalityRelation(MetamorphicRelation):
         
         s1, f1, s2, f2 = result
 
+        if s1 is None or f1 is None or s2 is None or f2 is None:
+            raise AssertionError(
+                f"Proportionality check failed: Sensor value is None (sensor1: {s1} -> {f1}, sensor2: {s2} -> {f2})"
+            )
+
         # Both sensors unchanged → trivially proportional
         if s1 == f1 and s2 == f2:
             print("\n      [MR CHECK] Proportionality PASSED: Both sensors remained completely unchanged (0% change)")
