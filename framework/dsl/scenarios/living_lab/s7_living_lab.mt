@@ -12,11 +12,11 @@ beforeAll {
         valOff "0"
         valOn "1"
         minChangePercent 0.03
-        maxSettleTolerance 0.03
-        settleTime 20.0
+        maxSettleTolerance 0.08
+        settleTime 15.0
         toleranceFactor 1
-        addSeconds 10
-        timeout 90.0
+        addSeconds 0
+        timeout 30.0
         runs 3
     }
     set "light.norden_tuer" feature "state" to "off"
@@ -29,11 +29,11 @@ beforeAll {
         valOff "0"
         valOn "1"
         minChangePercent 0.03
-        maxSettleTolerance 0.03
-        settleTime 20.0
+        maxSettleTolerance 0.08
+        settleTime 15.0
         toleranceFactor 1
-        addSeconds 10
-        timeout 90.0
+        addSeconds 0
+        timeout 30.0
         runs 3
     }
 
@@ -41,15 +41,15 @@ beforeAll {
 
     calibrateLatency {
         actuator "light.sueden_tuer" feature "brightness"
-        sensor "TSL2_Keyboard_spec.Room518a_Ceiling" feature "TSL2_Keyboard_spec"
+        sensor "TSL2_Keyboard_spec.Room518a_WP1" feature "TSL2_Keyboard_spec"
         valOff "0"
         valOn "1"
         minChangePercent 0.03
-        maxSettleTolerance 0.03
-        settleTime 20.0
+        maxSettleTolerance 0.08
+        settleTime 15.0
         toleranceFactor 1
-        addSeconds 10
-        timeout 90.0
+        addSeconds 0
+        timeout 30.0
         runs 3
     }
 
@@ -61,11 +61,11 @@ beforeAll {
         valOff "0"
         valOn "1"
         minChangePercent 0.03
-        maxSettleTolerance 0.03
-        settleTime 20.0
+        maxSettleTolerance 0.08
+        settleTime 15.0
         toleranceFactor 1
-        addSeconds 10
-        timeout 90.0
+        addSeconds 0
+        timeout 30.0
         runs 3
     }
 
@@ -77,11 +77,11 @@ beforeAll {
         valOff "0"
         valOn "1"
         minChangePercent 0.03
-        maxSettleTolerance 0.03
-        settleTime 20.0
+        maxSettleTolerance 0.08
+        settleTime 15.0
         toleranceFactor 1
-        addSeconds 10
-        timeout 90.0
+        addSeconds 0
+        timeout 30.0
         runs 3
     }
 

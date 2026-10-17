@@ -1,25 +1,5 @@
 beforeAll {
 
-    set "light.norden_tuer" feature "brightness" to "0"
-    set "light.norden_fenster" feature "brightness" to "0"
-    set "light.sueden_tuer" feature "brightness" to "0"
-    set "light.sueden_fenster" feature "brightness" to "0"
-
-
-    calibrateLatency {
-        actuator "light.norden_tuer" feature "brightness"
-        sensor "Illuminance.Room518a_Ceiling" feature "Illuminance"
-        valOff "0"
-        valOn "1"
-        minChangePercent 0.03
-        maxSettleTolerance 0.03
-        settleTime 20.0
-        toleranceFactor 1
-        addSeconds 10
-        timeout 90.0
-        runs 1
-    }
-
 
 }
 
