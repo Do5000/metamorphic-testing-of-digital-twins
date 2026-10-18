@@ -14,17 +14,40 @@ DSL_OUT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "dsl")
 
 def compile_mt_files():
     import subprocess
+    import sys
+
+    # Check if a keyword filter was passed to pytest (e.g. -k "living_lab")
+    k_filter = None
+    for idx, arg in enumerate(sys.argv):
+        if arg == "-k" and idx + 1 < len(sys.argv):
+            k_filter = sys.argv[idx + 1].strip("'\"")
+            break
+        elif arg.startswith("-k="):
+            k_filter = arg.split("=", 1)[1].strip("'\"")
+            break
+
     # Find all .mt files in dsl folder, ignoring node_modules
-    mt_files = []
+    all_mt_files = []
     for root, dirs, files in os.walk(DSL_OUT_DIR):
-        if "node_modules" in root:
+        if "node_modules" in root or "generated" in root:
             continue
         for file in files:
             if file.endswith(".mt"):
-                mt_files.append(os.path.join(root, file))
+                all_mt_files.append(os.path.join(root, file))
                 
-    if not mt_files:
+    if not all_mt_files:
         return
+
+    # If -k was passed and matches a scenario folder/name, compile only matching files
+    mt_files = []
+    if k_filter:
+        for f in all_mt_files:
+            if k_filter.lower() in f.lower() or k_filter.lower() in os.path.basename(f).lower():
+                mt_files.append(f)
+        if not mt_files:
+            mt_files = all_mt_files
+    else:
+        mt_files = all_mt_files
 
     env = os.environ.copy()
     # Add common Unix/macOS Node install paths to PATH dynamically using correct path separator
@@ -50,15 +73,17 @@ def compile_mt_files():
                 text=True
             )
             if result.returncode != 0:
-                print(f"[DSL RUNNER ERROR] Failed to compile {mt_file}: {result.stderr or result.stdout}")
+                sys.stderr.write(f"\n[DSL RUNNER ERROR] Failed to compile {mt_file}: {result.stderr or result.stdout}\n")
+            elif "[DSL WARNING]" in (result.stderr or "") or "[DSL WARNING]" in (result.stdout or ""):
+                output = (result.stdout or "") + (result.stderr or "")
+                sys.stderr.write(f"\n{output.strip()}\n")
         except Exception as e:
             print(f"[DSL RUNNER ERROR] Exception while compiling {mt_file}: {e}")
 
 # Compile .mt files to .json automatically before test collection
 compile_mt_files()
 
-JSON_FILES = glob.glob(os.path.join(DSL_OUT_DIR, "generated", "*.json"))
-
+JSON_FILES = sorted(glob.glob(os.path.join(DSL_OUT_DIR, "generated", "*.json")))
 # Ignore langium configuration files or other non-test json files
 def is_test_json(filepath):
     if not os.path.exists(filepath):

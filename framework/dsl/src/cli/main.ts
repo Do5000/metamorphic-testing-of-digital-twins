@@ -37,6 +37,17 @@ export const generateAction = async (fileName: string | undefined, opts: { desti
         await services.shared.workspace.DocumentBuilder.build([document], { validation: true });
 
         const validationErrors = (document.diagnostics ?? []).filter(e => e.severity === 1);
+        const validationWarnings = (document.diagnostics ?? []).filter(e => e.severity === 2);
+
+        if (validationWarnings.length > 0) {
+            console.warn(chalk.yellow(`[DSL WARNING] in ${path.basename(currentFile)}:`));
+            for (const warning of validationWarnings) {
+                console.warn(chalk.yellow(
+                    `  line ${warning.range.start.line + 1}: ${warning.message} [${document.textDocument.getText(warning.range)}]`
+                ));
+            }
+        }
+
         if (validationErrors.length > 0) {
             console.error(chalk.red(`There are validation errors in ${currentFile}:`));
             for (const validationError of validationErrors) {
