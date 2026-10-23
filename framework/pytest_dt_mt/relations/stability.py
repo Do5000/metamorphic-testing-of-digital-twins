@@ -44,16 +44,24 @@ class StabilityRelation(MetamorphicRelation):
         
         if all_numeric:
             vals = parsed_vals  # Use the actual numbers for math
+            initial_val = vals[0]
             max_v = max(vals)
             min_v = min(vals)
             diff = abs(max_v - min_v)
             
-            allowed = tolerance if tolerance > 1.0 else max(abs(max_v), abs(min_v), 1.0) * tolerance
+            # Paper formula: max_t O_j(t) - min_t O_j(t) <= tau * max(|O_j(0)|, 1.0)
+            allowed = tolerance if tolerance > 1.0 else max(abs(initial_val), 1.0) * tolerance
             
             if diff > allowed:
-                raise MetamorphicRelationError(f"Metamorphic Relation (Stability) failed: Fluctuation {diff:.3f} > allowed {allowed:.3f} (Max: {max_v}, Min: {min_v}) over {duration}s")
+                raise MetamorphicRelationError(
+                    f"Metamorphic Relation (Stability) failed: Fluctuation {diff:.3f} > allowed {allowed:.3f} "
+                    f"(Max: {max_v}, Min: {min_v}, Initial O(0): {initial_val}) over {duration}s"
+                )
                 
-            print(f"      [MR CHECK] Stability PASSED: Fluctuation diff {diff:.3f} <= allowed tolerance {tolerance*100}% [= {allowed:.3f}] (Max: {max_v}, Min: {min_v}) over {duration}s")
+            print(
+                f"      [MR CHECK] Stability PASSED: Fluctuation diff {diff:.3f} <= allowed tolerance {allowed:.3f} "
+                f"(Max: {max_v}, Min: {min_v}, Initial O(0): {initial_val}) over {duration}s"
+            )
         else:
             first_v = vals[0]
             changed_v = None
