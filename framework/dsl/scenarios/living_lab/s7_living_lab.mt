@@ -13,13 +13,16 @@ beforeAll {
         valOn "1"
         minChangePercent 0.03
         maxSettleTolerance 0.08
-        settleTime 15.0
+        settleTime 20.0
         toleranceFactor 1
         addSeconds 0
         timeout 30.0
         runs 3
     }
-    set "light.norden_tuer" feature "state" to "off"
+    set "light.norden_tuer" feature "brightness" to "0"
+    set "light.norden_fenster" feature "brightness" to "0"
+    set "light.sueden_tuer" feature "brightness" to "0"
+    set "light.sueden_fenster" feature "brightness" to "0"
 
 
 
@@ -30,14 +33,17 @@ beforeAll {
         valOn "1"
         minChangePercent 0.03
         maxSettleTolerance 0.08
-        settleTime 15.0
+        settleTime 20.0
         toleranceFactor 1
         addSeconds 0
         timeout 30.0
         runs 3
     }
 
-    set "light.sueden_fenster" feature "state" to "off"
+    set "light.norden_tuer" feature "brightness" to "0"
+    set "light.norden_fenster" feature "brightness" to "0"
+    set "light.sueden_tuer" feature "brightness" to "0"
+    set "light.sueden_fenster" feature "brightness" to "0"
 
     calibrateLatency {
         actuator "light.sueden_tuer" feature "brightness"
@@ -46,14 +52,17 @@ beforeAll {
         valOn "1"
         minChangePercent 0.03
         maxSettleTolerance 0.08
-        settleTime 15.0
+        settleTime 20.0
         toleranceFactor 1
         addSeconds 0
         timeout 30.0
         runs 3
     }
 
-    set "light.sueden_tuer" feature "state" to "off"
+    set "light.norden_tuer" feature "brightness" to "0"
+    set "light.norden_fenster" feature "brightness" to "0"
+    set "light.sueden_tuer" feature "brightness" to "0"
+    set "light.sueden_fenster" feature "brightness" to "0"
 
     calibrateLatency {
         actuator "light.sueden_tuer" feature "brightness"
@@ -62,14 +71,17 @@ beforeAll {
         valOn "1"
         minChangePercent 0.03
         maxSettleTolerance 0.08
-        settleTime 15.0
+        settleTime 20.0
         toleranceFactor 1
         addSeconds 0
         timeout 30.0
         runs 3
     }
 
-    set "light.sueden_tuer" feature "state" to "off"
+    set "light.norden_tuer" feature "brightness" to "0"
+    set "light.norden_fenster" feature "brightness" to "0"
+    set "light.sueden_tuer" feature "brightness" to "0"
+    set "light.sueden_fenster" feature "brightness" to "0"
 
     calibrateLatency {
         actuator "light.sueden_fenster" feature "brightness"
@@ -78,7 +90,7 @@ beforeAll {
         valOn "1"
         minChangePercent 0.03
         maxSettleTolerance 0.08
-        settleTime 15.0
+        settleTime 20.0
         toleranceFactor 1
         addSeconds 0
         timeout 30.0
