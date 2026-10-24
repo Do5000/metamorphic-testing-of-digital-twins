@@ -43,16 +43,12 @@ classDiagram
         +String relation
         +Double tolerance
         +Double duration
-        +String profile
-        +Integer historicalSamples
-        +String historicalFile
         +Double waitTime
         +DeviceFeature[] actuators
         +DeviceFeature[] sensors
         +Value[] sourceActions
         +Value[] intermediateActions
         +Value[] followupActions
-        +Value[] brightnessLevels
     }
     class DeviceFeature {
         +String deviceId
@@ -80,4 +76,3 @@ classDiagram
     TestDefinition *-- Value : sourceActions
     TestDefinition *-- Value : intermediateActions
     TestDefinition *-- Value : followupActions
-    TestDefinition *-- Value : brightnessLevels

@@ -61,7 +61,3 @@
 ## 9. Consistency (Noise Robustness)
 Problem: Sensoren rauschen. Ein absolut exakter Vergleich (==) schlägt oft fehl.
 Feature: Unterstützung für Relationen wie approximately_equal oder mean_invariant. Man prüft nicht einen Einzelwert, sondern ob der Mittelwert über 10 Sekunden stabil bleibt. Das macht MT im IoT-Bereich erst praxistauglich.
-
-## 10. Substitution (Metamorphe Relation???)
-Problem: Wenn ein Sensor ausgetauscht wird. Moechte man ein Sensor einbauen, der auch in absoluten Werten ähnliche Werte liefert.
-Feature: Input: neuer Senor und Nachbarsensor Livedaten; historische daten mit verhaeltnis von alten sensor und nachbarsensor

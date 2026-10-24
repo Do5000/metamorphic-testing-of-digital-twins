@@ -1,231 +1,346 @@
-# Dokumentation zur Metamorphic Testing DSL
+# Metamorphic Testing DSL (MT-DSL) Documentation
 
-Dieses Dokument dient als Einstieg für Anwender der MT-DSL. Die DSL (Domain-Specific Language) wurde entwickelt, um metamorphes Testen für Digitale Zwillinge (Digital Twins) und Smart-Home-Szenarien einfach, lesbar und standardisiert zu definieren.
+The **Metamorphic Testing Domain-Specific Language (MT-DSL)** is designed for defining, standardizing, and automatically executing metamorphic tests on Digital Twins and IoT systems (e.g., Smart Home / Living Lab environments).
 
-Dateien dieser Sprache verwenden die Dateiendung **`.mt`**.
+Files written in this language use the extension **`.mt`**. They are validated using a Langium-based language server, compiled into machine-readable JSON test definitions, and subsequently executed by a pytest-based metamorphic test runner.
 
 ---
 
-## 1. Grundstruktur einer `.mt`-Datei
+## Table of Contents
+1. [Basic Structure of a `.mt` File](#1-basic-structure-of-a-mt-file)
+2. [Lifecycle Hooks and Statements](#2-lifecycle-hooks-and-statements)
+   - [2.1. Setting State (`set`)](#21-setting-state-set)
+   - [2.2. Checking Preconditions (`precondition`)](#22-checking-preconditions-precondition)
+   - [2.3. Latency and Settling Time Calibration (`calibrateLatency`)](#23-latency-and-settling-time-calibration-calibratelatency)
+3. [Test Definitions (`test`)](#3-test-definitions-test)
+   - [3.1. Structure and Test Parameters](#31-structure-and-test-parameters)
+   - [3.2. The 5 Core Relations](#32-the-5-core-relations)
+     - [1. Monotonicity](#1-monotonicity-monotonicity)
+     - [2. Invariance](#2-invariance-invariance)
+     - [3. Conservation](#3-conservation-conservation)
+     - [4. Stability](#4-stability-stability)
+     - [5. Proportionality](#5-proportionality-proportionality)
+   - [3.3. Inverted Relations (`not`)](#33-inverted-relations-not)
+4. [Live Validation & Device Catalog Integration (LSP)](#4-live-validation--device-catalog-integration-lsp)
+5. [Test Execution and Pytest Runner](#5-test-execution-and-pytest-runner)
+   - [5.1. Selective Automatic Compilation (`-k`)](#51-selective-automatic-compilation--k)
+   - [5.2. CLI Flags & Monitoring](#52-cli-flags--monitoring)
+6. [Central Default Values (Single Point of Truth)](#6-central-default-values-single-point-of-truth)
+7. [CLI and DSL Developer Commands](#7-cli-and-dsl-developer-commands)
 
-Eine `.mt`-Datei besteht in der Regel aus zwei Bausteinen:
-1. **Lifecycle-Hooks** (z. B. `beforeAll`, `beforeEach`): Hier definierst du, was vor oder nach den Tests passieren soll (z.B. Geräte in einen definierten Grundzustand versetzen oder Latenzen kalibrieren).
-2. **Test-Definitionen** (`test`): Hier wird der eigentliche metamorphe Test konfiguriert.
+---
 
-Ein typischer Ablauf sieht so aus:
+## 1. Basic Structure of a `.mt` File
+
+A `.mt` file is typically structured into two main parts:
+1. **Lifecycle Hooks**: Set up preconditions, reset devices before or after test executions, and perform automated latency calibration.
+2. **Test Definitions (`test`)**: Declare metamorphic relations to be evaluated along with actuators, sensors, and test values.
+
 ```mt
 beforeAll {
-    // Setup für alle Tests
+    // One-time setup of test environment & calibration
 }
 
 beforeEach {
-    // Setup vor jedem einzelnen Test
+    // Reset or defined initial state before each test
 }
 
-test "mein_erster_test" {
-    // Testkonfiguration
+test "TC_Example_Test" {
+    // Test configuration
+}
+
+afterAll {
+    // Teardown / restoration after all tests finish
 }
 ```
 
 ---
 
-## 2. Lifecycle-Hooks und Befehle
+## 2. Lifecycle Hooks and Statements
 
-Du kannst vier verschiedene Hooks verwenden:
-- `beforeAll`: Wird **einmal** vor allen Tests ausgeführt.
-- `afterAll`: Wird **einmal** nach allen Tests ausgeführt.
-- `beforeEach`: Wird **vor jedem** Test ausgeführt.
-- `afterEach`: Wird **nach jedem** Test ausgeführt.
+The DSL provides three lifecycle hooks:
+- `beforeAll`: Executed **once before all tests** in the file.
+- `afterAll`: Executed **once after all tests** in the file.
+- `beforeEach`: Executed **before each individual test case**.
 
-Innerhalb dieser Blöcke stehen dir drei Arten von Befehlen (Statements) zur Verfügung:
+Within these blocks, the following statements can be used:
 
-### 2.1. Zustand setzen (`set`)
-Ändert den Zustand eines Geräts (Aktuators).
-**Syntax:** `set "GERÄT" feature "EIGENSCHAFT" to "WERT"`
-```mt
-set "light.schreibtisch_lampe" feature "state" to "off"
-set "switch.fernseher" feature "state" to "on"
-```
+### 2.1. Setting State (`set`)
+Actuates devices or sets properties (features) directly in the Digital Twin.
+- **Syntax:** `set "DEVICE" feature "FEATURE" to VALUE`
+- **Examples:**
+  ```mt
+  set "light.desk_lamp" feature "state" to "off"
+  set "light.desk_lamp" feature "brightness" to 50
+  set "automation.living_room_on" feature "state" to "off"
+  ```
 
-### 2.2. Vorbedingungen prüfen (`precondition`)
-Pausiert oder überspringt Tests, falls eine bestimmte Bedingung in der physischen Umgebung nicht erfüllt ist.
-**Syntax:** `precondition "SENSOR" feature "EIGENSCHAFT" equals "WERT" [skipMessage "GRUND"]`
-```mt
-precondition "automation.nach_sonnenuntergang" feature "state" equals "on" skipMessage "Tests erfordern, dass die Sonne untergegangen ist."
-```
+### 2.2. Checking Preconditions (`precondition`)
+Evaluates an environment or state reading before executing tests. If the precondition is not met, the test run is skipped without producing false failures.
+- **Syntax:** `precondition "SENSOR" feature "FEATURE" equals VALUE [skipMessage "REASON"]`
+- **Example:**
+  ```mt
+  precondition "sun.sun" feature "state" equals "below_horizon" skipMessage "This scenario must be tested at night."
+  ```
 
-### 2.3. Latenzen kalibrieren (`calibrateLatency`)
-Misst die Laufzeit/Latenz, die benötigt wird, bis sich der Zustand eines Aktuators beim Sensor messbar bemerkbar macht. Parameter sind optional.
+### 2.3. Latency and Settling Time Calibration (`calibrateLatency`)
+Automatically measures the physical response and settling time (pipeline latency) between an actuator command and the corresponding sensor response. The measured value is dynamically applied as the wait duration (`wait_dt`) for subsequent tests.
+
 ```mt
 calibrateLatency {
-    actuator "light.schreibtisch_lampe" feature "state"
-    sensor "sensor.esp_helligkeit" feature "state"
-    valOff "off"
-    valOn "on"
+    actuator "light.desk_lamp" feature "brightness"
+    sensor "sensor.esp_c6_brightness" feature "state"
+    valOff "0"
+    valOn "100"
     
-    // Optionale Feinabstimmung:
-    minChangePercent 0.2
-    toleranceFactor 1.1
-    addSeconds 0
-    timeout 3.0
-    runs 1
+    // Optional parameters for fine-tuning:
+    minChangePercent 0.01      // Minimum change threshold (1%) to detect a response
+    maxSettleTolerance 0.01    // Allowed fluctuation band for steady state (1%)
+    settleTime 5.0             // Settling time window in seconds
+    toleranceFactor 1.2        // Multiplicative safety factor (+20%)
+    addSeconds 1               // Additive buffer in seconds (+1s)
+    timeout 30.0               // Maximum timeout per calibration run
+    runs 1                     // Number of measurement runs (for averaging)
 }
 ```
 
+#### Parameter Reference for `calibrateLatency`:
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `actuator` | String | Actuator device ID (*Required*) |
+| `actuatorFeature` | String | Feature to manipulate (e.g., `"brightness"`, default: `"state"`) |
+| `sensor` | String | Sensor device ID (*Required*) |
+| `sensorFeature` | String | Observed sensor feature (default: `"state"`) |
+| `valOff` | Value | Baseline / off value (*Required*) |
+| `valOn` | Value | Actuation value for latency measurement (*Required*) |
+| `minChangePercent` | Number | Threshold for detecting the initial measurable sensor response |
+| `maxSettleTolerance`| Number | Fluctuation tolerance band for the settled reading |
+| `settleTime` | Number | Duration the reading must remain stable |
+| `toleranceFactor` | Number | Multiplicative safety factor applied to the measured latency (e.g., 1.2 = +20%) |
+| `addSeconds` | Number | Fixed additive time buffer on top of the calculated wait time |
+| `timeout` | Number | Maximum wait time before the measurement times out |
+| `runs` | Number | Number of measurement runs for aggregation |
+
 ---
 
-## 3. Einen Test definieren (`test`)
+## 3. Test Definitions (`test`)
 
-Die Test-Definition beschreibt, welche *Metamorphe Relation* geprüft werden soll und welche Geräte dafür verwendet werden.
+A test block defines a metamorphic relationship between input actions and output sensor observations.
 
-**Syntax:**
+### 3.1. Structure and Test Parameters
+
 ```mt
 test "Test_Name" {
-    relation: <Relation>
-    ... Parameter ...
+    relation: <Relation> [tolerance: <Number>] [duration: <Number>] [waitTime: <Number>]
+    
+    actuators [ "DEVICE" feature "FEATURE", ... ]
+    sensors [ "SENSOR" feature "FEATURE", ... ]
+    
+    sourceAction [ VALUE, ... ]
+    intermediateAction [ VALUE, ... ]    // Optional (e.g. for invariance reset)
+    followUpAction [ VALUE, ... ]
 }
 ```
 
-### 3.1. Relationen und Pflichtparameter
-Jeder Test benötigt eine **`relation`**. Mögliche Relationen sind beispielsweise `monotonicity`, `invariance`, `substitution` etc.
-Zudem musst du meist Aktuatoren und Sensoren als Listen (`[...]`) übergeben:
-```mt
-test "test_home_monotony" {
-    relation: monotonicity
-    
-    actuators [ "light.schreibtisch_lampe" feature "brightness" ]
-    sensors [ "sensor.esp_helligkeit" feature "state" ]
-    
-    sourceAction [ "0" ]
-    followUpAction [ "100" ]
-}
-```
-
-**Umgekehrte Relationen (`not`)**
-Man kann jede Relation umkehren (negieren), indem man das Schlüsselwort `not` direkt vor den Namen der Relation setzt. Dies ist besonders nützlich, um z. B. eine strikte *Abnahme* (Inverted Monotonicity) zu testen oder um sicherzustellen, dass sich ein Sensorwert definitiv ändert (was nützlich ist, um "eingefrorene" Sensoren aufzudecken).
-```mt
-    relation: not monotonicity
-```
-
-### 3.2. Verfügbare Parameter im Testblock
-Je nach gewählter Metamorpher Relation benötigst du unterschiedliche Parameter. Folgende Schlüsselwörter stehen zur Verfügung:
-
-* **Listen für Geräte:**
-  * `actuators [...]`: Liste der Stellglieder.
-  * `sensors [...]`: Liste der Messaufnehmer.
-* **Metamorphe Testwerte:**
-  * `sourceAction [...]`: Die Ausgangs-Eingabe für das System.
-  * `followUpAction [...]`: Die abgewandelte Eingabe (für den Folge-Testfall).
-  * `brightnessLevels [...]`: Spezifische Liste von Helligkeitswerten (falls benötigt).
-* **Konfiguration & Timing:**
-  * `tolerance: <Zahl>`: Erlaubte Abweichung bei Messungen.
-  * `duration: <Zahl>`: Dauer einer Messung in Sekunden.
-  * `waitTime: <Zahl>`: Wartezeit nach einer Aktion (wegen Pipeline-Latenzen).
-* **Profile & Historische Daten:**
-  * `profile: "Profilname"`: Name eines JSON-Geräteprofils (z.B. für `substitution`).
-  * `historicalSamples: <Zahl>`: Anzahl der Abtastwerte (z.B. 0, 1, 2... 100).
-  * `historicalFile: "Dateiname.json"`: Name der Ausgabedatei für historische Daten.
+#### Available Parameters:
+- **`actuators [...]`**: List of target actuators. Relations like `conservation` or `proportionality` support multiple actuators.
+- **`sensors [...]`**: List of sensors to observe.
+- **`sourceAction [...]`**: Source input values for the actuators. The number of values must match the number of defined `actuators`.
+- **`intermediateAction [...]`**: Intermediate state (essential for invariance reset checks).
+- **`followUpAction [...]`**: Follow-up input values for the metamorphic relation.
+- **`tolerance: <Number>`**: Allowed tolerance $\tau$. When $\tau \le 1.0$, it is treated as a relative tolerance (e.g., `0.05` = 5%), otherwise as an absolute tolerance.
+- **`duration: <Number>`**: Observation duration in seconds (specifically for `stability`).
+- **`waitTime: <Number>`**: Optional manual override for the physical settling wait time of this test.
 
 ---
 
-## 4. Vollständiges Beispiel
+### 3.2. The 5 Core Relations
 
-Hier ist ein realistisches Skript, das die Lampe kalibriert und anschließend auf Monotonie prüft (je heller die Lampe eingestellt wird, desto höher muss der gemessene Helligkeitswert des Sensors sein):
+#### 1. Monotonicity (`monotonicity`)
+- **Example:**
+  ```mt
+  test "TC_S1_Monotony_80" {
+      relation: monotonicity tolerance: 0.02
+      actuators [ "light.desk_lamp" feature "brightness" ]
+      sensors [ "sensor.esp_c6_brightness" feature "state" ]
+      sourceAction [ "20" ]
+      followUpAction [ "80" ]
+  }
+  ```
 
+#### 2. Invariance (`invariance`)
+- **Example:**
+  ```mt
+  test "TC_S2_Invariance" {
+      relation: invariance tolerance: 0.05
+      actuators [ "light.desk_lamp" feature "brightness" ]
+      sensors [ "sensor.esp_c6_brightness" feature "state" ]
+      sourceAction [ "100" ]
+      intermediateAction [ "0" ]
+      followUpAction [ "100" ]
+  }
+  ```
+
+#### 3. Conservation (`conservation`)
+- **Example:**
+  ```mt
+  test "TC_S3_Conservation_75" {
+      relation: conservation tolerance: 0.05
+      actuators [ 
+          "light.desk_lamp" feature "brightness", 
+          "light.vintage_lamp" feature "brightness" 
+      ]
+      sensors [ "sensor.esp_c6_brightness" feature "state" ]
+      sourceAction [ "75", "25" ]
+      followUpAction [ "25", "75" ]
+  }
+  ```
+
+#### 4. Stability (`stability`)
+- **Example:**
+  ```mt
+  test "TC_S10_Stability_esp_c6" {
+      relation: stability tolerance: 0.05 duration: 60.0
+      actuators [ "light.desk_lamp" feature "brightness" ]
+      sensors [ "sensor.esp_c6_brightness" feature "state" ]
+      sourceAction [ "50" ]
+  }
+  ```
+
+#### 5. Proportionality (`proportionality`)
+- **Example:**
+  ```mt
+  test "TC_S5_Proportionality_Synchronous_Scaling" {
+      relation: proportionality tolerance: 0.05
+      actuators [ 
+          "light.desk_lamp" feature "brightness", 
+          "light.vintage_lamp" feature "brightness" 
+      ]
+      sensors [ 
+          "sensor.esp_c6_brightness" feature "state", 
+          "sensor.esp_c3_brightness" feature "state" 
+      ]
+      sourceAction [ "20", "20" ]
+      followUpAction [ "80", "80" ]
+  }
+  ```
+
+---
+
+### 3.3. Inverted Relations (`not`)
+
+Any relation can be inverted by prefixing the relation identifier with the keyword `not`:
 ```mt
-beforeAll {
-    // Vorbedingung: Es muss dunkel sein
-    precondition "automation.nach_sonnenuntergang" feature "state" equals "on" skipMessage "Zu hell für diesen Test!"
-    
-    // Setup
-    set "automation.wohnzimmer_ein" feature "state" to "off"
-    
-    // Latenz messen
-    calibrateLatency {
-        actuator "light.schreibtisch_lampe" feature "state"
-        sensor "sensor.esp_c3_helligkeit" feature "state"
-        valOff "off"
-        valOn "on"
-        runs 1
-    }
-    
-    // Lampe wieder ausschalten
-    set "light.schreibtisch_lampe" feature "state" to "off"
-}
-
-beforeEach {
-    // Vor jedem einzelnen Testlauf Störfaktoren ausschalten
-    set "switch.fernseher_steckdose" feature "state" to "off"
-}
-
-test "TC_01_Monotony_DeskLight" {
-    relation: monotonicity
-    
-    actuators [ "light.schreibtisch_lampe" feature "brightness" ]
-    sensors [ "sensor.esp_c3_helligkeit" feature "state" ]
-    
-    sourceAction [ "20" ]
-    followUpAction [ "80" ]
-    
-    tolerance: 0.05
-    waitTime: 2.0
+test "TC_Monotony_Fault_Check" {
+    relation: not monotonicity tolerance: 0.02
+    actuators [ "light.desk_lamp" feature "brightness" ]
+    sensors [ "sensor.esp_c6_brightness" feature "state" ]
+    sourceAction [ "100" ]
+    followUpAction [ "0" ]
 }
 ```
+- **Semantics:** The test passes if and only if the original relation is **violated**.
+- **Use Cases:** Fault injection verification, negative testing, and detecting frozen sensor states.
 
-## Ausführung und CLI-Befehle
+---
 
-Die DSL bringt ein Command-Line Interface (CLI) mit, um die geschriebenen `.mt`-Dateien zu validieren und in `.json`-Dateien umzuwandeln, die dann vom Test-Runner verwendet werden.
+## 4. Live Validation & Device Catalog Integration (LSP)
 
-### 1. `.mt` in `.json` konvertieren
+The MT-DSL Language Server validates `.mt` files in real time in the editor and during CLI generation:
 
-* **Alle Dateien im Verzeichnis umwandeln**:
-  ```bash
-  npm run generate
-  ```
-  Sucht alle `.mt`-Dateien im aktuellen Verzeichnis, validiert sie (zeigt Fehler bei Syntax- oder Typ-Problemen an) und generiert die zugehörigen `.json`-Dateien.
+1. **Comparison with `device_catalog.json`:**
+   - Validates that referenced devices exist.
+   - Validates that the specified `feature` is defined on that device in the Digital Twin catalog.
+2. **Fuzzy Typo Suggestions (Levenshtein Distance):**
+   - If an unrecognized device ID is typed (e.g., `"light.desk"`), the validator provides an interactive warning:
+     *`Device "light.desk" not found. Did you mean "light.desk_lamp"?`*
+3. **Cardinality Verification:**
+   - Ensures that the number of values in `sourceAction`, `intermediateAction`, and `followUpAction` strictly matches the number of defined `actuators`.
+4. **Runtime Null Guard:**
+   - If a sensor returns `None` during test execution (e.g., due to an offline physical device or communication timeout), the test immediately fails with a descriptive `AssertionError` to prevent misleading calculations.
 
-* **Spezifische Datei umwandeln**:
-  ```bash
-  npm run generate -- <dateiname>.mt
-  ```
-  Oder direkt über das CLI-Skript:
-  ```bash
-  node out/cli/main.js generate <dateiname>.mt
-  ```
+---
 
-* **Ausgabeverzeichnis definieren**:
-  Über das Argument `-d` oder `--destination` kannst du angeben, wo die JSON-Dateien gespeichert werden sollen:
-  ```bash
-  node out/cli/main.js generate <dateiname>.mt -d /pfad/zum/zielordner
-  ```
+## 5. Test Execution and Pytest Runner
 
-### 2. Befehle zur Weiterentwicklung der DSL
+Tests are executed using the central runner [`tests/test_dsl_runner.py`](file:///Users/dorian/Documents/Uni/Bachelorarbeit/metamorphic-testing-of-digital-twins/framework/tests/test_dsl_runner.py).
 
-Wenn du die Sprache selbst erweitern möchtest (z. B. in der Grammatik `framework/dsl/src/language/mt-dsl.langium`), stehen im `dsl`-Verzeichnis folgende Befehle zur Verfügung:
+### 5.1. Selective Automatic Compilation (`-k`)
 
-* **`npm run langium:generate`**:
-  Erzeugt die Infrastruktur (Parser, AST-Typen etc.) neu, basierend auf der `.langium`-Datei. Muss nach jeder Änderung an der Grammatik ausgeführt werden.
-* **`npm run build`**:
-  Kompiliert den TypeScript-Code (inklusive der CLI und des VS Code Plugins).
-* **`npm run build:extension`**:
-  Kompiliert ausschließlich das VS Code Plugin.
-* **`npm run watch`**:
-  Startet einen Hintergrundprozess, der bei jeder Dateiänderung (an TypeScript oder Grammatik) automatisch neu kompiliert. Sehr nützlich während der Entwicklung.
+When invoking `pytest` with a `-k` filter, the runner automatically compiles **only the `.mt` files that match the filter keyword** into JSON before collecting tests:
 
-### 3. Test-Ausführung (Python)
+```bash
+# Run only Home Lab scenarios:
+pytest tests/test_dsl_runner.py -k "my_home_lab" -v --capture=tee-sys
 
-siehe workflow.md
+# Run only Living Lab scenarios:
+pytest tests/test_dsl_runner.py -k "living_lab" -v --capture=tee-sys
 
-## DSL Plugin (Language Server) in VS Code starten
+# Run a specific scenario (e.g., S3 Conservation):
+pytest tests/test_dsl_runner.py -k "s3_conservation" -v --capture=tee-sys
+```
 
-Das Plugin bietet Syntax-Highlighting, Autovervollständigung und Fehlerüberprüfung direkt im Editor:
+### 5.2. CLI Flags & Monitoring
 
-1. Navigiere in den `dsl`-Ordner: `cd framework/dsl`
-2. Installiere die Abhängigkeiten:
-   ```bash
-   npm install
-   ```
-3. Öffne das Projekt in VS Code und drücke **F5**. Ein neues VS Code Fenster ("Extension Development Host") öffnet sich, in dem die `.mt`-Dateien mit voller Sprachunterstützung bearbeitet werden können.
+| Flag | Function |
+| :--- | :--- |
+| `-v` | Verbose output displaying detailed test outcomes |
+| `--wait-time=X` | Overrides the global default wait time (in seconds) |
+| `--capture=tee-sys` | Displays terminal output live **and** stores it for test reports |
+| `--monitor` | Enables live sensor data streaming during test execution |
+| `--log` | Generates a structured session log file in the `test_reports/` directory |
+| `--count=N` | Repeats test suite execution $N$ times (for stress testing & detecting flaky tests) |
+| `--repeat-scope=session` | Runs the entire test suite from start to finish before starting the next repetition |
 
+**Recommended Standard Invocation:**
+```bash
+pytest tests/test_dsl_runner.py -k "s1_monotony" -v --wait-time=5.0 --capture=tee-sys --monitor --log
+```
 
+---
 
+## 6. Central Default Values (Single Point of Truth)
+
+All default parameters of the framework are centrally managed in [`pytest_dt_mt/config.py`](file:///Users/dorian/Documents/Uni/Bachelorarbeit/metamorphic-testing-of-digital-twins/framework/pytest_dt_mt/config.py):
+
+```python
+DEFAULT_MIN_CHANGE_PERCENT = 0.01      # 1% minimum change threshold for latency detection
+DEFAULT_MAX_SETTLE_TOLERANCE = 0.01    # 1% fluctuation tolerance for steady state
+DEFAULT_SETTLE_TIME = 5.0             # 5 seconds settling window
+DEFAULT_TOLERANCE_FACTOR = 1.2        # 20% margin on measured response time
+DEFAULT_ADD_SECONDS = 1.0             # 1 second additive buffer
+DEFAULT_TIMEOUT = 5.0                 # Timeout for calibration runs
+DEFAULT_CALIBRATION_RUNS = 1          # 1 calibration run
+DEFAULT_MONITOR_INTERVAL = 0.5        # 500ms sampling rate for live monitoring
+DEFAULT_RELATION_TOLERANCE = 0.05     # 5% default relation tolerance
+DEFAULT_STABILITY_DURATION = 10.0     # 10 seconds default stability observation duration
+DEFAULT_GLOBAL_WAIT_TIME = 30.0       # Global fallback wait time
+```
+
+---
+
+## 7. CLI and DSL Developer Commands
+
+Within the `framework/dsl/` directory:
+
+```bash
+# 1. Compile all .mt files into JSON test definitions:
+npm run generate
+
+# 2. Compile a specific .mt file manually:
+node out/cli/main.js generate scenarios/my_home_lab/s1_monotony.mt -d generated/
+
+# 3. Regenerate the Langium parser and AST (after editing mt-dsl.langium):
+npm run langium:generate
+
+# 4. Compile TypeScript files and bundles:
+npm run build
+
+# 5. Continuous watch mode for active development:
+npm run watch
+```
+
+### VS Code Extension Development Host:
+1. Open `framework/dsl` in VS Code.
+2. Run `npm install`.
+3. Press **F5**: A new VS Code window launches with live MT-DSL language support (syntax highlighting, autocompletion, diagnostics).

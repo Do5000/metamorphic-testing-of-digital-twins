@@ -98,10 +98,6 @@ class DslRunner:
         print(f"\n[DSL] Executing Test: {test_data.get('name')} (Relation: {test_data.get('relation')})")
         
         relation_name = test_data.get("relation")
-        if relation_name == "generation":
-            await self._execute_generation(test_data, wait_dt_callable, verbose)
-            return
-            
         actuators = test_data.get("actuators", [])
         sensors = test_data.get("sensors", [])
         sourceActions = test_data.get("sourceActions", [])
@@ -160,8 +156,6 @@ class DslRunner:
             kwargs["tolerance"] = test_data["tolerance"]
         if test_data.get("duration") is not None:
             kwargs["duration"] = test_data["duration"]
-        if test_data.get("profile") is not None:
-            kwargs["profile"] = test_data["profile"]
         if test_data.get("not") is not None:
             kwargs["not"] = test_data["not"]
             
@@ -192,56 +186,3 @@ class DslRunner:
                 raise original_error
             else:
                 print(f"      [DSL] {relation_name} Relation Passed successfully!")
-
-    async def _execute_generation(self, test_data: Dict[str, Any], wait_dt_callable: Callable, verbose: bool) -> None:
-        actuators = test_data.get("actuators", [])
-        sensors = test_data.get("sensors", [])
-        output_file = test_data.get("historicalFile", "sensor_profile.json")
-        
-        if not actuators or not sensors:
-            raise ValueError("Generation requires at least 1 actuator and 1 sensor.")
-            
-        # Find the feature to iterate over (prefer 'brightness' or anything other than 'state')
-        actuator = next((a for a in actuators if a["feature"] != "state"), actuators[0])
-        
-        if test_data.get("brightnessLevels"):
-            steps = test_data["brightnessLevels"]
-        else:
-            steps = [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 30, 31, 32, 33, 34, 35, 40, 41, 42, 43, 44, 45, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
-        
-        samples = test_data.get("historicalSamples")
-        if samples is None:
-            samples = len(steps)
-        
-        profile = []
-        for step_val in steps:
-            if step_val == 0:
-                await self.adapter.set_feature_value(actuator["deviceId"], "state", "off")
-            else:
-                await self.adapter.set_feature_value(actuator["deviceId"], "state", "on")
-                await self.adapter.set_feature_value(actuator["deviceId"], actuator["feature"], step_val)
-                
-            async with multi_monitor(self.adapter, sensors, verbose):
-                await wait_dt_callable()
-                
-            entry = {"brightness_cmd": step_val}
-            
-            if len(sensors) > 0:
-                val_old = await self.adapter.get_feature_value(sensors[0]["deviceId"], sensors[0]["feature"])
-                entry["old_sensor"] = val_old
-            if len(sensors) > 1:
-                val_neighbor = await self.adapter.get_feature_value(sensors[1]["deviceId"], sensors[1]["feature"])
-                entry["neighbor_sensor"] = val_neighbor
-                
-            profile.append(entry)
-            print(f"      [GENERATION] Step {step_val}/{samples} -> Old: {entry.get('old_sensor')}, Neighbor: {entry.get('neighbor_sensor')}")
-            
-        profile_data = {
-            "actuator_id": actuator["deviceId"],
-            "profile": profile
-        }
-        
-        with open(output_file, "w") as f:
-            json.dump(profile_data, f, indent=4)
-            
-        print(f"      [DSL] Generation Profile saved to {output_file} successfully!")

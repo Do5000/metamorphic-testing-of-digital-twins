@@ -37,7 +37,7 @@ MeasureLatency:
 
 TestDefinition:
     'test' name=STRING '{'
-        'relation' ':' (not?='not')? relation=ID ('tolerance' ':' tolerance=NUMBER)? ('duration' ':' duration=NUMBER)? ('profile' ':' profile=STRING)? ('historicalSamples' ':' historicalSamples=NUMBER)? ('historicalFile' ':' historicalFile=STRING)? ('waitTime' ':' waitTime=NUMBER)?
+        'relation' ':' (not?='not')? relation=ID ('tolerance' ':' tolerance=NUMBER)? ('duration' ':' duration=NUMBER)? ('waitTime' ':' waitTime=NUMBER)?
         
         ('actuators' '[' (actuators+=DeviceFeature (',' actuators+=DeviceFeature)*)? ']')?
         ('sensors' '[' (sensors+=DeviceFeature (',' sensors+=DeviceFeature)*)? ']')?
@@ -45,7 +45,6 @@ TestDefinition:
         ('sourceAction' '[' (sourceActions+=Value (',' sourceActions+=Value)*)? ']')?
         ('intermediateAction' '[' (intermediateActions+=Value (',' intermediateActions+=Value)*)? ']')?
         ('followUpAction' '[' (followupActions+=Value (',' followupActions+=Value)*)? ']')?
-        ('brightnessLevels' ('=')? '[' (brightnessLevels+=Value (',' brightnessLevels+=Value)*)? ']')?
     '}';
 
 DeviceFeature:
