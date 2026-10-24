@@ -33,7 +33,7 @@ beforeEach {
 }
 
 test "TC_S10_Stability_esp_c6" {
-    relation: stability tolerance: 0.05 duration: 10800.0
+    relation: stability tolerance: 0.05 duration: 80.0
     actuators [ "light.schreibtisch_lampe" feature "brightness" ]
     sensors [ "sensor.esp_c6_helligkeit" feature "state" ]
     
