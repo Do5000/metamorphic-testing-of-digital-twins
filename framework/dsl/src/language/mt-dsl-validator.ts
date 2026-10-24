@@ -116,20 +116,6 @@ function validateDeviceAndFeature(
 ): void {
     if (!deviceId) return;
 
-    // Check which scenario folder this document is in
-    let docPath = '';
-    try {
-        const doc = AstUtils.getDocument(node);
-        if (doc && doc.uri) {
-            docPath = doc.uri.fsPath;
-        }
-    } catch {}
-
-    // Only validate against device_catalog if not in my_home_lab (Home Lab uses a different setup)
-    if (docPath.includes('my_home_lab')) {
-        return;
-    }
-
     const catalog = getDeviceCatalog(node);
     if (!catalog) return;
 
