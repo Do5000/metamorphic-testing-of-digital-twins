@@ -1,12 +1,12 @@
-flowchart LR
-    subgraph MT_Framework [Interne Struktur des MT Frameworks]
+gssflowchart TB
+    subgraph MT_Framework [Internal Structure of the MT Framework]
         direction TB
 
-        subgraph DSL [1. DSL und Test Definition - TypeScript / Langium]
+        subgraph DSL [1. DSL and Test Definition - TypeScript / Langium]
             direction TB
             MTFiles(["*.mt Test Scripts"])
             Compiler["CLI Compiler / Generator"]
-            JSONOutput(["Generierte JSON Testfälle"])
+            JSONOutput(["Generated JSON Test Cases"])
 
             MTFiles --> Compiler
             Compiler --> JSONOutput
@@ -17,8 +17,8 @@ flowchart LR
             Runner["Test Runner\n(test_dsl_runner.py)"]
             Core["MT Engine Core\n(core.py / fixtures.py)"]
             Relations["Metamorphic Relations\n(invariance, monotonicity, etc.)"]
-            Calibration["Latenz Kalibrierung\n(calibration.py)"]
-            Monitoring["Live Monitoring und Logging\n(monitoring.py)"]
+            Calibration["Latency Calibration\n(calibration.py)"]
+            Monitoring["Live Monitoring and Logging\n(monitoring.py)"]
 
             Runner --> Core
             Core --> Relations
@@ -28,7 +28,7 @@ flowchart LR
 
         DTClient["3. DT Client\n(client.py)"]
 
-        JSONOutput -.->|Testkonfiguration| Runner
+        JSONOutput -.->|Test Configuration| PytestPlugin
 
         Relations --> DTClient
         Calibration --> DTClient
