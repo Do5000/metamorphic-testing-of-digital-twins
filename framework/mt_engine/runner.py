@@ -2,7 +2,7 @@ import asyncio
 import time
 import inspect
 import json
-from typing import Dict, Any, List, Tuple, Callable
+from typing import Dict, Any, List, Tuple, Callable, Optional
 
 from pytest_dt_mt.core import DigitalTwinAdapter, PreconditionFailedError
 from pytest_dt_mt.relations.base import MetamorphicRelationError

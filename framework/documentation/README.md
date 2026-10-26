@@ -1,6 +1,6 @@
-# Metamorphic Testing DSL (MT-DSL) Documentation
+# Metamorphic Testing DSL Documentation
 
-The **Metamorphic Testing Domain-Specific Language (MT-DSL)** is designed for defining, standardizing, and automatically executing metamorphic tests on Digital Twins and IoT systems (e.g., Smart Home / Living Lab environments).
+The **Metamorphic Testing Domain-Specific Language** is designed for defining, standardizing, and automatically executing metamorphic tests on Digital Twins and IoT systems (e.g., Smart Home / Living Lab environments).
 
 Files written in this language use the extension **`.mt`**. They are validated using a Langium-based language server, compiled into machine-readable JSON test definitions, and subsequently executed by a pytest-based metamorphic test runner.
 
@@ -263,7 +263,7 @@ The MT-DSL Language Server validates `.mt` files in real time in the editor and 
 
 ## 5. Test Execution and Pytest Runner
 
-Tests are executed using the central runner [`tests/test_dsl_runner.py`](file:///Users/dorian/Documents/Uni/Bachelorarbeit/metamorphic-testing-of-digital-twins/framework/tests/test_dsl_runner.py).
+Tests are executed using the central runner [`tests/test_dsl_runner.py`](../tests/test_dsl_runner.py).
 
 ### 5.1. Selective Automatic Compilation (`-k`)
 
@@ -301,7 +301,7 @@ pytest tests/test_dsl_runner.py -k "s1_monotony" -v --wait-time=5.0 --capture=te
 
 ## 6. Central Default Values (Single Point of Truth)
 
-All default parameters of the framework are centrally managed in [`pytest_dt_mt/config.py`](file:///Users/dorian/Documents/Uni/Bachelorarbeit/metamorphic-testing-of-digital-twins/framework/pytest_dt_mt/config.py):
+All default parameters of the framework are centrally managed in [`pytest_dt_mt/config.py`](../pytest_dt_mt/config.py):
 
 ```python
 DEFAULT_MIN_CHANGE_PERCENT = 0.01      # 1% minimum change threshold for latency detection

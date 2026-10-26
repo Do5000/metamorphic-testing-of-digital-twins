@@ -163,7 +163,7 @@ async def test_execute_dsl_scenario(dt_adapter, wait_dt, pytestconfig, filepath,
         # Run beforeEach hooks from the same file
         await _run_hooks(runner, full_data, "beforeEach", wait_time=pytestconfig.getoption("--wait-time"))
         
-        # WICHTIG: Warte nach dem Reset (beforeEach), bevor der eigentliche Test startet!
+        # IMPORTANT: Wait after reset (beforeEach) before the actual test starts!
         await dynamic_wait()
 
         # Run the test definition

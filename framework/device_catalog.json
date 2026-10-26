@@ -1,1231 +1,972 @@
 {
     "update.home_assistant_supervisor_update": {
-        "full_id": "at.uibk.ut.tenants:update.home_assistant_supervisor_update",
+        "full_id": "org.eclipse.ditto:update.home_assistant_supervisor_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.home_assistant_core_update": {
-        "full_id": "at.uibk.ut.tenants:update.home_assistant_core_update",
+        "full_id": "org.eclipse.ditto:update.home_assistant_core_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.home_assistant_operating_system_update": {
-        "full_id": "at.uibk.ut.tenants:update.home_assistant_operating_system_update",
+        "full_id": "org.eclipse.ditto:update.home_assistant_operating_system_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.openthread_border_router_update": {
-        "full_id": "at.uibk.ut.tenants:update.openthread_border_router_update",
+        "full_id": "org.eclipse.ditto:update.openthread_border_router_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.matter_server_update": {
-        "full_id": "at.uibk.ut.tenants:update.matter_server_update",
+        "full_id": "org.eclipse.ditto:update.matter_server_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.mosquitto_broker_update": {
-        "full_id": "at.uibk.ut.tenants:update.mosquitto_broker_update",
+        "full_id": "org.eclipse.ditto:update.mosquitto_broker_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.advanced_ssh_web_terminal_update": {
-        "full_id": "at.uibk.ut.tenants:update.advanced_ssh_web_terminal_update",
+        "full_id": "org.eclipse.ditto:update.advanced_ssh_web_terminal_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.esphome_device_builder_update": {
-        "full_id": "at.uibk.ut.tenants:update.esphome_device_builder_update",
+        "full_id": "org.eclipse.ditto:update.esphome_device_builder_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.file_editor_update": {
-        "full_id": "at.uibk.ut.tenants:update.file_editor_update",
+        "full_id": "org.eclipse.ditto:update.file_editor_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.tailscale_update": {
-        "full_id": "at.uibk.ut.tenants:update.tailscale_update",
+        "full_id": "org.eclipse.ditto:update.tailscale_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.music_assistant_update": {
-        "full_id": "at.uibk.ut.tenants:update.music_assistant_update",
+        "full_id": "org.eclipse.ditto:update.music_assistant_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.node_red_update": {
-        "full_id": "at.uibk.ut.tenants:update.node_red_update",
+        "full_id": "org.eclipse.ditto:update.node_red_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.home_assistant_mcp_server_update": {
-        "full_id": "at.uibk.ut.tenants:update.home_assistant_mcp_server_update",
+        "full_id": "org.eclipse.ditto:update.home_assistant_mcp_server_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.nabu_casa_webhook_proxy_for_ha_mcp_update": {
-        "full_id": "at.uibk.ut.tenants:update.nabu_casa_webhook_proxy_for_ha_mcp_update",
+        "full_id": "org.eclipse.ditto:update.nabu_casa_webhook_proxy_for_ha_mcp_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "conversation.home_assistant": {
-        "full_id": "at.uibk.ut.tenants:conversation.home_assistant",
+        "full_id": "org.eclipse.ditto:conversation.home_assistant",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "light.kuche_led_leiste": {
-        "full_id": "at.uibk.ut.tenants:light.kuche_led_leiste",
+        "full_id": "org.eclipse.ditto:light.kuche_led_leiste",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "event.backup_automatic_backup": {
-        "full_id": "at.uibk.ut.tenants:event.backup_automatic_backup",
+        "full_id": "org.eclipse.ditto:event.backup_automatic_backup",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.backup_backup_manager_state": {
-        "full_id": "at.uibk.ut.tenants:sensor.backup_backup_manager_state",
+        "full_id": "org.eclipse.ditto:sensor.backup_backup_manager_state",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.backup_next_scheduled_automatic_backup": {
-        "full_id": "at.uibk.ut.tenants:sensor.backup_next_scheduled_automatic_backup",
+        "full_id": "org.eclipse.ditto:sensor.backup_next_scheduled_automatic_backup",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.backup_last_successful_automatic_backup": {
-        "full_id": "at.uibk.ut.tenants:sensor.backup_last_successful_automatic_backup",
+        "full_id": "org.eclipse.ditto:sensor.backup_last_successful_automatic_backup",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.backup_last_attempted_automatic_backup": {
-        "full_id": "at.uibk.ut.tenants:sensor.backup_last_attempted_automatic_backup",
+        "full_id": "org.eclipse.ditto:sensor.backup_last_attempted_automatic_backup",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_hausture_batterie": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_hausture_batterie",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_hausture_batterie",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_hausture_batteriespannung": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_hausture_batteriespannung",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_hausture_batteriespannung",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_hausture_batterietyp": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_hausture_batterietyp",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_hausture_batterietyp",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.myggbett_door_window_sensor_thread_routing_rolle": {
-        "full_id": "at.uibk.ut.tenants:sensor.myggbett_door_window_sensor_thread_routing_rolle",
+        "full_id": "org.eclipse.ditto:sensor.myggbett_door_window_sensor_thread_routing_rolle",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.vorraum_hausture_firmware": {
-        "full_id": "at.uibk.ut.tenants:update.vorraum_hausture_firmware",
+        "full_id": "org.eclipse.ditto:update.vorraum_hausture_firmware",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "binary_sensor.vorraum_hausture_tur": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.vorraum_hausture_tur",
+        "full_id": "org.eclipse.ditto:binary_sensor.vorraum_hausture_tur",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.vorraum_hausture_identifizieren": {
-        "full_id": "at.uibk.ut.tenants:button.vorraum_hausture_identifizieren",
+        "full_id": "org.eclipse.ditto:button.vorraum_hausture_identifizieren",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.vorraum_waschmaschine_firmware": {
-        "full_id": "at.uibk.ut.tenants:update.vorraum_waschmaschine_firmware",
+        "full_id": "org.eclipse.ditto:update.vorraum_waschmaschine_firmware",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.vorraum_waschmaschine_identifizieren": {
-        "full_id": "at.uibk.ut.tenants:button.vorraum_waschmaschine_identifizieren",
+        "full_id": "org.eclipse.ditto:button.vorraum_waschmaschine_identifizieren",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "select.vorraum_waschmaschine_wiedereinschaltverhalten": {
-        "full_id": "at.uibk.ut.tenants:select.vorraum_waschmaschine_wiedereinschaltverhalten",
+        "full_id": "org.eclipse.ditto:select.vorraum_waschmaschine_wiedereinschaltverhalten",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "switch.vorraum_waschmaschine": {
-        "full_id": "at.uibk.ut.tenants:switch.vorraum_waschmaschine",
+        "full_id": "org.eclipse.ditto:switch.vorraum_waschmaschine",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_waschmaschine_leistung": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_waschmaschine_leistung",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_waschmaschine_leistung",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_waschmaschine_scheinleistung": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_waschmaschine_scheinleistung",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_waschmaschine_scheinleistung",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_waschmaschine_blindleistung": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_waschmaschine_blindleistung",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_waschmaschine_blindleistung",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_waschmaschine_spannung": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_waschmaschine_spannung",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_waschmaschine_spannung",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_waschmaschine_spannung_effektivwert": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_waschmaschine_spannung_effektivwert",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_waschmaschine_spannung_effektivwert",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_waschmaschine_scheinstrom": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_waschmaschine_scheinstrom",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_waschmaschine_scheinstrom",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_waschmaschine_wirkstrom": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_waschmaschine_wirkstrom",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_waschmaschine_wirkstrom",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_waschmaschine_blindstrom": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_waschmaschine_blindstrom",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_waschmaschine_blindstrom",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_waschmaschine_stromstarke_effektivwert": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_waschmaschine_stromstarke_effektivwert",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_waschmaschine_stromstarke_effektivwert",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_waschmaschine_frequenz": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_waschmaschine_frequenz",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_waschmaschine_frequenz",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_waschmaschine_leistungsfaktor": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_waschmaschine_leistungsfaktor",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_waschmaschine_leistungsfaktor",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vorraum_waschmaschine_energie": {
-        "full_id": "at.uibk.ut.tenants:sensor.vorraum_waschmaschine_energie",
+        "full_id": "org.eclipse.ditto:sensor.vorraum_waschmaschine_energie",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.wohnzimmer_dual_button_batterie": {
-        "full_id": "at.uibk.ut.tenants:sensor.wohnzimmer_dual_button_batterie",
+        "full_id": "org.eclipse.ditto:sensor.wohnzimmer_dual_button_batterie",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.wohnzimmer_dual_button_batteriespannung": {
-        "full_id": "at.uibk.ut.tenants:sensor.wohnzimmer_dual_button_batteriespannung",
+        "full_id": "org.eclipse.ditto:sensor.wohnzimmer_dual_button_batteriespannung",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.wohnzimmer_dual_button_batterietyp": {
-        "full_id": "at.uibk.ut.tenants:sensor.wohnzimmer_dual_button_batterietyp",
+        "full_id": "org.eclipse.ditto:sensor.wohnzimmer_dual_button_batterietyp",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.wohnzimmer_dual_button_firmware": {
-        "full_id": "at.uibk.ut.tenants:update.wohnzimmer_dual_button_firmware",
+        "full_id": "org.eclipse.ditto:update.wohnzimmer_dual_button_firmware",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.wohnzimmer_dual_button_identifizieren_1": {
-        "full_id": "at.uibk.ut.tenants:button.wohnzimmer_dual_button_identifizieren_1",
+        "full_id": "org.eclipse.ditto:button.wohnzimmer_dual_button_identifizieren_1",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "event.wohnzimmer_dual_button_taste_1": {
-        "full_id": "at.uibk.ut.tenants:event.wohnzimmer_dual_button_taste_1",
+        "full_id": "org.eclipse.ditto:event.wohnzimmer_dual_button_taste_1",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "event.wohnzimmer_dual_button_taste_2": {
-        "full_id": "at.uibk.ut.tenants:event.wohnzimmer_dual_button_taste_2",
+        "full_id": "org.eclipse.ditto:event.wohnzimmer_dual_button_taste_2",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.aqara_smart_lock_u200_firmware": {
-        "full_id": "at.uibk.ut.tenants:update.aqara_smart_lock_u200_firmware",
+        "full_id": "org.eclipse.ditto:update.aqara_smart_lock_u200_firmware",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "binary_sensor.aqara_smart_lock_u200_aktor": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.aqara_smart_lock_u200_aktor",
+        "full_id": "org.eclipse.ditto:binary_sensor.aqara_smart_lock_u200_aktor",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.aqara_smart_lock_u200_identifizieren": {
-        "full_id": "at.uibk.ut.tenants:button.aqara_smart_lock_u200_identifizieren",
+        "full_id": "org.eclipse.ditto:button.aqara_smart_lock_u200_identifizieren",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "lock.aqara_smart_lock_u200": {
-        "full_id": "at.uibk.ut.tenants:lock.aqara_smart_lock_u200",
+        "full_id": "org.eclipse.ditto:lock.aqara_smart_lock_u200",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "number.aqara_smart_lock_u200_limit_fur_code_falscheingabe": {
-        "full_id": "at.uibk.ut.tenants:number.aqara_smart_lock_u200_limit_fur_code_falscheingabe",
+        "full_id": "org.eclipse.ditto:number.aqara_smart_lock_u200_limit_fur_code_falscheingabe",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "number.aqara_smart_lock_u200_zeit_fur_temporare_benutzercode_deaktivierung": {
-        "full_id": "at.uibk.ut.tenants:number.aqara_smart_lock_u200_zeit_fur_temporare_benutzercode_deaktivierung",
+        "full_id": "org.eclipse.ditto:number.aqara_smart_lock_u200_zeit_fur_temporare_benutzercode_deaktivierung",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "select.aqara_smart_lock_u200_betriebsart": {
-        "full_id": "at.uibk.ut.tenants:select.aqara_smart_lock_u200_betriebsart",
+        "full_id": "org.eclipse.ditto:select.aqara_smart_lock_u200_betriebsart",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "switch.vorraum_aqara_smart_lock_u200_ein_touch_verriegelung": {
-        "full_id": "at.uibk.ut.tenants:switch.vorraum_aqara_smart_lock_u200_ein_touch_verriegelung",
+        "full_id": "org.eclipse.ditto:switch.vorraum_aqara_smart_lock_u200_ein_touch_verriegelung",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.aqara_smart_lock_u200_batterie": {
-        "full_id": "at.uibk.ut.tenants:sensor.aqara_smart_lock_u200_batterie",
+        "full_id": "org.eclipse.ditto:sensor.aqara_smart_lock_u200_batterie",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.aqara_smart_lock_u200_batteriespannung": {
-        "full_id": "at.uibk.ut.tenants:sensor.aqara_smart_lock_u200_batteriespannung",
+        "full_id": "org.eclipse.ditto:sensor.aqara_smart_lock_u200_batteriespannung",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sun.sun": {
-        "full_id": "at.uibk.ut.tenants:sun.sun",
+        "full_id": "org.eclipse.ditto:sun.sun",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.sun_next_dawn": {
-        "full_id": "at.uibk.ut.tenants:sensor.sun_next_dawn",
+        "full_id": "org.eclipse.ditto:sensor.sun_next_dawn",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.sun_next_dusk": {
-        "full_id": "at.uibk.ut.tenants:sensor.sun_next_dusk",
+        "full_id": "org.eclipse.ditto:sensor.sun_next_dusk",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.sun_next_midnight": {
-        "full_id": "at.uibk.ut.tenants:sensor.sun_next_midnight",
+        "full_id": "org.eclipse.ditto:sensor.sun_next_midnight",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.sun_next_noon": {
-        "full_id": "at.uibk.ut.tenants:sensor.sun_next_noon",
+        "full_id": "org.eclipse.ditto:sensor.sun_next_noon",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.sun_next_rising": {
-        "full_id": "at.uibk.ut.tenants:sensor.sun_next_rising",
+        "full_id": "org.eclipse.ditto:sensor.sun_next_rising",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.sun_next_setting": {
-        "full_id": "at.uibk.ut.tenants:sensor.sun_next_setting",
+        "full_id": "org.eclipse.ditto:sensor.sun_next_setting",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "todo.einkaufsliste": {
-        "full_id": "at.uibk.ut.tenants:todo.einkaufsliste",
+        "full_id": "org.eclipse.ditto:todo.einkaufsliste",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "binary_sensor.rpi_power_status": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.rpi_power_status",
+        "full_id": "org.eclipse.ditto:binary_sensor.rpi_power_status",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "weather.forecast_home": {
-        "full_id": "at.uibk.ut.tenants:weather.forecast_home",
+        "full_id": "org.eclipse.ditto:weather.forecast_home",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.washdata_update": {
-        "full_id": "at.uibk.ut.tenants:update.washdata_update",
+        "full_id": "org.eclipse.ditto:update.washdata_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.vidaa_tv_update": {
-        "full_id": "at.uibk.ut.tenants:update.vidaa_tv_update",
+        "full_id": "org.eclipse.ditto:update.vidaa_tv_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.hacs_update": {
-        "full_id": "at.uibk.ut.tenants:update.hacs_update",
+        "full_id": "org.eclipse.ditto:update.hacs_update",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "binary_sensor.shelly1minig3_d885ac0828b8_eingang_0": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.shelly1minig3_d885ac0828b8_eingang_0",
+        "full_id": "org.eclipse.ditto:binary_sensor.shelly1minig3_d885ac0828b8_eingang_0",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.shelly1minig3_d885ac0828b8_neu_starten": {
-        "full_id": "at.uibk.ut.tenants:button.shelly1minig3_d885ac0828b8_neu_starten",
+        "full_id": "org.eclipse.ditto:button.shelly1minig3_d885ac0828b8_neu_starten",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.shelly1minig3_d885ac0828b8_temperatur": {
-        "full_id": "at.uibk.ut.tenants:sensor.shelly1minig3_d885ac0828b8_temperatur",
+        "full_id": "org.eclipse.ditto:sensor.shelly1minig3_d885ac0828b8_temperatur",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "switch.led_leiste": {
-        "full_id": "at.uibk.ut.tenants:switch.led_leiste",
+        "full_id": "org.eclipse.ditto:switch.led_leiste",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.shelly1minig3_d885ac0828b8_firmware": {
-        "full_id": "at.uibk.ut.tenants:update.shelly1minig3_d885ac0828b8_firmware",
+        "full_id": "org.eclipse.ditto:update.shelly1minig3_d885ac0828b8_firmware",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "binary_sensor.kuche_led_leiste_eingang_0": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.kuche_led_leiste_eingang_0",
+        "full_id": "org.eclipse.ditto:binary_sensor.kuche_led_leiste_eingang_0",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.kuche_led_leiste_neu_starten": {
-        "full_id": "at.uibk.ut.tenants:button.kuche_led_leiste_neu_starten",
+        "full_id": "org.eclipse.ditto:button.kuche_led_leiste_neu_starten",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "switch.kuche_led_leiste": {
-        "full_id": "at.uibk.ut.tenants:switch.kuche_led_leiste",
+        "full_id": "org.eclipse.ditto:switch.kuche_led_leiste",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.kuche_led_leiste_firmware": {
-        "full_id": "at.uibk.ut.tenants:update.kuche_led_leiste_firmware",
+        "full_id": "org.eclipse.ditto:update.kuche_led_leiste_firmware",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.schalter_wohnzimmer_batterie": {
-        "full_id": "at.uibk.ut.tenants:sensor.schalter_wohnzimmer_batterie",
+        "full_id": "org.eclipse.ditto:sensor.schalter_wohnzimmer_batterie",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.bett_batterie": {
-        "full_id": "at.uibk.ut.tenants:sensor.bett_batterie",
+        "full_id": "org.eclipse.ditto:sensor.bett_batterie",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.tur_batterie": {
-        "full_id": "at.uibk.ut.tenants:sensor.tur_batterie",
+        "full_id": "org.eclipse.ditto:sensor.tur_batterie",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "switch.schreibtisch_steckdose": {
-        "full_id": "at.uibk.ut.tenants:switch.schreibtisch_steckdose",
+        "full_id": "org.eclipse.ditto:switch.schreibtisch_steckdose",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "switch.vintage_steckdose": {
-        "full_id": "at.uibk.ut.tenants:switch.vintage_steckdose",
+        "full_id": "org.eclipse.ditto:switch.vintage_steckdose",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "switch.tretakt": {
-        "full_id": "at.uibk.ut.tenants:switch.tretakt",
+        "full_id": "org.eclipse.ditto:switch.tretakt",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "switch.bad_oben_steckdose": {
-        "full_id": "at.uibk.ut.tenants:switch.bad_oben_steckdose",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "switch.steckdose_dorian": {
-        "full_id": "at.uibk.ut.tenants:switch.steckdose_dorian",
+        "full_id": "org.eclipse.ditto:switch.bad_oben_steckdose",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "switch.fernseher_ecke_steckdose": {
-        "full_id": "at.uibk.ut.tenants:switch.fernseher_ecke_steckdose",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "binary_sensor.iphone_von_dorian_focus": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.iphone_von_dorian_focus",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "binary_sensor.iphone_von_dorian_kiosk_mode": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.iphone_von_dorian_kiosk_mode",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "binary_sensor.iphone_von_dorian_kiosk_screensaver": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.iphone_von_dorian_kiosk_screensaver",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "device_tracker.iphone_von_dorian": {
-        "full_id": "at.uibk.ut.tenants:device_tracker.iphone_von_dorian",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "notify.iphone_von_dorian": {
-        "full_id": "at.uibk.ut.tenants:notify.iphone_von_dorian",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_battery_level": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_battery_level",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_battery_state": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_battery_state",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_app_version": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_app_version",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_location_permission": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_location_permission",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_activity": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_activity",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_floors_descended": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_floors_descended",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_current_cadence": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_current_cadence",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_floors_ascended": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_floors_ascended",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_average_active_pace": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_average_active_pace",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_distance": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_distance",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_pressure": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_pressure",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_current_pace": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_current_pace",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_dorian_steps": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_dorian_steps",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "binary_sensor.iphone_von_amelie_kiosk_mode": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.iphone_von_amelie_kiosk_mode",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "device_tracker.iphone_von_amelie": {
-        "full_id": "at.uibk.ut.tenants:device_tracker.iphone_von_amelie",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "notify.iphone_von_amelie": {
-        "full_id": "at.uibk.ut.tenants:notify.iphone_von_amelie",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_battery_level": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_battery_level",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_battery_state": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_battery_state",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_storage": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_storage",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_ssid": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_ssid",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_bssid": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_bssid",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_connection_type": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_connection_type",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_sim_2": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_sim_2",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_sim_1": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_sim_1",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_last_update_trigger": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_last_update_trigger",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_app_version": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_app_version",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_location_permission": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_location_permission",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_audio_output": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_audio_output",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_geocoded_location": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_geocoded_location",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_kiosk_brightness": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_kiosk_brightness",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.iphone_von_amelie_kiosk_volume": {
-        "full_id": "at.uibk.ut.tenants:sensor.iphone_von_amelie_kiosk_volume",
+        "full_id": "org.eclipse.ditto:switch.fernseher_ecke_steckdose",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "tts.google_ubersetzer_en_com_google_translate_en_com": {
-        "full_id": "at.uibk.ut.tenants:tts.google_ubersetzer_en_com_google_translate_en_com",
+        "full_id": "org.eclipse.ditto:tts.google_ubersetzer_en_com_google_translate_en_com",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.wohnzimmer_ein": {
-        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_ein",
+        "full_id": "org.eclipse.ditto:automation.wohnzimmer_ein",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.wohnzimmer_aus": {
-        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_aus",
+        "full_id": "org.eclipse.ditto:automation.wohnzimmer_aus",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.schlafzimmer_ein": {
-        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_ein",
+        "full_id": "org.eclipse.ditto:automation.schlafzimmer_ein",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.schlafzimmer_aus": {
-        "full_id": "at.uibk.ut.tenants:automation.schlafzimmer_aus",
+        "full_id": "org.eclipse.ditto:automation.schlafzimmer_aus",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.luften": {
-        "full_id": "at.uibk.ut.tenants:automation.luften",
+        "full_id": "org.eclipse.ditto:automation.luften",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.radio_starten": {
-        "full_id": "at.uibk.ut.tenants:automation.radio_starten",
+        "full_id": "org.eclipse.ditto:automation.radio_starten",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.radio_stoppen": {
-        "full_id": "at.uibk.ut.tenants:automation.radio_stoppen",
+        "full_id": "org.eclipse.ditto:automation.radio_stoppen",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.einbruch": {
-        "full_id": "at.uibk.ut.tenants:automation.einbruch",
+        "full_id": "org.eclipse.ditto:automation.einbruch",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.kuche_ein": {
-        "full_id": "at.uibk.ut.tenants:automation.kuche_ein",
+        "full_id": "org.eclipse.ditto:automation.kuche_ein",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.kuche_aus": {
-        "full_id": "at.uibk.ut.tenants:automation.kuche_aus",
+        "full_id": "org.eclipse.ditto:automation.kuche_aus",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.wohnzimmer_ein_bei_sonnenuntergang_und_fernseher_an": {
-        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_ein_bei_sonnenuntergang_und_fernseher_an",
+        "full_id": "org.eclipse.ditto:automation.wohnzimmer_ein_bei_sonnenuntergang_und_fernseher_an",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.dual_button_taste_1_kuche": {
-        "full_id": "at.uibk.ut.tenants:automation.dual_button_taste_1_kuche",
+        "full_id": "org.eclipse.ditto:automation.dual_button_taste_1_kuche",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.dual_button_wohnzimmer_umschalten": {
-        "full_id": "at.uibk.ut.tenants:automation.dual_button_wohnzimmer_umschalten",
+        "full_id": "org.eclipse.ditto:automation.dual_button_wohnzimmer_umschalten",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "automation.wohnzimmer_dunkel": {
-        "full_id": "at.uibk.ut.tenants:automation.wohnzimmer_dunkel",
+        "full_id": "org.eclipse.ditto:automation.wohnzimmer_dunkel",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_zustand": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_zustand",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_zustand",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_programm": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_programm",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_programm",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_aktuelle_phase": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_aktuelle_phase",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_aktuelle_phase",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_verbleibende_zeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_verbleibende_zeit",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_verbleibende_zeit",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_gesamtdauer": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_gesamtdauer",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_gesamtdauer",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_fortschritt": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_fortschritt",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_fortschritt",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_aktuelle_leistung": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_aktuelle_leistung",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_aktuelle_leistung",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_verstrichene_zeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_verstrichene_zeit",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_verstrichene_zeit",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_empfohlene_einstellungen": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_empfohlene_einstellungen",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_empfohlene_einstellungen",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_zyklusanzahl": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_zyklusanzahl",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_zyklusanzahl",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_energie_gesamt": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_energie_gesamt",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_energie_gesamt",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_profil_clean_anzahl": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_profil_clean_anzahl",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_profil_clean_anzahl",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_profil_intensiv_40_grad_anzahl": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_profil_intensiv_40_grad_anzahl",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_profil_intensiv_40_grad_anzahl",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_profil_intensiv_30_grad_anzahl": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_profil_intensiv_30_grad_anzahl",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_profil_intensiv_30_grad_anzahl",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.waschmaschine_wash_profil_intensiv_60_grad_anzahl": {
-        "full_id": "at.uibk.ut.tenants:sensor.waschmaschine_wash_profil_intensiv_60_grad_anzahl",
+        "full_id": "org.eclipse.ditto:sensor.waschmaschine_wash_profil_intensiv_60_grad_anzahl",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "binary_sensor.waschmaschine_wash_lauft": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.waschmaschine_wash_lauft",
+        "full_id": "org.eclipse.ditto:binary_sensor.waschmaschine_wash_lauft",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "binary_sensor.waschmaschine_wash_wartung_fallig": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.waschmaschine_wash_wartung_fallig",
+        "full_id": "org.eclipse.ditto:binary_sensor.waschmaschine_wash_wartung_fallig",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "select.waschmaschine_wash_zyklusprogramm": {
-        "full_id": "at.uibk.ut.tenants:select.waschmaschine_wash_zyklusprogramm",
+        "full_id": "org.eclipse.ditto:select.waschmaschine_wash_zyklusprogramm",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.waschmaschine_wash_zyklusende_erzwingen": {
-        "full_id": "at.uibk.ut.tenants:button.waschmaschine_wash_zyklusende_erzwingen",
+        "full_id": "org.eclipse.ditto:button.waschmaschine_wash_zyklusende_erzwingen",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.waschmaschine_wash_zyklus_anhalten": {
-        "full_id": "at.uibk.ut.tenants:button.waschmaschine_wash_zyklus_anhalten",
+        "full_id": "org.eclipse.ditto:button.waschmaschine_wash_zyklus_anhalten",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.waschmaschine_wash_zyklus_fortsetzen": {
-        "full_id": "at.uibk.ut.tenants:button.waschmaschine_wash_zyklus_fortsetzen",
+        "full_id": "org.eclipse.ditto:button.waschmaschine_wash_zyklus_fortsetzen",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.waschmaschine_wash_zyklusaufzeichnung_starten": {
-        "full_id": "at.uibk.ut.tenants:button.waschmaschine_wash_zyklusaufzeichnung_starten",
+        "full_id": "org.eclipse.ditto:button.waschmaschine_wash_zyklusaufzeichnung_starten",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.waschmaschine_wash_zyklusaufzeichnung_stoppen": {
-        "full_id": "at.uibk.ut.tenants:button.waschmaschine_wash_zyklusaufzeichnung_stoppen",
+        "full_id": "org.eclipse.ditto:button.waschmaschine_wash_zyklusaufzeichnung_stoppen",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.waschmaschine_wash_als_entladen_markieren": {
-        "full_id": "at.uibk.ut.tenants:button.waschmaschine_wash_als_entladen_markieren",
+        "full_id": "org.eclipse.ditto:button.waschmaschine_wash_als_entladen_markieren",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "update.raspberry_pi_5_firmware": {
-        "full_id": "at.uibk.ut.tenants:update.raspberry_pi_5_firmware",
+        "full_id": "org.eclipse.ditto:update.raspberry_pi_5_firmware",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.esp_c6_temperatur": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_temperatur",
+        "full_id": "org.eclipse.ditto:sensor.esp_c6_temperatur",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.esp_c6_luftfeuchtigkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_luftfeuchtigkeit",
+        "full_id": "org.eclipse.ditto:sensor.esp_c6_luftfeuchtigkeit",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.esp_c6_helligkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c6_helligkeit",
+        "full_id": "org.eclipse.ditto:sensor.esp_c6_helligkeit",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.esp_c3_temperatur": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c3_temperatur",
+        "full_id": "org.eclipse.ditto:sensor.esp_c3_temperatur",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.esp_c3_luftfeuchtigkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c3_luftfeuchtigkeit",
+        "full_id": "org.eclipse.ditto:sensor.esp_c3_luftfeuchtigkeit",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.esp_c3_helligkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.esp_c3_helligkeit",
+        "full_id": "org.eclipse.ditto:sensor.esp_c3_helligkeit",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "binary_sensor.arbeitsplatz_prasenz": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.arbeitsplatz_prasenz",
+        "full_id": "org.eclipse.ditto:binary_sensor.arbeitsplatz_prasenz",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.arbeitsplatz_helligkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_helligkeit",
+        "full_id": "org.eclipse.ditto:sensor.arbeitsplatz_helligkeit",
         "features": [
             "config",
             "state"
@@ -1233,7 +974,7 @@
         "attributes": {}
     },
     "sensor.arbeitsplatz_temperatur": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_temperatur",
+        "full_id": "org.eclipse.ditto:sensor.arbeitsplatz_temperatur",
         "features": [
             "config",
             "state"
@@ -1241,7 +982,7 @@
         "attributes": {}
     },
     "sensor.arbeitsplatz_luftfeuchtigkeit": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_luftfeuchtigkeit",
+        "full_id": "org.eclipse.ditto:sensor.arbeitsplatz_luftfeuchtigkeit",
         "features": [
             "config",
             "state"
@@ -1249,7 +990,7 @@
         "attributes": {}
     },
     "sensor.arbeitsplatz_fernbedienung": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_fernbedienung",
+        "full_id": "org.eclipse.ditto:sensor.arbeitsplatz_fernbedienung",
         "features": [
             "config",
             "state"
@@ -1257,7 +998,7 @@
         "attributes": {}
     },
     "sensor.arbeitsplatz_helligkeit_2": {
-        "full_id": "at.uibk.ut.tenants:sensor.arbeitsplatz_helligkeit_2",
+        "full_id": "org.eclipse.ditto:sensor.arbeitsplatz_helligkeit_2",
         "features": [
             "config",
             "state"
@@ -1265,57 +1006,36 @@
         "attributes": {}
     },
     "media_player.wohnzimmer_hisense_television": {
-        "full_id": "at.uibk.ut.tenants:media_player.wohnzimmer_hisense_television",
+        "full_id": "org.eclipse.ditto:media_player.wohnzimmer_hisense_television",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "switch.wohnzimmer_hisense_mute": {
-        "full_id": "at.uibk.ut.tenants:switch.wohnzimmer_hisense_mute",
+        "full_id": "org.eclipse.ditto:switch.wohnzimmer_hisense_mute",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.wohnzimmer_hisense_identify": {
-        "full_id": "at.uibk.ut.tenants:button.wohnzimmer_hisense_identify",
+        "full_id": "org.eclipse.ditto:button.wohnzimmer_hisense_identify",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "light.nanoleaf_lampe": {
-        "full_id": "at.uibk.ut.tenants:light.nanoleaf_lampe",
+        "full_id": "org.eclipse.ditto:light.nanoleaf_lampe",
         "features": [
             "brightness",
             "state"
         ],
         "attributes": {}
     },
-    "button.amelie_lampe_identify": {
-        "full_id": "at.uibk.ut.tenants:button.amelie_lampe_identify",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.amelie_lampe_thread_capabilities": {
-        "full_id": "at.uibk.ut.tenants:sensor.amelie_lampe_thread_capabilities",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "sensor.amelie_lampe_thread_status": {
-        "full_id": "at.uibk.ut.tenants:sensor.amelie_lampe_thread_status",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
     "light.schreibtisch_lampe": {
-        "full_id": "at.uibk.ut.tenants:light.schreibtisch_lampe",
+        "full_id": "org.eclipse.ditto:light.schreibtisch_lampe",
         "features": [
             "brightness",
             "state"
@@ -1323,28 +1043,28 @@
         "attributes": {}
     },
     "button.schreibtisch_lampe_identify": {
-        "full_id": "at.uibk.ut.tenants:button.schreibtisch_lampe_identify",
+        "full_id": "org.eclipse.ditto:button.schreibtisch_lampe_identify",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.schreibtisch_lampe_thread_capabilities": {
-        "full_id": "at.uibk.ut.tenants:sensor.schreibtisch_lampe_thread_capabilities",
+        "full_id": "org.eclipse.ditto:sensor.schreibtisch_lampe_thread_capabilities",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.schreibtisch_lampe_thread_status": {
-        "full_id": "at.uibk.ut.tenants:sensor.schreibtisch_lampe_thread_status",
+        "full_id": "org.eclipse.ditto:sensor.schreibtisch_lampe_thread_status",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "light.vintage_lampe": {
-        "full_id": "at.uibk.ut.tenants:light.vintage_lampe",
+        "full_id": "org.eclipse.ditto:light.vintage_lampe",
         "features": [
             "brightness",
             "state"
@@ -1352,140 +1072,70 @@
         "attributes": {}
     },
     "button.vintage_lampe_identify": {
-        "full_id": "at.uibk.ut.tenants:button.vintage_lampe_identify",
+        "full_id": "org.eclipse.ditto:button.vintage_lampe_identify",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vintage_lampe_thread_capabilities": {
-        "full_id": "at.uibk.ut.tenants:sensor.vintage_lampe_thread_capabilities",
+        "full_id": "org.eclipse.ditto:sensor.vintage_lampe_thread_capabilities",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "sensor.vintage_lampe_thread_status": {
-        "full_id": "at.uibk.ut.tenants:sensor.vintage_lampe_thread_status",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "button.bose_amelie_aktuellen_titel_favorisieren": {
-        "full_id": "at.uibk.ut.tenants:button.bose_amelie_aktuellen_titel_favorisieren",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "media_player.bose_amelie_3": {
-        "full_id": "at.uibk.ut.tenants:media_player.bose_amelie_3",
+        "full_id": "org.eclipse.ditto:sensor.vintage_lampe_thread_status",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.wohnzimmer_tv_aktuellen_titel_favorisieren": {
-        "full_id": "at.uibk.ut.tenants:button.wohnzimmer_tv_aktuellen_titel_favorisieren",
+        "full_id": "org.eclipse.ditto:button.wohnzimmer_tv_aktuellen_titel_favorisieren",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "media_player.wohnzimmer_tv": {
-        "full_id": "at.uibk.ut.tenants:media_player.wohnzimmer_tv",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "button.macbook_air_von_dorian_aktuellen_titel_favorisieren": {
-        "full_id": "at.uibk.ut.tenants:button.macbook_air_von_dorian_aktuellen_titel_favorisieren",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "media_player.macbook_air_von_dorian": {
-        "full_id": "at.uibk.ut.tenants:media_player.macbook_air_von_dorian",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "button.macbook_air_von_amelie_aktuellen_titel_favorisieren": {
-        "full_id": "at.uibk.ut.tenants:button.macbook_air_von_amelie_aktuellen_titel_favorisieren",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "media_player.macbook_air_von_amelie": {
-        "full_id": "at.uibk.ut.tenants:media_player.macbook_air_von_amelie",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "button.macbook_pro_von_katharina_aktuellen_titel_favorisieren": {
-        "full_id": "at.uibk.ut.tenants:button.macbook_pro_von_katharina_aktuellen_titel_favorisieren",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "media_player.macbook_pro_von_katharina": {
-        "full_id": "at.uibk.ut.tenants:media_player.macbook_pro_von_katharina",
+        "full_id": "org.eclipse.ditto:media_player.wohnzimmer_tv",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.wohnzimmer_tv_aktuellen_titel_favorisieren_2": {
-        "full_id": "at.uibk.ut.tenants:button.wohnzimmer_tv_aktuellen_titel_favorisieren_2",
+        "full_id": "org.eclipse.ditto:button.wohnzimmer_tv_aktuellen_titel_favorisieren_2",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "media_player.wohnzimmer_tv_3": {
-        "full_id": "at.uibk.ut.tenants:media_player.wohnzimmer_tv_3",
+        "full_id": "org.eclipse.ditto:media_player.wohnzimmer_tv_3",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "button.wohnzimmer_tv_aktuellen_titel_favorisieren_3": {
-        "full_id": "at.uibk.ut.tenants:button.wohnzimmer_tv_aktuellen_titel_favorisieren_3",
+        "full_id": "org.eclipse.ditto:button.wohnzimmer_tv_aktuellen_titel_favorisieren_3",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "media_player.wohnzimmer_tv_4": {
-        "full_id": "at.uibk.ut.tenants:media_player.wohnzimmer_tv_4",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "button.macbook_pro_von_selina_aktuellen_titel_favorisieren": {
-        "full_id": "at.uibk.ut.tenants:button.macbook_pro_von_selina_aktuellen_titel_favorisieren",
-        "features": [
-            "state"
-        ],
-        "attributes": {}
-    },
-    "media_player.macbook_pro_von_selina": {
-        "full_id": "at.uibk.ut.tenants:media_player.macbook_pro_von_selina",
+        "full_id": "org.eclipse.ditto:media_player.wohnzimmer_tv_4",
         "features": [
             "state"
         ],
         "attributes": {}
     },
     "binary_sensor.arbeitsplatz_praesenz": {
-        "full_id": "at.uibk.ut.tenants:binary_sensor.arbeitsplatz_praesenz",
+        "full_id": "org.eclipse.ditto:binary_sensor.arbeitsplatz_praesenz",
         "features": [
             "config",
             "state"

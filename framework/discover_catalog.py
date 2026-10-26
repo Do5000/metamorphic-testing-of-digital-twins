@@ -2,7 +2,7 @@ import requests
 import json
 import os
 
-from ut_params import DITTO_NGINX_IP
+from pytest_dt_mt.config import DITTO_NGINX_IP
 
 # Configuration (matching DigitalTwinAdapter defaults)
 HTTP_URL = f"http://{DITTO_NGINX_IP}:8083"
