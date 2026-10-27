@@ -1,0 +1,25 @@
+services:
+  framework:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mt-framework:latest
+    container_name: mt-framework
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - DITTO_NGINX_IP
+      - UT_TENANT
+      - DITTO_USER
+      - DITTO_PW
+    extra_hosts:
+      # Ensure host.docker.internal resolves to the host machine on Linux/Mac/Windows
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # Persist test session logs on the host machine
+      - ./test_reports:/app/test_reports
+      # Live-mount scenario definitions so changes don't require rebuilding
+      - ./dsl/scenarios:/app/dsl/scenarios
+      # Live-mount device catalog so syncs persist
+      - ./device_catalog.json:/app/device_catalog.json

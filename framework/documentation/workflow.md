@@ -1,8 +1,13 @@
 # Test Execution & Operation Workflow
 
-Ensure the virtual environment is activated before running tests:
+Ensure the virtual environment is activated before running tests locally:
 ```bash
 source venv/bin/activate
+```
+Or use Docker directly without any manual virtual environment setup:
+```bash
+cd framework
+docker compose run --rm framework pytest tests/test_dsl_runner.py -v --capture=tee-sys
 ```
 
 ---

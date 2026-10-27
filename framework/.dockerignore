@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.DS_Store
+**/.DS_Store
+*.log
+test_reports/*.log
+dsl/node_modules/
+.git/
+.gitignore
+.vscode/
+.idea/
+venv/
+**/venv/

@@ -1,7 +1,13 @@
 import os
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # --- Digital Twin / Backend Configuration ---
-UT_TENANT = os.getenv("UT_TENANT", "org.eclipse.ditto")
+UT_TENANT = os.getenv("UT_TENANT", "at.uibk.ut.tenants")
 DITTO_USER = os.getenv("DITTO_USER", "ditto")
 DITTO_PW = os.getenv("DITTO_PW", "ditto")
 DITTO_NGINX_IP = os.getenv("DITTO_NGINX_IP", "127.0.0.1")
